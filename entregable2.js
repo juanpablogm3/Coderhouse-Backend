@@ -4,16 +4,32 @@ class ProductManager{
     constructor(path){
         this.path = path;
         this.products=[];
-    }
-            
-    addProduct(newTitle, newDescription, newPrice, newThumbnail, newCode, newStock){
+        this.idManager = 1;
+    };
+
+    readFile(){
         try{
             const prodsStr = fs.readFileSync(this.path, "utf-8");
             this.products = JSON.parse(prodsStr);
+            //return this.products;
         } catch(err){
-            console.log(`El archivo no existe, pero se va a crear`);
+            console.log(`El archivo no existe: ${err}`);
         }
+    };
+
+    saveFile(){
+        const prodStr = JSON.stringify(this.products, null, 2);
+        try{
+            fs.writeFileSync(this.path, prodStr);
+            return 'Guardado con éxito';
+        } catch(err) {
+            Console.log(`Error al escribir el archivo: ${err}`)
+        }
+    };
+            
+    addProduct(newTitle, newDescription, newPrice, newThumbnail, newCode, newStock){
         
+        this.readFile();
         const newProduct={
             title: newTitle,
             description: newDescription,
@@ -30,29 +46,19 @@ class ProductManager{
         if(!newTitle || !newDescription || !newPrice || !newThumbnail || !newCode || !newStock){
             return 'Se deben completar todos los campos';
         };
-        const id = this.products.length + 1;
-        newProduct.id = id;
-        this.products.push(newProduct)
-        const prodStr = JSON.stringify(this.products, null, 2);
-        fs.writeFileSync(this.path, prodStr);
-        return 'Producto agregado con éxito';
+        newProduct.id = this.idManager;
+        this.products.push(newProduct);
+        this.idManager++;
     };
 
     getProducts(){
-        try{
-            const prodsStr = fs.readFileSync(this.path, "utf-8");
-            this.products = JSON.parse(prodsStr);
-            return this.products;
-        } catch(err){
-            console.log(`El archivo no existe, ${err}`);
-        }
+        this.readFile();
     };
 
 
     getProductById(id) {
         try{
-            const prodsStr = fs.readFileSync(this.path, "utf-8");
-            this.products = JSON.parse(prodsStr);
+           this.readFile();
             const productById = this.products.find((elem) => elem.id === id);
             if (!productById) {
                 return `Producto con id ${id} no existe`;
@@ -65,8 +71,7 @@ class ProductManager{
     
     updateProduct(id, field, newValue){
         try{
-            const prodsStr = fs.readFileSync(this.path, "utf-8");
-            this.products = JSON.parse(prodsStr);
+            this.readFile();
             const indexToUpdate = this.products.findIndex(elem => elem.id === id);
             if (indexToUpdate===-1){
                 return `No existe un producto con id ${id}`;
@@ -85,21 +90,18 @@ class ProductManager{
 
     deleteProduct(id){
         try{
-            const prodsStr = fs.readFileSync(this.path, "utf-8");
-            this.products = JSON.parse(prodsStr);
+            this.readFile();
             const filteredProds = this.products.filter((elem)=> elem.id !== id )
             if (filteredProds.length === this.products.length){
                 return `No extiste producto con id ${id}`;
             }
             this.products = filteredProds;
-            const prodStr = JSON.stringify(this.products, null, 2);
-            fs.writeFileSync(this.path, prodStr);
+            this.saveFile();
             return `Producto con id ${id} eliminado con éxito`;
         }catch(err){
             console.log(`Elproducto no existe: ${err}`);
-        }
-    }
-        
+        };
+    };        
 };
 
 // *********** TESTING **************
@@ -110,7 +112,7 @@ console.log(productManager.addProduct("producto prueba1","Este es un producto pr
 console.log(productManager.addProduct("Este es un producto prueba",200,"sin imagen","abc1234",25)); // PRODUCTO SIN UN CAMPO
 console.log(productManager.addProduct("producto prueba2","Este es un producto prueba",200,"sin imagen","abc1234",25)); 
 console.log(productManager.addProduct("producto prueba","Este es un producto prueba",200,"sin imagen","abc123",25)); // PRODUCTO CON CODIGO REPETIDO
-console.log(productManager.deleteProduct(1));
+console.log(productManager.deleteProduct(2));
 console.log(productManager.deleteProduct(5)); // PRODUCTO NO EXISTE
 console.log(productManager.getProductById(1));
 console.log(productManager.getProductById(2)); // ID INEXISTENTE (BORRADO)
