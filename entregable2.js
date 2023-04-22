@@ -4,7 +4,7 @@ class ProductManager{
     constructor(path){
         this.path = path;
         this.products=[];
-        this.idManager = 1;
+        this.idManager = [];
     };
 
     readFile(){
@@ -47,10 +47,16 @@ class ProductManager{
         if(!newTitle || !newDescription || !newPrice || !newThumbnail || !newCode || !newStock){
             return 'Se deben completar todos los campos';
         };
-        newProduct.id = this.idManager;
+
+        const nextId = this.idManager.length > 0? Math.max(...this.idManager) : 1;
+        let newId = nextId;
+        while (this.idManager.includes(newId)) {
+            newId++;
+        }
+        newProduct.id = newId;
         this.products.push(newProduct);
+        this.idManager.push(newId);
         this.saveFile();
-        this.idManager++;
         return `Producto agregado con éxito`;
 
     };
@@ -100,6 +106,8 @@ class ProductManager{
             }
             this.products = filteredProds;
             this.saveFile();
+            const idIndex = this.products.findIndex((elem)=> elem.id === id);
+            this.idManager.splice(idIndex,1);
             return `Producto con id ${id} eliminado con éxito`;
         }catch(err){
             console.log(`El producto no existe: ${err}`);
@@ -114,6 +122,11 @@ console.log(productManager.getProducts()); // Sin estar creado el array de produ
 console.log(productManager.addProduct("producto prueba1","Este es un producto prueba",200,"sin imagen","abc123",25)); // con ID 1
 console.log(productManager.addProduct("Este es un producto prueba",200,"sin imagen","abc1234",25)); // PRODUCTO SIN UN CAMPO
 console.log(productManager.addProduct("producto prueba2","Este es un producto prueba",200,"sin imagen","abc1234",25)); // con ID 2
+console.log(productManager.addProduct("producto prueba2","Este es un producto prueba",200,"sin imagen","abc12345",25)); // con ID 3
+console.log(productManager.addProduct("producto prueba2","Este es un producto prueba",200,"sin imagen","abc12346",25)); // con ID 4
+console.log(productManager.addProduct("producto prueba2","Este es un producto prueba",200,"sin imagen","abc12347",25)); // con ID 5
+console.log(productManager.addProduct("producto prueba2","Este es un producto prueba",200,"sin imagen","abc12348",25)); // con ID 6
+console.log(productManager.addProduct("producto prueba2","Este es un producto prueba",200,"sin imagen","abc12349",25)); // con ID 7
 console.log(productManager.addProduct("producto prueba","Este es un producto prueba",200,"sin imagen","abc123",25)); // PRODUCTO CON CODIGO REPETIDO
 console.log(productManager.deleteProduct(2));
 console.log(productManager.deleteProduct(5)); // PRODUCTO NO EXISTE
@@ -122,5 +135,7 @@ console.log(productManager.getProductById(5)); // ID INEXISTENTE
 console.log(productManager.updateProduct(1,"title","super zapatilla"));
 console.log(productManager.updateProduct(1,"prize",1000)); // CAMPO MAL INGRESADO
 console.log(productManager.updateProduct(5,"price",1000)); // ID NO EXISTE
-console.log(productManager.addProduct("producto prueba2","Este es un producto prueba",200,"sin imagen","abc123456",25)); // Para demostrar id (ID 3) incrementado
+console.log(productManager.idManager);
+console.log(productManager.addProduct("producto prueba2","Este es un producto prueba",200,"sin imagen","abc123456",25)); // Para demostrar id MAAALLLLL
 console.log(productManager.getProducts());
+console.log(productManager.idManager);
