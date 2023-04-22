@@ -48,7 +48,7 @@ class ProductManager{
             return 'Se deben completar todos los campos';
         };
 
-        const nextId = this.idManager.length > 0? Math.max(...this.idManager) : 1;
+        const nextId = this.idManager.length > 0? Math.min(...this.idManager) : 1;
         let newId = nextId;
         while (this.idManager.includes(newId)) {
             newId++;
@@ -106,7 +106,7 @@ class ProductManager{
             }
             this.products = filteredProds;
             this.saveFile();
-            const idIndex = this.products.findIndex((elem)=> elem.id === id);
+            const idIndex = this.idManager.indexOf(id);
             this.idManager.splice(idIndex,1);
             return `Producto con id ${id} eliminado con éxito`;
         }catch(err){
