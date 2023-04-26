@@ -1,4 +1,4 @@
-const fs = require('fs');
+import fs from 'fs';
 
 class ProductManager{
     constructor(path){
@@ -7,9 +7,9 @@ class ProductManager{
         this.idManager = [];
     };
 
-    readFile(){
+    async readFile(){
         try{
-            const prodsStr = fs.readFileSync(this.path, "utf-8");
+            const prodsStr = fs.promises.readFile(this.path, "utf-8");
             this.products = JSON.parse(prodsStr);
             return this.products;
         } catch(err){
@@ -17,19 +17,19 @@ class ProductManager{
         }
     };
 
-    saveFile(){
+    async saveFile(){
         const prodStr = JSON.stringify(this.products, null, 2);
         try{
-            fs.writeFileSync(this.path, prodStr);
+            await fs.promises.writeFile(this.path, prodStr);
             return "Archivo guardado con éxito";
         } catch(err) {
             return `Error al escribir el archivo: ${err}`;
         }
     };
             
-    addProduct(newTitle, newDescription, newPrice, newThumbnail, newCode, newStock){
+    async addProduct(newTitle, newDescription, newPrice, newThumbnail, newCode, newStock){
         
-        this.readFile();
+        await this.readFile();
 
         const newProduct={
             title: newTitle,
@@ -58,19 +58,20 @@ class ProductManager{
         this.idManager.push(newId);
         this.idManager.sort((a,b)=>a-b);
         this.products.sort((a,b)=>a.id-b.id);
-        this.saveFile();
+        await this.saveFile();
         return `Producto agregado con éxito`;
 
     };
 
-    getProducts(){
-       return this.readFile();
+    async getProducts(){
+       await this.readFile();
+       return this.products.length>0 ? this.products : `No hay productos`;
     };
 
 
-    getProductById(id) {
+    async getProductById(id) {
         try{
-           this.readFile();
+           await this.readFile();
             const productById = this.products.find((elem) => elem.id === id);
             if (!productById) {
                 return `Producto con id ${id} no existe`;
@@ -81,9 +82,9 @@ class ProductManager{
         }
     };
     
-    updateProduct(id, field, newValue){
+    async updateProduct(id, field, newValue){
         try{
-            this.readFile();
+            await this.readFile();
             const indexToUpdate = this.products.findIndex(elem => elem.id === id);
             if (indexToUpdate===-1){
                 return `No existe un producto con id ${id}`;
@@ -92,22 +93,22 @@ class ProductManager{
                 return `Error en el campo a modificar: ${field}`;
             }
             this.products[indexToUpdate][field] = newValue;
-            this.saveFile();
+            await this.saveFile();
             return `Producto actualizado con éxito`;
         } catch(err){
             console.log(`Error en update ${err}`);
         }
     }
 
-    deleteProduct(id){
+    async deleteProduct(id){
         try{
-            this.readFile();
+            await this.readFile();
             const filteredProds = this.products.filter((elem)=> elem.id !== id )
             if (filteredProds.length === this.products.length){
                 return `No extiste producto con id ${id}`;
             }
             this.products = filteredProds;
-            this.saveFile();
+            await this.saveFile();
             const idIndex = this.idManager.indexOf(id);
             this.idManager.splice(idIndex,1);
             return `Producto con id ${id} eliminado con éxito`;
