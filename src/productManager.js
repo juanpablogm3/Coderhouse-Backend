@@ -120,7 +120,7 @@ class ProductManager{
 
 
 // *********** TESTING **************
-const productManager = new ProductManager("productos.json");
+/* const productManager = new ProductManager("productos.json");
 console.log(productManager.getProducts()); // Sin estar creado el array de productos
 console.log(productManager.addProduct("producto prueba1","Este es un producto prueba",200,"sin imagen","abc123",25)); // con ID 1
 console.log(productManager.addProduct("Este es un producto prueba",200,"sin imagen","abc1234",25)); // PRODUCTO SIN UN CAMPO
@@ -139,4 +139,4 @@ console.log(productManager.updateProduct(1,"title","super zapatilla"));
 console.log(productManager.updateProduct(1,"prize",1000)); // CAMPO MAL INGRESADO
 console.log(productManager.updateProduct(22,"price",1000)); // ID NO EXISTE
 console.log(productManager.addProduct("producto prueba8","Este es un producto prueba",200,"sin imagen","abc123456",25)); // Para demostrar que usa ids mínimos disponibles
-console.log(productManager.getProducts());
+console.log(productManager.getProducts()); */
