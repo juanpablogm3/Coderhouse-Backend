@@ -9,7 +9,7 @@ class ProductManager{
 
     async readFile(){
         try{
-            const prodsStr = fs.promises.readFile(this.path, "utf-8");
+            const prodsStr =  await fs.promises.readFile(this.path, "utf-8");
             this.products = JSON.parse(prodsStr);
             return this.products;
         } catch(err){
@@ -26,6 +26,20 @@ class ProductManager{
             return `Error al escribir el archivo: ${err}`;
         }
     };
+
+    async getNextId() {
+        const newId = await new Promise((resolve) => {
+            const nextId = this.idManager.length > 0 ? Math.min(...this.idManager) : 1;
+            let availableId = nextId;
+            while (this.idManager.includes(availableId)) {
+                availableId++;
+            }
+            resolve(availableId);
+        });
+        return newId;
+    }
+        
+
             
     async addProduct(newTitle, newDescription, newPrice, newThumbnail, newCode, newStock){
         
@@ -48,14 +62,10 @@ class ProductManager{
             return 'Se deben completar todos los campos';
         };
 
-        const nextId = this.idManager.length > 0? Math.min(...this.idManager) : 1;
-        let newId = nextId;
-        while (this.idManager.includes(newId)) {
-            newId++;
-        }
+        const newId = await this.getNextId();
         newProduct.id = newId;
-        this.products.push(newProduct);
         this.idManager.push(newId);
+        this.products.push(newProduct);
         this.idManager.sort((a,b)=>a-b);
         this.products.sort((a,b)=>a.id-b.id);
         await this.saveFile();
