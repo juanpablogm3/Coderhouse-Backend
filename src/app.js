@@ -38,17 +38,21 @@ console.log(`Example app listening on port ${port}`)
 
 app.get("/products/:pid", (req, res)=> {
     const idProd = req.params.pid;
-    res.json(
-        productManager.getProductById(idProd)
-    )
+    return res
+    .status(200)    
+    .json(productManager.getProductById(idProd))
 })
 
 app.get("/products", (req, res)=> {
     const limit = req.query.limit;
     if (limit){
-        const allProducts = prodManager.getProducts();
-        res.json(allProducts.slice(0,limit));
+        const allProducts = productManager.getProducts();
+        return res
+        .status(200)
+        .json(allProducts.slice(0,limit));
     } else {
-        res.json(productManager.getProducts());
+        return res
+        .status(200)
+        .json(productManager.getProducts());
     }
 })
