@@ -1,31 +1,31 @@
-import { promises as fs } from 'fs';
+import fs from 'fs';
 
 class ProductManager {
   constructor(path) {
     this.path = path;
     this.products = [];
     this.idManager = [];
-  }
+  };
 
   async readFile() {
     try {
-      const prodsStr = await fs.readFile(this.path, 'utf-8');
+      const prodsStr = await fs.promises.readFile(this.path, 'utf-8');
       this.products = JSON.parse(prodsStr);
       return this.products;
     } catch (err) {
       return `El archivo no existe: ${err}`;
     }
-  }
+  };
 
   async saveFile() {
     const prodStr = JSON.stringify(this.products, null, 2);
     try {
-      await fs.writeFile(this.path, prodStr);
+      await fs.promises.writeFile(this.path, prodStr);
       return 'Archivo guardado con éxito';
     } catch (err) {
       return `Error al escribir el archivo: ${err}`;
     }
-  }
+  };
 
   async addProduct(newTitle, newDescription, newPrice, newThumbnail, newCode, newStock) {
     await this.readFile();
@@ -47,23 +47,17 @@ class ProductManager {
       return 'Se deben completar todos los campos';
     }
 
-    const nextId = this.idManager.length > 0 ? Math.min(...this.idManager) : 1;
-    let newId = nextId;
-    while (this.idManager.includes(newId)) {
-      newId++;
-    }
+    const newId = (Math.random() * 10000000000000).toFixed(0);
     newProduct.id = newId;
     this.products.push(newProduct);
     this.idManager.push(newId);
-    this.idManager.sort((a, b) => a - b);
-    this.products.sort((a, b) => a.id - b.id);
     await this.saveFile();
     return `Producto agregado con éxito`;
-  }
+  };
 
   async getProducts() {
     return await this.readFile();
-  }
+  };
 
   async getProductById(id) {
     try {
@@ -76,7 +70,7 @@ class ProductManager {
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   async updateProduct(id, field, newValue) {
     try {
@@ -94,7 +88,7 @@ class ProductManager {
     } catch (err) {
       console.log(`Error en update ${err}`);
     }
-  }
+  };
 
   async deleteProduct(id){
     try{
@@ -111,7 +105,7 @@ class ProductManager {
     }catch(err){
         console.log(`El producto no existe: ${err}`);
     };
-};        
+  };        
 };
 
 export default ProductManager;
