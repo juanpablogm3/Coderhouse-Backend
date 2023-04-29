@@ -3,109 +3,100 @@ import fs from 'fs';
 class ProductManager {
   constructor(path) {
     this.path = path;
-    this.products = [];
-    this.idManager = [];
-  };
-
-  async readFile() {
-    try {
-      const prodsStr = await fs.promises.readFile(this.path, 'utf-8');
-      this.products = JSON.parse(prodsStr);
-      return this.products;
-    } catch (err) {
-      return `El archivo no existe: ${err}`;
-    }
-  };
-
-  async saveFile() {
-    const prodStr = JSON.stringify(this.products, null, 2);
-    try {
-      await fs.promises.writeFile(this.path, prodStr);
-      return 'Archivo guardado con éxito';
-    } catch (err) {
-      return `Error al escribir el archivo: ${err}`;
-    }
-  };
-
-  async addProduct(newTitle, newDescription, newPrice, newThumbnail, newCode, newStock) {
-    await this.readFile();
-
-    const newProduct = {
-      title: newTitle,
-      description: newDescription,
-      price: newPrice,
-      thumbnail: newThumbnail,
-      code: newCode,
-      stock: newStock
-    };
-
-    const existingProduct = this.products.find(p => p.code === newCode);
-    if (existingProduct) {
-      return `El producto con código ${newCode} ya existe`;
-    }
-    if (!newTitle || !newDescription || !newPrice || !newThumbnail || !newCode || !newStock) {
-      return 'Se deben completar todos los campos';
-    }
-
-    const newId = (Math.random() * 10000000000000).toFixed(0);
-    newProduct.id = newId;
-    this.products.push(newProduct);
-    this.idManager.push(newId);
-    await this.saveFile();
-    return `Producto agregado con éxito`;
   };
 
   async getProducts() {
-    return await this.readFile();
+    try {
+      if (fs.existsSync(this.path)){
+        const prodsStr = await fs.promises.readFile(this.path, 'utf-8');
+        return JSON.parse(prodsStr);
+
+      }
+      await fs.promises.writeFile(this.path, JSON.stringify([]));
+      return [];
+    } catch (err) {
+      throw new Error(err+' Error getting products');
+    }
   };
 
+  async addProduct(newProduct) {
+    try {
+      let products = await this.getProducts(); 
+      const existingProduct = products.find(p => p.code === newProduct.code);
+      if (existingProduct) {
+        return `Code: ${newProduct.code} already exists`;
+      }
+      if (!newProduct.title || !newProduct.description || !newProduct.price || !newProduct.thumbnail || !newProduct.code || !newProduct.stock) {
+        return 'Fields missing';
+      }
+      const id = products.length>0 ? products[products.length-1].id + 1 : 1;
+      const newProdWithId = {id, ...newProduct}
+      products.push(newProdWithId);
+      const prodString = JSON.stringify(products, null, 2);
+      await fs.promises.writeFile(this.path, prodString);
+      return newProdWithId;
+      
+    } catch (error) {
+      throw new Error(error+' Error adding product')
+    }
+  };
+  
   async getProductById(id) {
     try {
-      await this.readFile();
-      const productById = this.products.find(elem => elem.id === id);
-      if (!productById) {
-        return `Producto con id ${id} no existe`;
+      const products = await this.getProducts();
+      const productById = products.find(elem => elem.id === id);
+      if(!productById){
+        return `Product with id ${id} not found`;
       }
       return productById;
     } catch (err) {
-      console.log(err);
+      throw new Error(err);
     }
   };
 
   async updateProduct(id, field, newValue) {
     try {
-      await this.readFile();
-      const indexToUpdate = this.products.findIndex(elem => elem.id === id);
+      const products = await this.getProducts();
+      const indexToUpdate = products.findIndex(elem => elem.id === id);
       if (indexToUpdate === -1) {
-        return `No existe un producto con id ${id}`;
+        return `Product id ${id} does not exist`;
       }
       if (field !== ('title' || 'description' || 'price' || 'thumbnail' || 'code' || 'stock')) {
-        return `Error en el campo a modificar: ${field}`;
+        return `Field error: ${field}`;
       }
-      this.products[indexToUpdate][field] = newValue;
-      await this.saveFile();
-      return `Producto actualizado con éxito`;
+      products[indexToUpdate][field] = newValue;
+      const prodString = JSON.stringify(products, null, 2);
+      await fs.promises.writeFile(this.path, prodString);
+      return 'Product updated succesfully';
     } catch (err) {
-      console.log(`Error en update ${err}`);
+      throw new Error(err+' Update error');
     }
   };
 
   async deleteProduct(id){
     try{
-        await this.readFile();
-        const filteredProds = this.products.filter((elem)=> elem.id !== id )
-        if (filteredProds.length === this.products.length){
-            return `No extiste producto con id ${id}`;
+        const products = await this.getProducts();
+        const filteredProds = products.filter((elem)=> elem.id !== id )
+        if (filteredProds.length === products.length){
+            return `Product id ${id} does not exist`;
+        } else {
+          const prodString = JSON.stringify(filteredProds, null, 2);
+          await fs.promises.writeFile(this.path, prodString);
+          return 'Product deleted succesfully';
         }
-        this.products = filteredProds;
-        await this.saveFile();
-        const idIndex = this.idManager.indexOf(id);
-        this.idManager.splice(idIndex,1);
-        return `Producto con id ${id} eliminado con éxito`;
     }catch(err){
-        console.log(`El producto no existe: ${err}`);
+        throw new Error(err+' Product does not exist');
     };
   };        
 };
+
+const prod = {
+  "title": "Producto estrellaaaaaa",
+  "description": "Descripción del producto 2",
+  "price": 2099,
+  "thumbnail": "ruta/de/imagen/2",
+  "code": "DE456546",
+  "stock": 20
+}
 
 export default ProductManager;
