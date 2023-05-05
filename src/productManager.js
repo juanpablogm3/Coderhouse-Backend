@@ -24,9 +24,9 @@ class ProductManager {
       let products = await this.getProducts(); 
       const existingProduct = products.find(p => p.code === newProduct.code);
       if (existingProduct) {
-        return `Code: ${newProduct.code} already exists`;
+        return 'Code already exists';
       }
-      if (!newProduct.title || !newProduct.description || !newProduct.price || !newProduct.thumbnail || !newProduct.code || !newProduct.stock) {
+      if (!newProduct.title || !newProduct.description || !newProduct.price || !newProduct.thumbnail || !newProduct.code || !newProduct.status || !newProduct.category || !newProduct.stock) {
         return 'Fields missing';
       }
       const id = products.length>0 ? products[products.length-1].id + 1 : 1;
@@ -35,7 +35,6 @@ class ProductManager {
       const prodString = JSON.stringify(products, null, 2);
       await fs.promises.writeFile(this.path, prodString);
       return newProdWithId;
-      
     } catch (error) {
       throw new Error(error+' Error adding product')
     }
@@ -46,7 +45,7 @@ class ProductManager {
       const products = await this.getProducts();
       const productById = products.find(elem => elem.id === id);
       if(!productById){
-        return `Product with id ${id} not found`;
+        return {msg: `Product with id ${id} not found`}
       }
       return productById;
     } catch (err) {
@@ -61,13 +60,14 @@ class ProductManager {
       if (indexToUpdate === -1) {
         return `Product id ${id} does not exist`;
       }
-      if (field !== ('title' || 'description' || 'price' || 'thumbnail' || 'code' || 'stock')) {
-        return `Field error: ${field}`;
+      //ENCONTRAR ERROR: solo funciona con title!!!
+      if (field !== ('title' || 'description' || 'price' || 'thumbnail' || 'status' || 'category' || 'code' || 'stock')) {
+        return `Field error: ${field}`
       }
       products[indexToUpdate][field] = newValue;
       const prodString = JSON.stringify(products, null, 2);
       await fs.promises.writeFile(this.path, prodString);
-      return 'Product updated succesfully';
+      return products[indexToUpdate];
     } catch (err) {
       throw new Error(err+' Update error');
     }
@@ -78,25 +78,16 @@ class ProductManager {
         const products = await this.getProducts();
         const filteredProds = products.filter((elem)=> elem.id !== id )
         if (filteredProds.length === products.length){
-            return `Product id ${id} does not exist`;
+            return {msg: `Product id ${id} does not exist`}
         } else {
           const prodString = JSON.stringify(filteredProds, null, 2);
           await fs.promises.writeFile(this.path, prodString);
-          return 'Product deleted succesfully';
+          return {msg: 'Product deleted succesfully'}
         }
     }catch(err){
         throw new Error(err+' Product does not exist');
     };
   };        
 };
-
-const prod = {
-  "title": "Producto estrellaaaaaa",
-  "description": "Descripción del producto 2",
-  "price": 2099,
-  "thumbnail": "ruta/de/imagen/2",
-  "code": "DE456546",
-  "stock": 20
-}
 
 export default ProductManager;

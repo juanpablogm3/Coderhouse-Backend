@@ -127,11 +127,26 @@
   },
   {
     "id": 15,
-    "title": "Producto 15",
+    "title": "zapatillas mágicas",
     "description": "Descripción del producto 15",
     "price": 1399,
     "thumbnail": "ruta/de/imagen/15",
     "code": "QRS345",
     "stock": 12
+  },
+  {
+    "id": 16,
+    "title": "zapatillas mágicas",
+    "description": "Descripción del producto 2",
+    "price": 2099,
+    "thumbnail": [
+      "ruta/de/imagen/1",
+      "ruta/de/imagen/2",
+      "ruta/de/imagen/3"
+    ],
+    "code": "DE455646546",
+    "status": true,
+    "category": "productos",
+    "stock": 20
   }
-]  
+]
