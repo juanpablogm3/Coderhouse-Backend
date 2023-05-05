@@ -52,7 +52,7 @@ class ProductManager {
       throw new Error(err);
     }
   };
-
+ 
   async updateProduct(id, field, newValue) {
     try {
       const products = await this.getProducts();
