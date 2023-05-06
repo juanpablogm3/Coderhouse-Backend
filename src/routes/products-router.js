@@ -5,9 +5,28 @@ export const prodsRouter= express.Router();
 const productManager = new ProductManager("./src/data/products.json");
 
 prodsRouter.get("/:pid", async (req, res)=> {
-    const idProd = parseInt(req.params.pid);
-    const reqProd = await productManager.getProductById(idProd);
-    return res.json(reqProd)
+    try{
+        const idProd = parseInt(req.params.pid);
+        const getProdByIdResult = await productManager.getProductById(idProd);
+        if(typeof getProdByIdResult == "object"){
+            return res.status(200).json({
+                status: 'success',
+                msg: 'Product found',
+                data: getProdByIdResult
+            })
+        } else {
+            return res.status(404).json({
+                status: 'error',
+                msg: `Product with id ${idProd} not found`,
+            })
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(400).json({
+            status: 'error',
+            msg: error.message,
+        });
+    }
 })
 
 prodsRouter.get("/", async (req, res)=> {
@@ -16,13 +35,13 @@ prodsRouter.get("/", async (req, res)=> {
     if (!limit){
         return res.status(200).json({
             status: 'success',
-            msg: 'Listado de productos',
+            msg: 'Product list',
             data: allProducts
         });
     }  else {
         return res.status(200).json({
             status: 'success',
-            msg: 'Listado de productos',
+            msg: 'Product list',
             data: allProducts.slice(0, limit)
         });
     } 
@@ -35,7 +54,7 @@ prodsRouter.post("/", async (req, res)=> {
         if(typeof addProductResult == "object"){
             return res.status(201).json({
                 status: 'success',
-                msg: 'Producto creado',
+                msg: 'Product created',
                 data: addProductResult
             });
         } else {
@@ -60,7 +79,7 @@ prodsRouter.put("/:pid", async (req, res)=>{
         if(typeof updateProdResult == "object"){
             return res.status(200).json({
                 status: 'success',
-                msg: 'Producto modificado',
+                msg: 'Product updated',
                 data: updateProdResult
             });
         } else {
@@ -69,7 +88,6 @@ prodsRouter.put("/:pid", async (req, res)=>{
               msg: updateProdResult,
             });
         }
-
     } catch (error) {
         console.error(error);
         return res.status(400).json({
@@ -78,3 +96,27 @@ prodsRouter.put("/:pid", async (req, res)=>{
         });
     }
 });
+
+prodsRouter.delete("/:pid", async (req, res)=>{
+    try{
+        const idProd = parseInt(req.params.pid);
+        const deleteProductResult = await productManager.deleteProduct(idProd);
+        if(typeof deleteProductResult == "object"){
+            return res.status(200).json({
+                status: 'success',
+                msg: 'Product deleted',
+            });
+        } else {
+            return res.status(404).json({
+              status: 'error',
+              msg: deleteProductResult,
+            });
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(400).json({
+            status: 'error',
+            msg: error.message,
+        });
+    }
+})

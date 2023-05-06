@@ -1,12 +1,14 @@
 import express from 'express';
-import {prodsRouter} from './routes/products.router.js';
+import {prodsRouter} from './routes/products-router.js';
+import {cartsRouter} from './routes/carts-router.js';
 
 const port = 8080;
 const app = express();
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 app.use('/api/products', prodsRouter);
+app.use('/api/carts', cartsRouter);
 
 app.listen(port, () => {
 console.log(`Example app listening on http://localhost:${port}`)
@@ -15,11 +17,10 @@ console.log(`Example app listening on http://localhost:${port}`)
 app.get('*',(req, res)=>{
     return res.status(404).json({
         status: 'error',
-        msg: 'no está implementada la ruta',
-        data: {}
+        msg: 'Route not found'
     });
 });
-app.get("/products/:pid", async (req, res)=> {
+/* app.get("/products/:pid", async (req, res)=> {
     const idProd = parseInt(req.params.pid);
     const reqProd = await productManager.getProductById(idProd);
     if(typeof reqProd !== 'object'){
@@ -68,5 +69,5 @@ app.post("/products", async (req, res)=> {
     return res
         .status(201)
         .json({message: "Product created!"})
-})
+}) */
 

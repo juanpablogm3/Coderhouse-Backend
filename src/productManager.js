@@ -45,7 +45,7 @@ class ProductManager {
       const products = await this.getProducts();
       const productById = products.find(elem => elem.id === id);
       if(!productById){
-        return {msg: `Product with id ${id} not found`}
+        return `Product with id ${id} not found`;
       }
       return productById;
     } catch (err) {
@@ -82,11 +82,11 @@ class ProductManager {
         const products = await this.getProducts();
         const filteredProds = products.filter((elem)=> elem.id !== id )
         if (filteredProds.length === products.length){
-            return {msg: `Product id ${id} does not exist`}
+            return `Product id ${id} does not exist`;
         } else {
           const prodString = JSON.stringify(filteredProds, null, 2);
           await fs.promises.writeFile(this.path, prodString);
-          return {msg: 'Product deleted succesfully'}
+          return {msg: 'Product deleted succesfully'};
         }
     }catch(err){
         throw new Error(err+' Product does not exist');
