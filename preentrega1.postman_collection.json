@@ -11,13 +11,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/products",
+					"raw": "http://localhost:8080/api/products",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
+						"api",
 						"products"
 					]
 				}
@@ -31,7 +32,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"title\": \"Producto estrellaaaaaa\",\r\n    \"description\": \"Descripción del producto 2\",\r\n    \"price\": 2099,\r\n    \"thumbnail\": \"ruta/de/imagen/2\",\r\n    \"code\": \"DE456546\",\r\n    \"stock\": 20\r\n}",
+					"raw": "{\r\n    \"title\": \"Producto estrellaaaaaa\",\r\n    \"description\": \"Descripción del producto 2\",\r\n    \"price\": 2099,\r\n    \"thumbnail\": [\"ruta/de/imagen/1\", \"ruta/de/imagen/2\", \"ruta/de/imagen/3\"],\r\n    \"code\": \"DE455646546\",\r\n    \"status\": true,\r\n    \"category\": \"productos\",\r\n    \"stock\": 20\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -39,13 +40,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/products",
+					"raw": "http://localhost:8080/api/products",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
+						"api",
 						"products"
 					]
 				}
@@ -59,7 +61,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"field\": \"title\",\r\n    \"newValue\": \"zapatillas mágicas\"\r\n}",
+					"raw": "{\r\n    \"field\": \"thumbnail\",\r\n    \"newValue\": [\"ruta1\", \"ruta2\", \"ruta3\"]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -67,15 +69,16 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/products/15",
+					"raw": "http://localhost:8080/api/products/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
+						"api",
 						"products",
-						"15"
+						"1"
 					]
 				}
 			},
@@ -87,13 +90,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/products?limit=5",
+					"raw": "http://localhost:8080/api/products?limit=5",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
+						"api",
 						"products"
 					],
 					"query": [
@@ -108,17 +112,25 @@
 		},
 		{
 			"name": "/products/1",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
-					"raw": "http://localhost:8080/products/1",
+					"raw": "http://localhost:8080/api/products/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
+						"api",
 						"products",
 						"1"
 					]
@@ -132,13 +144,14 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/products/16",
+					"raw": "http://localhost:8080/api/products/16",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
+						"api",
 						"products",
 						"16"
 					]
@@ -152,13 +165,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/products/20",
+					"raw": "http://localhost:8080/api/products/20",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
+						"api",
 						"products",
 						"20"
 					]

@@ -4,149 +4,224 @@
     "title": "Producto 1",
     "description": "Descripción del producto 1",
     "price": 1099,
-    "thumbnail": "ruta/de/imagen/1",
+    "thumbnail": [
+      "ruta1",
+      "ruta2",
+      "ruta3"
+    ],
     "code": "ABC123",
-    "stock": 50
+    "stock": 50,
+    "category": "product",
+    "status": true
   },
   {
     "id": 2,
     "title": "Producto 2",
     "description": "Descripción del producto 2",
     "price": 2099,
-    "thumbnail": "ruta/de/imagen/2",
+    "thumbnail": [
+      "ruta1",
+      "ruta2",
+      "ruta3"
+    ],
     "code": "DEF456",
-    "stock": 20
+    "stock": 20,
+    "category": "product",
+    "status": true
   },
   {
     "id": 3,
     "title": "Producto 3",
     "description": "Descripción del producto 3",
     "price": 1599,
-    "thumbnail": "ruta/de/imagen/3",
+    "thumbnail": [
+      "ruta1",
+      "ruta2",
+      "ruta3"
+    ],
     "code": "GHI789",
-    "stock": 30
+    "stock": 30,
+    "category": "product",
+    "status": true
   },
   {
     "id": 4,
     "title": "Producto 4",
     "description": "Descripción del producto 4",
     "price": 2299,
-    "thumbnail": "ruta/de/imagen/4",
+    "thumbnail": [
+      "ruta1",
+      "ruta2",
+      "ruta3"
+    ],
     "code": "JKL012",
-    "stock": 15
+    "stock": 15,
+    "category": "product",
+    "status": true
   },
   {
     "id": 5,
     "title": "Producto 5",
     "description": "Descripción del producto 5",
     "price": 1399,
-    "thumbnail": "ruta/de/imagen/5",
+    "thumbnail": [
+      "ruta1",
+      "ruta2",
+      "ruta3"
+    ],
     "code": "MNO345",
-    "stock": 40
+    "stock": 40,
+    "category": "product",
+    "status": true
   },
   {
     "id": 6,
     "title": "Producto 6",
     "description": "Descripción del producto 6",
     "price": 999,
-    "thumbnail": "ruta/de/imagen/6",
+    "thumbnail": [
+      "ruta1",
+      "ruta2",
+      "ruta3"
+    ],
     "code": "PQR678",
-    "stock": 25
+    "stock": 25,
+    "category": "product",
+    "status": true
   },
   {
     "id": 7,
     "title": "Producto 7",
     "description": "Descripción del producto 7",
     "price": 1799,
-    "thumbnail": "ruta/de/imagen/7",
+    "thumbnail": [
+      "ruta1",
+      "ruta2",
+      "ruta3"
+    ],
     "code": "STU901",
-    "stock": 60
+    "stock": 60,
+    "category": "product",
+    "status": true
   },
   {
     "id": 8,
     "title": "Producto 8",
     "description": "Descripción del producto 8",
     "price": 2499,
-    "thumbnail": "ruta/de/imagen/8",
+    "thumbnail": [
+      "ruta1",
+      "ruta2",
+      "ruta3"
+    ],
     "code": "VWX234",
-    "stock": 10
+    "stock": 10,
+    "category": "product",
+    "status": true
   },
   {
     "id": 9,
     "title": "Producto 9",
     "description": "Descripción del producto 9",
     "price": 1899,
-    "thumbnail": "ruta/de/imagen/9",
+    "thumbnail": [
+      "ruta1",
+      "ruta2",
+      "ruta3"
+    ],
     "code": "YZA567",
-    "stock": 35
+    "stock": 35,
+    "category": "product",
+    "status": true
   },
   {
     "id": 10,
     "title": "Producto 10",
     "description": "Descripción del producto 10",
     "price": 1299,
-    "thumbnail": "ruta/de/imagen/10",
+    "thumbnail": [
+      "ruta1",
+      "ruta2",
+      "ruta3"
+    ],
     "code": "BCD890",
-    "stock": 55
+    "stock": 55,
+    "category": "product",
+    "status": true
   },
   {
     "id": 11,
     "title": "Producto 11",
     "description": "Descripción del producto 11",
     "price": 2099,
-    "thumbnail": "ruta/de/imagen/11",
+    "thumbnail": [
+      "ruta1",
+      "ruta2",
+      "ruta3"
+    ],
     "code": "EFG123",
-    "stock": 5
+    "stock": 5,
+    "category": "product",
+    "status": true
   },
   {
     "id": 12,
     "title": "Producto 12",
     "description": "Descripción del producto 12",
     "price": 2999,
-    "thumbnail": "ruta/de/imagen/12",
+    "thumbnail": [
+      "ruta1",
+      "ruta2",
+      "ruta3"
+    ],
     "code": "HIJ456",
-    "stock": 8
+    "stock": 8,
+    "category": "product",
+    "status": true
   },
   {
     "id": 13,
     "title": "Producto 13",
     "description": "Descripción del producto 13",
     "price": 1699,
-    "thumbnail": "ruta/de/imagen/13",
+    "thumbnail": [
+      "ruta1",
+      "ruta2",
+      "ruta3"
+    ],
     "code": "KLM789",
-    "stock": 17
+    "stock": 17,
+    "category": "product",
+    "status": true
   },
   {
     "id": 14,
     "title": "Producto 14",
     "description": "Descripción del producto 14",
     "price": 2599,
-    "thumbnail": "ruta/de/imagen/14",
+    "thumbnail": [
+      "ruta1",
+      "ruta2",
+      "ruta3"
+    ],
     "code": "NOP012",
-    "stock": 22
+    "stock": 22,
+    "category": "product",
+    "status": true
   },
   {
     "id": 15,
     "title": "zapatillas mágicas",
     "description": "Descripción del producto 15",
     "price": 1399,
-    "thumbnail": "ruta/de/imagen/15",
-    "code": "QRS345",
-    "stock": 12
-  },
-  {
-    "id": 16,
-    "title": "zapatillas mágicas",
-    "description": "Descripción del producto 2",
-    "price": 2099,
     "thumbnail": [
-      "ruta/de/imagen/1",
-      "ruta/de/imagen/2",
-      "ruta/de/imagen/3"
+      "ruta1",
+      "ruta2",
+      "ruta3"
     ],
-    "code": "DE455646546",
-    "status": true,
-    "category": "productos",
-    "stock": 20
+    "code": "QRS345",
+    "stock": 12,
+    "category": "product",
+    "status": true
   }
 ]
