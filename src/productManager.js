@@ -60,14 +60,9 @@ class ProductManager {
       if (indexToUpdate === -1) {
         return `Product id ${id} does not exist`;
       }
-      //ENCONTRAR ERROR: solo funciona con title!!!
-      /* if (field !== ('title' || 'description' || 'price' || 'thumbnail' || 'status' || 'category' || 'code' || 'stock')) {
-        return `Field error: ${field}`
-      } */
       if (!['title', 'description', 'price', 'thumbnail', 'status', 'category', 'code', 'stock'].includes(field)) {
         return `Field error: ${field}`;
       }
-
       products[indexToUpdate][field] = newValue;
       const prodString = JSON.stringify(products, null, 2);
       await fs.promises.writeFile(this.path, prodString);
