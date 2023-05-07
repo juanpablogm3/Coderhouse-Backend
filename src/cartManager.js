@@ -1,5 +1,6 @@
 import fs from 'fs';
 import ProductManager from './productManager.js';
+const productManager = new ProductManager("./src/data/products.json");
 
 class CartManager {
     constructor(path) {
@@ -49,7 +50,7 @@ class CartManager {
         }
         let prodInCart = carts[cartIndex].products.findIndex((elem)=>elem.id === prodId)
         if(prodInCart===-1){
-          const prod = await ProductManager.getProductById(prodId)
+          const prod = await productManager.getProductById(prodId)
           if (!prod) {
             return `Product with id ${prodId} not found`;
           }     
