@@ -57,53 +57,6 @@
 					"response": []
 				},
 				{
-					"name": "/products/20(id inexistente)",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/products/12",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"products",
-								"12"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/products?limit=5",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/products?limit=5",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"products"
-							],
-							"query": [
-								{
-									"key": "limit",
-									"value": "5"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "/addProduct",
 					"request": {
 						"method": "POST",
@@ -139,7 +92,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"field\": \"thumbnail\",\r\n    \"newValue\": [\"ruta1\", \"ruta2\", \"ruta3\"]\r\n}",
+							"raw": "{\r\n    \"field\": \"category\",\r\n    \"newValue\": \" other product\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -147,7 +100,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/products/1",
+							"raw": "http://localhost:8080/api/products/16",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -156,7 +109,7 @@
 							"path": [
 								"api",
 								"products",
-								"1"
+								"16"
 							]
 						}
 					},
@@ -209,7 +162,7 @@
 					"response": []
 				},
 				{
-					"name": "carts/1",
+					"name": "carts/:cid",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -231,6 +184,29 @@
 								"api",
 								"products",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "carts/:cid/products/:pid",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/carts/1/products/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								"1",
+								"products",
+								"5"
 							]
 						}
 					},
