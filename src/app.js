@@ -1,17 +1,26 @@
 import express from 'express';
-import {prodsRouter} from './routes/products-router.js';
-import {cartsRouter} from './routes/carts-router.js';
-//import path from "path";
+import { prodsRouter } from './routes/products-router.js';
+import { cartsRouter } from './routes/carts-router.js';
+import { viewsRouter } from './routes/views-router.js';
+import __dirname from './utils.js';
+import handlebars from 'express-handlebars';
+import path from "path";
 
 const port = 8080;
 const app = express();
 
+app.engine('handlebars', handlebars.engine());
+app.set('views', __dirname+'/views');
+app.set('view engine', 'handlebars');
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 app.use('/api/products', prodsRouter);
 app.use('/api/carts', cartsRouter);
-//app.use(express.static(path.join(__dirname, "public")));
-app.use(express.static("public"));
+app.use('/', viewsRouter);
+app.use(express.static(__dirname+'/public'));
+//app.use(express.static("public"));
 
 app.listen(port, () => {
 console.log(`Example app listening on http://localhost:${port}`)
