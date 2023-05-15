@@ -48,7 +48,7 @@ prodsRouter.get("/", async (req, res)=> {
     } 
 });
 
-prodsRouter.post("/", uploader.array('file'), async (req, res)=> {
+prodsRouter.post("/", uploader.array('thumbnail'), async (req, res)=> {
     try{
         if(!req.files){
             req.status(400).json({
@@ -57,7 +57,8 @@ prodsRouter.post("/", uploader.array('file'), async (req, res)=> {
             })
         }
         const newProduct = req.body;
-        newProduct.thumbnail= req.files;
+        const thumbnailPaths = req.files.map(file => file.path);
+        newProduct.thumbnail = thumbnailPaths;
         const addProductResult = await productManager.addProduct(newProduct);
         if(typeof addProductResult == "object"){
             return res.status(201).json({

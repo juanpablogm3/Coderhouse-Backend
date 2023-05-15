@@ -30,7 +30,7 @@ class ProductManager {
         return 'Fields missing';
       }
       const id = products.length>0 ? products[products.length-1].id + 1 : 1;
-      const newProdWithId = {id, ...newProduct}
+      const newProdWithId = {id, ...newProduct};
       products.push(newProdWithId);
       const prodString = JSON.stringify(products, null, 2);
       await fs.promises.writeFile(this.path, prodString);

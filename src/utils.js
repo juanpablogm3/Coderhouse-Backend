@@ -3,6 +3,8 @@ import path from "path";
 import { fileURLToPath } from "url";
 export const __filename = fileURLToPath(import.meta.url);
 export const __dirname = path.dirname(__filename);
+
+
 import multer from "multer";
 
 const storage = multer.diskStorage({
@@ -13,7 +15,6 @@ const storage = multer.diskStorage({
     cb(null, file.originalname);
   },
 });
-
 export default __dirname;
 export const uploader = multer({ storage });
 
