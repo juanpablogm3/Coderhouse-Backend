@@ -223,19 +223,5 @@
     "stock": 12,
     "category": "product",
     "status": true
-  },
-  {
-    "id": 16,
-    "title": "Product 16",
-    "description": "Descripción del producto 16",
-    "price": "1599",
-    "thumbnail": [
-      "C:\\Users\\Juan Pablo\\Desktop\\CoderHouse\\Backend\\Coderhouse-Backend\\src\\public\\prod1.jpg",
-      "C:\\Users\\Juan Pablo\\Desktop\\CoderHouse\\Backend\\Coderhouse-Backend\\src\\public\\prod2.jpg"
-    ],
-    "code": "CBR250",
-    "category": "best product",
-    "stock": "1",
-    "status": "true"
   }
 ]

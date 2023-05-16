@@ -48,17 +48,16 @@ prodsRouter.get("/", async (req, res)=> {
     } 
 });
 
-prodsRouter.post("/", uploader.array('thumbnail'), async (req, res)=> {
+prodsRouter.post("/", uploader.single('thumbnail'), async (req, res)=> {
     try{
-        if(!req.files){
+        if(!req.file){
             req.status(400).json({
                 status: "error",
                 error: "Unable to upload images"
             })
         }
         const newProduct = req.body;
-        const thumbnailPaths = req.files.map(file => file.path);
-        newProduct.thumbnail = thumbnailPaths;
+        newProduct.thumbnail = req.file.path;
         const addProductResult = await productManager.addProduct(newProduct);
         if(typeof addProductResult == "object"){
             return res.status(201).json({
