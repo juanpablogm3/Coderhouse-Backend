@@ -14,13 +14,29 @@ form.addEventListener('submit', (event) => {
     
     newProduct = {title, description, price, thumbnail, code, stock, category, status};
     //FRONT EMITE
-    socket.emit('msg_from_client_to_server', {newProduct});
-    console.log('mensaje enviado?' + newProduct);
+    socket.emit('msg_from_client_to_server', newProduct);
     form.reset();
 });
 
 //FRONT RECIBE
-socket.on('prodcuts', (data)=>{
-    
-    console.log(data);
-})
+socket.on('updatedProducts', (data) => {
+    const productList = document.getElementById('productList');
+    productList.innerHTML = '';
+    productList.innerHTML += `
+      <h1>LISTADO DE PRODUCTOS</h1>
+      ${data.productList.map((product) => `
+        <div class="card product__container" style="width: 14rem;">
+          <div>
+            <img src="${product.thumbnail}" class="card-img-top" alt="foto de Product ${product.id}">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">${product.title}</h3>
+            <p class="card-text">${product.description}</p>
+            <p class="card-text">${product.price}</p>
+          </div>
+        </div>
+      `).join('')}
+    `;
+  });
+
+

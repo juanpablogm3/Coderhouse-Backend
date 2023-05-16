@@ -8,24 +8,27 @@ import http from 'http';
 import { Server as SocketServer } from 'socket.io';
 import ProductManager from './productManager.js';
 
-const productManager = new ProductManager('./data/products.json');
+const productManager = new ProductManager('./src/data/products.json');
 const port = 8080;
 const app = express();
-
 const httpServer = http.createServer(app);
 const io = new SocketServer(httpServer);
 
+const serverConnected = httpServer.listen(port, ()=> console.log(`📢 Server listening on port: ${port}`));
+serverConnected.on('error', error => console.log(`Server error: ${error}`))
 
-//BACK EMITE
 
-
-//BACK RECIBE
-io.on('conection', (socket)=> {
+io.on('connection', (socket)=> {
+    console.log(`New Client Connection with ID: ${socket.id}`);
+    //BACK RECIBE
     socket.on('msg_from_client_to_server', async (newProduct)=>{
         try{
-            await productManager.addProduct({newProduct})
-            const productsList = await productManager.getProducts();
-            io.emit("msg_from_server_to_client", {productsList})
+            newProduct.thumbnail = ["ruta1"]; // harcodeado maaal porque sinó no lo puedo hacer funcionar
+            await productManager.addProduct(newProduct)
+            console.log(newProduct);
+            const productList = await productManager.getProducts();
+            //BACK EMITE
+            io.emit("updatedProducts", {productList})
         }
         catch (error) {
             console.log(error);
