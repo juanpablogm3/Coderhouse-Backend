@@ -13,17 +13,29 @@ form.addEventListener('submit', (event) => {
     const status = form.elements.status.value;
     
     newProduct = {title, description, price, thumbnail, code, stock, category, status};
+    const thumbnailBase64 = newProduct.thumbnail.toString('base64');
+    newProduct = {...newProduct, thumbnail: thumbnailBase64 };
+
     //FRONT EMITE
     socket.emit('msg_from_client_to_server', newProduct);
     form.reset();
 });
+
+const deleteForm = document.getElementById('deleteForm');
+
+deleteForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const id = deleteForm.elements.id.value;
+  socket.emit('deleteProduct', id);
+  deleteForm.reset();
+});
+
 
 //FRONT RECIBE
 socket.on('updatedProducts', (data) => {
     const productList = document.getElementById('productList');
     productList.innerHTML = '';
     productList.innerHTML += `
-      <h1>LISTADO DE PRODUCTOS</h1>
       ${data.productList.map((product) => `
         <div class="card product__container" style="width: 14rem;">
           <div>

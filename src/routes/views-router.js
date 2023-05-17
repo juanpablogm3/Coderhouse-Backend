@@ -16,4 +16,5 @@ viewsRouter.get('/realtimeproducts', async (req, res)=> {
     res.render('realTimeProducts', {prods});
 });
 
+
 export default viewsRouter;

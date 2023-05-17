@@ -2,11 +2,12 @@ import express from 'express';
 import { prodsRouter } from './routes/products-router.js';
 import { cartsRouter } from './routes/carts-router.js';
 import viewsRouter from './routes/views-router.js';
-import { __dirname } from './utils.js';
+import { __dirname, __filename } from './utils.js';
 import handlebars from 'express-handlebars';
 import http from 'http';
 import { Server as SocketServer } from 'socket.io';
 import ProductManager from './productManager.js';
+import fs from 'fs';
 
 const productManager = new ProductManager('./src/data/products.json');
 const port = 8080;
@@ -23,9 +24,17 @@ io.on('connection', (socket)=> {
     //BACK RECIBE
     socket.on('msg_from_client_to_server', async (newProduct)=>{
         try{
-            newProduct.thumbnail = ["ruta1"]; // harcodeado maaal porque sinó no lo puedo hacer funcionar
-            await productManager.addProduct(newProduct)
-            console.log(newProduct);
+            const thumbnailData = Buffer.from(newProduct.thumbnail, 'base64');
+            const imagePath = __dirname+`\\public\\${newProduct.title}.jpg`;
+            fs.writeFile(imagePath, thumbnailData, (err) => {
+                if (err) {
+                    console.error('Error al guardar la imagen:', err);
+                } else {
+                    console.log('Imagen guardada exitosamente.');
+                }
+            });
+            newProduct.thumbnail= imagePath;
+            await productManager.addProduct(newProduct);
             const productList = await productManager.getProducts();
             //BACK EMITE
             io.emit("updatedProducts", {productList})
@@ -34,7 +43,19 @@ io.on('connection', (socket)=> {
             console.log(error);
         }
     })
-})
+    socket.on('deleteProduct', async (id) => {
+        try {
+        const parsedId = parseInt(id, 10);
+        await productManager.deleteProduct(parsedId);
+        socket.emit('productDeleted', { message: 'Producto eliminado exitosamente' });
+        const productList = await productManager.getProducts();
+        io.emit('updatedProducts', { productList });
+        } catch (error) {
+        console.error('Error al eliminar el producto:', error);
+        socket.emit('productDeleteError', { error: 'Ocurrió un error al eliminar el producto' });
+        }
+    });
+});
 
 //Handlebars
 app.engine('handlebars', handlebars.engine());

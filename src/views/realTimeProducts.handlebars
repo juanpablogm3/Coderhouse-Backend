@@ -1,5 +1,5 @@
 <div  id="">
-    <form id="form" action="/" method="post" enctype="multipart/form-data">
+    <form id="form" action="/api/products" method="post" enctype="multipart/form-data">
         <div>
             <input type="text" placeholder="Ingrese Title" value="" name="title">
             <input type="text" placeholder="Ingrese description" value="" name="description">
@@ -12,8 +12,12 @@
             <button type="submit">Guardar</button>
         </div>
     </form>
+    <form id="deleteForm" action="/api/products" method="delete">
+        <input type="text" placeholder="Ingrese ID" name="id">
+        <button type="submit">Eliminar</button>
+    </form>
+    <h1>LISTADO DE PRODUCTOS</h1>
     <div class="row product justify-content-evenly" id="productList">
-        <h1>LISTADO DE PRODUCTOS</h1>
         {{#each prods}}
         <div class="card product__container" style="width: 14rem;">
             <div>
