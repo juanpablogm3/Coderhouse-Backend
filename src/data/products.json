@@ -223,5 +223,16 @@
     "stock": 12,
     "category": "product",
     "status": true
+  },
+  {
+    "id": 16,
+    "title": "prdo16",
+    "description": "desc 16",
+    "price": "1600",
+    "thumbnail": "C:\\Users\\Juan Pablo\\Desktop\\CoderHouse\\Backend\\Coderhouse-Backend\\src\\public\\prdo16.jpg",
+    "code": "fds5456",
+    "stock": "1",
+    "category": "baby",
+    "status": "true"
   }
 ]

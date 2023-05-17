@@ -15,7 +15,7 @@ const app = express();
 const httpServer = http.createServer(app);
 const io = new SocketServer(httpServer);
 
-const serverConnected = httpServer.listen(port, ()=> console.log(`📢 Server listening on port: ${port}`));
+const serverConnected = httpServer.listen(port, ()=> console.log(`Server listening on port: ${port}`));
 serverConnected.on('error', error => console.log(`Server error: ${error}`))
 
 

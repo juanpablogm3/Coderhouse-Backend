@@ -1,20 +1,20 @@
 <div  id="">
     <form id="form" action="/api/products" method="post" enctype="multipart/form-data">
-        <div>
-            <input type="text" placeholder="Ingrese Title" value="" name="title">
-            <input type="text" placeholder="Ingrese description" value="" name="description">
-            <input type="number" placeholder="Ingrese Price" value="" name="price">
-            <input type="file" name="thumbnail">
-            <input type="code" placeholder="Ingrese Code" value="" name="code">
-            <input type="number" placeholder="Ingrese Stock" value="" name="stock">
-            <input type="text" placeholder="Ingrese Category" value="" name="category">
-            <input type="hidden" value="true" name="status">
-            <button type="submit">Guardar</button>
+        <div class="form-group">
+            <input style="margin-top: 10px" type="text" class="form-control" placeholder="Ingrese Title" value="" name="title" required>
+            <input style="margin-top: 10px" type="text" class="form-control" placeholder="Ingrese Description" value="" name="description" required>
+            <input style="margin-top: 10px" type="number" class="form-control" placeholder="Ingrese Price" value="" name="price" required>
+            <input style="margin-top: 10px" type="file" class="form-control" name="thumbnail" accept="image/*" required>
+            <input style="margin-top: 10px" type="code" class="form-control" placeholder="Ingrese Code" value="" name="code" required>
+            <input style="margin-top: 10px" type="number" class="form-control" placeholder="Ingrese Stock" value="" name="stock" required>
+            <input style="margin-top: 10px" type="text" class="form-control" placeholder="Ingrese Category" value="" name="category" required>
+            <input style="margin-top: 10px" type="hidden" class="form-control" value="true" name="status" required>
+            <button style="margin-top: 10px" type="submit" class="btn btn-primary btn-lg btn-block">Guardar</button>
         </div>
     </form>
-    <form id="deleteForm" action="/api/products" method="delete">
-        <input type="text" placeholder="Ingrese ID" name="id">
-        <button type="submit">Eliminar</button>
+    <form id="deleteForm" class="form-group form-row" action="/api/products" method="delete">
+        <input type="text" style="margin-top: 10px" class="form-control col-3" placeholder="Ingrese ID del producto a ELIMINAR" name="id">
+        <button type="submit" style="margin-top: 10px" class="btn btn-primary btn-lg btn-block">Eliminar</button>
     </form>
     <h1>LISTADO DE PRODUCTOS</h1>
     <div class="row product justify-content-evenly" id="productList">
