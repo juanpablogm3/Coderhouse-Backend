@@ -7,7 +7,6 @@ import handlebars from 'express-handlebars';
 import http from 'http';
 import { Server as SocketServer } from 'socket.io';
 import ProductManager from './productManager.js';
-import fs from 'fs';
 
 const productManager = new ProductManager('./src/data/products.json');
 const port = 8080;
@@ -24,16 +23,6 @@ io.on('connection', (socket)=> {
     //BACK RECIBE
     socket.on('msg_from_client_to_server', async (newProduct)=>{
         try{
-            const thumbnailData = Buffer.from(newProduct.thumbnail, 'base64');
-            const imagePath = __dirname+`\\public\\${newProduct.title}.jpg`;
-            fs.writeFile(imagePath, thumbnailData, (err) => {
-                if (err) {
-                    console.error('Error al guardar la imagen:', err);
-                } else {
-                    console.log('Imagen guardada exitosamente.');
-                }
-            });
-            newProduct.thumbnail= imagePath;
             await productManager.addProduct(newProduct);
             const productList = await productManager.getProducts();
             //BACK EMITE
