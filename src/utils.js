@@ -5,8 +5,8 @@ export const __filename = fileURLToPath(import.meta.url);
 export const __dirname = path.dirname(__filename);
 
 
+/* ************* MULTER****************** */
 import multer from "multer";
-
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, __dirname + "/public");
@@ -18,3 +18,19 @@ const storage = multer.diskStorage({
 export default __dirname;
 export const uploader = multer({ storage });
 
+
+/* **************MONGO ATLAS ************** */
+// ATLAS user: juanpablogm3 pass: XiCzZNy60lfaLajA
+// mongodb+srv://juanpablogm3:XiCzZNy60lfaLajA@jpcluster.4kxbuid.mongodb.net/?retryWrites=true&w=majority
+import { connect } from "mongoose";
+export async function connectMongo() {
+  try {
+    await connect(
+      "mongodb+srv://juanpablogm3:XiCzZNy60lfaLajA@jpcluster.4kxbuid.mongodb.net/?retryWrites=true&w=majority"
+    );
+    console.log("plug to mongo!");
+  } catch (e) {
+    console.log(e);
+    throw "can not connect to the db";
+  }
+}

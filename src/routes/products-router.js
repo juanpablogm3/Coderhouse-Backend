@@ -1,130 +1,121 @@
 import express from 'express';
-import ProductManager from '../productManager.js';
-import {uploader} from '../utils.js';
+import ProductManager from '../dao/productManager.js';
+import { ProductModel } from '../dao/models/products.model.js';
 
 export const prodsRouter= express.Router();
 const productManager = new ProductManager("./src/data/products.json");
 
+prodsRouter.get("/", async (req, res)=> {
+    try{
+        const prods = await ProductModel.find({});
+        return res.status(200).json({
+            status: 'success',
+            msg: 'Product list',
+            data: prods
+        });
+    } catch (err) {
+        console.log(e);
+        return res.status(500).json({
+            status: "error",
+            msg: "something went wrong",
+            data: err
+        });
+    }
+});
+
 prodsRouter.get("/:pid", async (req, res)=> {
     try{
-        const idProd = parseInt(req.params.pid);
-        const getProdByIdResult = await productManager.getProductById(idProd);
-        if(typeof getProdByIdResult == "object"){
-            return res.status(200).json({
-                status: 'success',
-                msg: 'Product found',
-                data: getProdByIdResult
-            })
-        } else {
-            return res.status(404).json({
-                status: 'error',
-                msg: `Product with id ${idProd} not found`,
-            })
-        }
-    } catch (error) {
-        console.error(error);
-        return res.status(400).json({
+        const idProd = req.params.pid;
+        const getProdByIdResult = await ProductModel.findById(idProd);
+        return res.status(200).json({
+            status: 'success',
+            msg: 'Product found',
+            data: getProdByIdResult
+        })
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
             status: 'error',
-            msg: error.message,
+            msg: err
         });
     }
 })
 
-prodsRouter.get("/", async (req, res)=> {
-    const limit = parseInt(req.query.limit);
-    const allProducts = await productManager.getProducts();
-    if (!limit){
-        return res.status(200).json({
-            status: 'success',
-            msg: 'Product list',
-            data: allProducts
-        });
-    }  else {
-        return res.status(200).json({
-            status: 'success',
-            msg: 'Product list',
-            data: allProducts.slice(0, limit)
-        });
-    } 
-});
 
-prodsRouter.post("/", uploader.single('thumbnail'), async (req, res)=> {
+prodsRouter.post("/", async (req, res)=> {
     try{
-        if(!req.file){
-            req.status(400).json({
-                status: "error",
-                error: "Unable to upload images"
-            })
-        }
-        const newProduct = req.body;
-        newProduct.thumbnail = req.file.path;
-        const addProductResult = await productManager.addProduct(newProduct);
-        if(typeof addProductResult == "object"){
-            return res.status(201).json({
-                status: 'success',
-                msg: 'Product created',
-                data: addProductResult
-            });
-        } else {
+        const {title, description, price, thumbnail, code, stock, category } = req.body;
+        if (!title || !description || !price|| !thumbnail|| !code|| !stock|| !category) {
+            console.log(
+              "validation error: please complete title, description, price, thumbnail, code, stock, category."
+            );
             return res.status(400).json({
-              status: 'error',
-              msg: addProductResult,
+              status: "error",
+              msg: "please complete title, description, price, thumbnail, code, stock, category",
+              data: {},
             });
         }
-    } catch (error) {
-        console.error(error);
-        return res.status(400).json({
+        const addProductResult = await ProductModel.create({title, description, price, thumbnail, code, stock, category});
+        return res.status(201).json({
+            status: 'success',
+            msg: 'Product created',
+            data: addProductResult
+        });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({
             status: 'error',
-            msg: error.message,
+            msg: err 
         });
     }
 });
 
 prodsRouter.put("/:pid", async (req, res)=>{
     try{
-        const idProd = parseInt(req.params.pid);
-        const updateProdResult = await productManager.updateProduct(idProd, req.body.field, req.body.newValue);
-        if(typeof updateProdResult == "object"){
-            return res.status(200).json({
-                status: 'success',
-                msg: 'Product updated',
-                data: updateProdResult
-            });
-        } else {
+        const idProd = req.params.pid;
+        const {title, description, price, thumbnail, code, stock, category } = req.body; 
+        if (!title || !description || !price|| !thumbnail|| !code|| !stock|| !category|| !idProd ) {
+            console.log(
+                "validation error: please complete title, description, price, thumbnail, code, stock, category."
+                );
             return res.status(400).json({
-              status: 'error',
-              msg: updateProdResult,
+                status: "error",
+                msg: "please complete title, description, price, thumbnail, code, stock, category",
+                data: {},
             });
         }
-    } catch (error) {
-        console.error(error);
+        const updateProdResult = await ProductModel.updateOne(
+            {_id: idProd},
+            { title, description, price, thumbnail, code, stock, category }
+        );
+        return res.status(200).json({
+            status: 'success',
+            msg: 'Product updated',
+            data: updateProdResult
+        })
+    } catch (err) {
+        console.error(err);
         return res.status(400).json({
             status: 'error',
-            msg: error.message,
+            msg: err
         });
     }
 });
 
 prodsRouter.delete("/:pid", async (req, res)=>{
     try{
-        const idProd = parseInt(req.params.pid);
-        const deleteProductResult = await productManager.deleteProduct(idProd);
-        if(typeof deleteProductResult == "object"){
-            return res.status(200).json({
+        const idProd = req.params.pid;
+        const deleteProductResult = await ProductModel.deleteOne({_id: idProd});
+        return res.status(200).json({
                 status: 'success',
                 msg: 'Product deleted',
+                data: {}
             });
-        } else {
-            return res.status(404).json({
-              status: 'error',
-              msg: deleteProductResult,
-            });
-        }
-    } catch (error) {
-        console.error(error);
-        return res.status(400).json({
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({
             status: 'error',
-            msg: error.message,
+            msg: "Oops... unexpected error found!"
         });
     }
 })

@@ -2,11 +2,13 @@ import express from 'express';
 import { prodsRouter } from './routes/products-router.js';
 import { cartsRouter } from './routes/carts-router.js';
 import viewsRouter from './routes/views-router.js';
-import { __dirname, __filename } from './utils.js';
+import { __dirname, __filename, connectMongo } from './utils.js';
 import handlebars from 'express-handlebars';
 import http from 'http';
 import { Server as SocketServer } from 'socket.io';
-import ProductManager from './productManager.js';
+import ProductManager from './dao/productManager.js';
+
+connectMongo();
 
 const productManager = new ProductManager('./src/data/products.json');
 const port = 8080;
