@@ -1,9 +1,10 @@
 import express from 'express';
-import ProductManager from '../dao/productManager.js';
 import { ProductModel } from '../dao/models/products.model.js';
 
+/* import ProductManager from '../dao/productManager.js';
+const productManager = new ProductManager("./src/data/products.json"); */
+
 export const prodsRouter= express.Router();
-const productManager = new ProductManager("./src/data/products.json");
 
 prodsRouter.get("/", async (req, res)=> {
     try{
@@ -91,7 +92,7 @@ prodsRouter.put("/:pid", async (req, res)=>{
         return res.status(200).json({
             status: 'success',
             msg: 'Product updated',
-            data: updateProdResult
+            data: {}
         })
     } catch (err) {
         console.error(err);
