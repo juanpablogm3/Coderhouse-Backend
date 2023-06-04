@@ -8,7 +8,7 @@ import http from 'http';
 import { Server as SocketServer } from 'socket.io';
 import ProductManager from './dao/productManager.js';
 
-connectMongo();
+await connectMongo();
 
 const productManager = new ProductManager('./src/data/products.json');
 const port = 8080;

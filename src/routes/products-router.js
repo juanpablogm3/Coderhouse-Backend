@@ -85,14 +85,14 @@ prodsRouter.put("/:pid", async (req, res)=>{
                 data: {},
             });
         }
-        const updateProdResult = await ProductModel.updateOne(
+        const updatedProd = await ProductModel.updateOne(
             {_id: idProd},
             { title, description, price, thumbnail, code, stock, category }
         );
         return res.status(200).json({
             status: 'success',
             msg: 'Product updated',
-            data: {}
+            data: {updatedProd}
         })
     } catch (err) {
         console.error(err);
