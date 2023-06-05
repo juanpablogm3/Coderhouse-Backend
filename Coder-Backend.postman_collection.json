@@ -174,7 +174,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/products/1",
+							"raw": "http://localhost:8080/api/carts/647bdd08dc18e8ef25a050f5",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -182,8 +182,29 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"products",
-								"1"
+								"carts",
+								"647bdd08dc18e8ef25a050f5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "carts/:cid",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/carts/647be801cc5441432a281a17",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								"647be801cc5441432a281a17"
 							]
 						}
 					},
@@ -195,7 +216,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/carts/647be38462da63227cee9d08/products/647b9c01599105c3932d2578",
+							"raw": "http://localhost:8080/api/carts/647be801cc5441432a281a17/products/647b9bde599105c3932d2576",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -204,9 +225,9 @@
 							"path": [
 								"api",
 								"carts",
-								"647be38462da63227cee9d08",
+								"647be801cc5441432a281a17",
 								"products",
-								"647b9c01599105c3932d2578"
+								"647b9bde599105c3932d2576"
 							]
 						}
 					},
@@ -218,7 +239,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/carts/647be64abb8133ee3f169aa2/products/647b9bde599105c3932d2576",
+							"raw": "http://localhost:8080/api/carts/647be801cc5441432a281a17/products/647b9bde599105c3932d2576",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -227,7 +248,7 @@
 							"path": [
 								"api",
 								"carts",
-								"647be64abb8133ee3f169aa2",
+								"647be801cc5441432a281a17",
 								"products",
 								"647b9bde599105c3932d2576"
 							]

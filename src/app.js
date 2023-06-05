@@ -1,16 +1,16 @@
 import express from 'express';
-import { prodsRouter } from './routes/products-router.js';
-import { cartsRouter } from './routes/carts-router.js';
-import viewsRouter from './routes/views-router.js';
+import { productsRouter } from './routes/products.router.js';
+import { cartsRouter } from './routes/carts.router.js';
+import viewsRouter from './routes/views.router.js';
 import { __dirname, __filename, connectMongo } from './utils.js';
 import handlebars from 'express-handlebars';
 import http from 'http';
 import { Server as SocketServer } from 'socket.io';
-import ProductManager from './dao/productManager.js';
+import ProductService from './services/products.service.js';
 
 await connectMongo();
 
-const productManager = new ProductManager('./src/data/products.json');
+const productService = new ProductService;
 const port = 8080;
 const app = express();
 const httpServer = http.createServer(app);
@@ -25,8 +25,8 @@ io.on('connection', (socket)=> {
     //BACK RECIBE
     socket.on('msg_from_client_to_server', async (newProduct)=>{
         try{
-            await productManager.addProduct(newProduct);
-            const productList = await productManager.getProducts();
+            await productService.createProduct(newProduct);
+            const productList = await productService.getAllProducts();
             //BACK EMITE
             io.emit("updatedProducts", {productList})
         }
@@ -36,14 +36,13 @@ io.on('connection', (socket)=> {
     })
     socket.on('deleteProduct', async (id) => {
         try {
-        const parsedId = parseInt(id, 10);
-        await productManager.deleteProduct(parsedId);
-        socket.emit('productDeleted', { message: 'Producto eliminado exitosamente' });
-        const productList = await productManager.getProducts();
-        io.emit('updatedProducts', { productList });
+            await productService.deleteProduct(id);
+            socket.emit('productDeleted', { message: 'Producto eliminado exitosamente' });
+            const productList = await productService.getAllProducts();
+            io.emit('updatedProducts', { productList });
         } catch (error) {
-        console.error('Error al eliminar el producto:', error);
-        socket.emit('productDeleteError', { error: 'Ocurrió un error al eliminar el producto' });
+            console.error('Error al eliminar el producto:', error);
+            socket.emit('productDeleteError', { error: 'Ocurrió un error al eliminar el producto' });
         }
     });
 });
@@ -60,7 +59,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //routes
-app.use('/api/products', prodsRouter);
+app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 app.use('/', viewsRouter); 
 app.use('/realTimeProducts', viewsRouter); 

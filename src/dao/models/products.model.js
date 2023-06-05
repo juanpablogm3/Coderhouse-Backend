@@ -9,7 +9,7 @@ const productSchema = new Schema({
   stock: { type: Number, required: true },
   category: { type: String, required: true },
   status: { type: Boolean, default: true }
-});
+}, { versionKey: false });
 
 export const ProductModel = model('products', productSchema);
 
