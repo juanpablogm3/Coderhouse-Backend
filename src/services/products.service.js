@@ -3,7 +3,7 @@ import { ProductModel } from "../dao/models/products.model.js";
 class ProductService {
     async getAllProducts() {
         try {
-            const products = await ProductModel.find();
+            const products = await ProductModel.find().lean();
             return products;
         } catch (error) {
             throw error;
