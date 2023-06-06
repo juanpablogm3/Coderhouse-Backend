@@ -4,7 +4,6 @@ class ProductService {
     async getAllProducts() {
         try {
             const products = await ProductModel.paginate({},{limit:5,page:1});
-            console.log(products);
             return products;/* .docs.map(product => product.toObject()); */
         } catch (error) {
             throw error;
