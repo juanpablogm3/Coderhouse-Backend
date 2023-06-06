@@ -3,8 +3,9 @@ import { ProductModel } from "../dao/models/products.model.js";
 class ProductService {
     async getAllProducts() {
         try {
-            const products = await ProductModel.find().lean();
-            return products;
+            const products = await ProductModel.paginate({},{limit:5,page:1});
+            console.log(products);
+            return products;/* .docs.map(product => product.toObject()); */
         } catch (error) {
             throw error;
         }

@@ -7,6 +7,7 @@ const productService = new ProductService();
 productsRouter.get('/', async (req, res) => {
     try {
         const products = await productService.getAllProducts();
+        console.log(products);
         return res.status(200).json({
             status: 'success',
             msg: 'Products retrieved',
