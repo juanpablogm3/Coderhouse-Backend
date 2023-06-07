@@ -1,10 +1,10 @@
 import { ProductModel } from "../dao/models/products.model.js";
 
 class ProductService {
-    async getAllProducts() {
+    async getAllProducts(limit, page, sort, query) {
         try {
-            const products = await ProductModel.paginate({},{limit:5,page:1});
-            return products;/* .docs.map(product => product.toObject()); */
+            const products = await ProductModel.paginate({query: query},{limit: limit, page: page, sort: sort});
+            return products;
         } catch (error) {
             throw error;
         }

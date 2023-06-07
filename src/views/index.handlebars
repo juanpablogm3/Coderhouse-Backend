@@ -13,3 +13,14 @@
     </div>
     {{/each}}
 </div>
+<div style="display: flex; justify-content: center; margin-top: 100px">
+  <div class="pagination">
+    {{#if paginationInfo.hasPrevPage}}
+    <a href="?page={{paginationInfo.prevPage}}">&lt; Anterior</a>
+    {{/if}}
+    <span style="margin-left: 20px; margin-right: 20px">Página {{paginationInfo.page}} de {{paginationInfo.totalPages}}</span>
+    {{#if paginationInfo.hasNextPage}}
+    <a href="?page={{paginationInfo.nextPage}}">Siguiente &gt;</a>
+    {{/if}}
+  </div>
+</div>

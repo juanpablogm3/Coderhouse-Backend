@@ -37,10 +37,25 @@
                 <h3 class="card-title">{{this.title}}</h3>
                 <p class="card-text">{{this.description}}</p>
                 <p class="card-text">$ {{this.price}}</p>
+                <form class="delete-form" action="/api/products/{{this.id}}" method="delete">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="button" class="btn btn-danger delete-button" data-product-id="{{this.id}}">Eliminar</button>
+                </form>
             </div>
         </div>
         {{/each}}
     </div>
+</div>
+<div style="display: flex; justify-content: center; margin-top: 50px">
+  <div class="pagination">
+    {{#if paginationInfo.hasPrevPage}}
+    <a href="?page={{paginationInfo.prevPage}}">&lt; Anterior</a>
+    {{/if}}
+    <span style="margin-left: 20px; margin-right: 20px">Página {{paginationInfo.page}} de {{paginationInfo.totalPages}}</span>
+    {{#if paginationInfo.hasNextPage}}
+    <a href="?page={{paginationInfo.nextPage}}">Siguiente &gt;</a>
+    {{/if}}
+  </div>
 </div>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/index.js"></script>

@@ -19,14 +19,26 @@ form.addEventListener('submit', (event) => {
     form.reset();
 });
 
-const deleteForm = document.getElementById('deleteForm');
+document.querySelectorAll('.delete-button').forEach((button) => {
+  button.addEventListener('click', (event) => {
+    event.preventDefault(); // Evita que se realice la acción predeterminada del botón
+
+    // Obtén el ID del producto a eliminar
+    const id = button.dataset.productId;
+
+    // Envía la solicitud de eliminación al servidor o realiza cualquier acción necesaria
+    socket.emit('deleteProduct', id);
+  });
+});
+
+/* const deleteForm = document.getElementById('deleteForm');
 
 deleteForm.addEventListener('submit', (event) => {
   event.preventDefault();
   const id = deleteForm.elements.id.value;
   socket.emit('deleteProduct', id);
   deleteForm.reset();
-});
+}); */
 
 
 //FRONT RECIBE
