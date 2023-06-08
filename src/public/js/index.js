@@ -31,16 +31,6 @@ document.querySelectorAll('.delete-button').forEach((button) => {
   });
 });
 
-/* const deleteForm = document.getElementById('deleteForm');
-
-deleteForm.addEventListener('submit', (event) => {
-  event.preventDefault();
-  const id = deleteForm.elements.id.value;
-  socket.emit('deleteProduct', id);
-  deleteForm.reset();
-}); */
-
-
 //FRONT RECIBE
 socket.on('updatedProducts', (data) => {
     const productList = document.getElementById('productList');

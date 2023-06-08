@@ -1,9 +1,20 @@
 import { ProductModel } from "../dao/models/products.model.js";
 
 class ProductService {
-    async getAllProducts(limit, page, sort, query) {
+    async getAllProducts(page, limit, sort, search) {
         try {
-            const products = await ProductModel.paginate({query: query},{limit: limit, page: page, sort: sort});
+            const options = {}
+            //const query = search ? { $text: { $search: search } } : {};
+            if(page){
+                options.page = page || 1
+            }
+            if(limit){
+                options.limit = limit || 10
+            }
+            if(sort){
+                options.sort = { price: sort === 'desc' ? -1 : 1 };
+            }
+            const products = await ProductModel.paginate({}, options);
             return products;
         } catch (error) {
             throw error;

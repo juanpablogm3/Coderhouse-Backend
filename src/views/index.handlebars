@@ -1,5 +1,9 @@
 <div class="row product justify-content-evenly">
-    <h1>LISTADO DE PRODUCTOS</h1>
+  <h1>
+      LISTADO DE PRODUCTOS
+      <a href="?page={{paginationInfo.page}}&limit={{paginationInfo.limit}}&sort=asc">&#8593;</a>
+      <a href="?page={{paginationInfo.page}}&limit={{paginationInfo.limit}}&sort=desc">&#8595;</a>
+  </h1>
     {{#each prods}}
     <div class="card product__container" style="width: 14rem; margin-top: 5px;">
         <div style="margin-top: 10px; width:200px; height:200px;">
@@ -16,11 +20,11 @@
 <div style="display: flex; justify-content: center; margin-top: 100px">
   <div class="pagination">
     {{#if paginationInfo.hasPrevPage}}
-    <a href="?page={{paginationInfo.prevPage}}">&lt; Anterior</a>
+    <a href="?page={{paginationInfo.prevPage}}&limit={{paginationInfo.limit}}&sort={{sort}}">&lt; Anterior</a>
     {{/if}}
     <span style="margin-left: 20px; margin-right: 20px">Página {{paginationInfo.page}} de {{paginationInfo.totalPages}}</span>
     {{#if paginationInfo.hasNextPage}}
-    <a href="?page={{paginationInfo.nextPage}}">Siguiente &gt;</a>
+    <a href="?page={{paginationInfo.nextPage}}&limit={{paginationInfo.limit}}&sort={{sort}}">Siguiente &gt;</a>
     {{/if}}
   </div>
 </div>
