@@ -7,8 +7,8 @@ const productService = new ProductService;
 
 viewsRouter.get('/', async (req, res)=> {
     try{
-        const { page, limit, sort, search } = req.query;
-        const queryResult = await productService.getAllProducts(page, limit, sort, search);
+        const { page, limit, sort}= req.query;
+        const queryResult = await productService.getAllProducts(page, limit, sort);
         const {docs, ...paginationInfo} = queryResult;
         const prods = docs.map((product) => {
             return {
@@ -24,7 +24,7 @@ viewsRouter.get('/', async (req, res)=> {
         });
 
         const nextPage = parseInt(page)+1;
-        const nextPageUrl = `/?page=${nextPage}&limit=${limit}&sort=${sort}&search=${search || ''}`;
+        const nextPageUrl = `/?page=${nextPage}&limit=${limit}&sort=${sort}`;
         res.render('index', {prods, paginationInfo, nextPageUrl, sort});
     } catch(error) {
         console.log(error)
