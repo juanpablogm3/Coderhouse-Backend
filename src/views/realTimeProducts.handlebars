@@ -18,11 +18,13 @@
             <button style="margin-top: 10px" type="submit" class="btn btn-primary btn-lg btn-block">Guardar</button>
         </div>
     </form>
-    <h1>
-        LISTADO DE PRODUCTOS
-        <a href="?page={{paginationInfo.page}}&limit={{paginationInfo.limit}}&sort=asc">&#8593;</a>
-        <a href="?page={{paginationInfo.page}}&limit={{paginationInfo.limit}}&sort=desc">&#8595;</a>
-    </h1>
+    <div style="display: flex; justify-content: space-between; padding: 30px">
+        <h1>LISTADO DE PRODUCTOS</h1>
+        <div> ORDENAR
+            <a href="?page={{paginationInfo.page}}&limit={{paginationInfo.limit}}&sort=asc">&#8593;</a>
+            <a href="?page={{paginationInfo.page}}&limit={{paginationInfo.limit}}&sort=desc">&#8595;</a>
+        </div>
+    </div>
     <div class="row product justify-content-evenly" id="productList">
         {{#each prods}}
         <div class="card product__container" style="width: 14rem; margin-top: 5px;">
@@ -42,7 +44,7 @@
         {{/each}}
     </div>
 </div>
-<div style="display: flex; justify-content: center; margin-top: 100px">
+<div style="display: flex; justify-content: center; margin-top: 30px">
     <div class="pagination">
         {{#if paginationInfo.hasPrevPage}}
         <a href="?page={{paginationInfo.prevPage}}&limit={{paginationInfo.limit}}&sort={{sort}}">&lt; Anterior</a>

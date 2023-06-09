@@ -21,22 +21,19 @@ form.addEventListener('submit', (event) => {
 
 document.querySelectorAll('.delete-button').forEach((button) => {
   button.addEventListener('click', (event) => {
-    event.preventDefault(); // Evita que se realice la acción predeterminada del botón
-
-    // Obtén el ID del producto a eliminar
+    event.preventDefault();
     const id = button.dataset.productId;
-
-    // Envía la solicitud de eliminación al servidor o realiza cualquier acción necesaria
     socket.emit('deleteProduct', id);
   });
 });
 
 //FRONT RECIBE
 socket.on('updatedProducts', (data) => {
+  console.log(data);
     const productList = document.getElementById('productList');
     productList.innerHTML = '';
     productList.innerHTML += `
-      ${data.productList.map((product) => `
+      ${data.productList.docs.map((product) => `
         <div class="card product__container" style="width: 14rem;">
           <div>
             <img src=${product.thumbnail} class="card-img-top" alt="foto de Product ${product.id}">
