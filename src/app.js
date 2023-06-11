@@ -59,12 +59,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //routes
-app.use('/api/products', productsRouter);
-app.use('/api/carts', cartsRouter);
 app.use('/', viewsRouter); 
 app.use('/realTimeProducts', viewsRouter); 
 app.use('/products', viewsRouter);
-//app.use('/carts/:cid', viewsRouter);
+app.use('/carts/:cid', viewsRouter);
+app.use('/api/products', productsRouter);
+app.use('/api/carts', cartsRouter);
+app.use('/api/carts/:cid', cartsRouter);
+app.use('/api/carts/:cid/products/:pid', cartsRouter);
 app.get('*',(req, res)=>{
     return res.status(404).json({
         status: 'error',

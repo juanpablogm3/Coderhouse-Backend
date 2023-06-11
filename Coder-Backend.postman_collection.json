@@ -41,7 +41,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/products/647b9c13599105c3932d257a",
+							"raw": "http://localhost:8080/api/products/647b9c01599105c3932d2578",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -50,7 +50,7 @@
 							"path": [
 								"api",
 								"products",
-								"647b9c13599105c3932d257a"
+								"647b9c01599105c3932d2578"
 							]
 						}
 					},
@@ -63,7 +63,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"Producto 16\",\r\n    \"description\": \"Descripción del producto 16\",\r\n    \"price\": 1399,\r\n    \"thumbnail\": \"https://assets.justinmind.com/wp-content/uploads/2018/11/Lorem-Ipsum-alternatives-768x492.png\",\r\n    \"code\": \"QTU345\",\r\n    \"stock\": 12,\r\n    \"category\": \"product\"\r\n}",
+							"raw": "{\r\n    \"title\": \"Producto 16\",\r\n    \"description\": \"Descripción del producto 16\",\r\n    \"price\": 1399,\r\n    \"thumbnail\": \"https://assets.justinmind.com/wp-content/uploads/2018/11/Lorem-Ipsum-alternatives-768x492.png\",\r\n    \"code\": \"QT5U345\",\r\n    \"stock\": 12,\r\n    \"category\": \"cats\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -100,7 +100,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/products/16",
+							"raw": "http://localhost:8080/api/products/647b9eee599105c3932d259b",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -109,7 +109,7 @@
 							"path": [
 								"api",
 								"products",
-								"16"
+								"647b9eee599105c3932d259b"
 							]
 						}
 					},
@@ -121,7 +121,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/products/16",
+							"raw": "http://localhost:8080/api/products/647d07fd73cbf8a7ef1c7a19",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -130,7 +130,7 @@
 							"path": [
 								"api",
 								"products",
-								"16"
+								"647d07fd73cbf8a7ef1c7a19"
 							]
 						}
 					},
@@ -162,7 +162,7 @@
 					"response": []
 				},
 				{
-					"name": "carts/:cid",
+					"name": "api/carts/:cid",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -174,7 +174,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/carts/647bdd08dc18e8ef25a050f5",
+							"raw": "http://localhost:8080/api/carts/6485eeb9aa272f2e48d9f719",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -183,19 +183,19 @@
 							"path": [
 								"api",
 								"carts",
-								"647bdd08dc18e8ef25a050f5"
+								"6485eeb9aa272f2e48d9f719"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "carts/:cid",
+					"name": "api/carts/:cid",
 					"request": {
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/carts/647be801cc5441432a281a17",
+							"raw": "http://localhost:8080/api/carts/647d0584f49bf7fcd2855f8d",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -204,19 +204,19 @@
 							"path": [
 								"api",
 								"carts",
-								"647be801cc5441432a281a17"
+								"647d0584f49bf7fcd2855f8d"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "carts/:cid/products/:pid",
+					"name": "api/carts/:cid/products/:pid",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/carts/647be801cc5441432a281a17/products/647b9bde599105c3932d2576",
+							"raw": "http://localhost:8080/api/carts/6485eeb9aa272f2e48d9f719/products/647b9bde599105c3932d2576",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -225,7 +225,7 @@
 							"path": [
 								"api",
 								"carts",
-								"647be801cc5441432a281a17",
+								"6485eeb9aa272f2e48d9f719",
 								"products",
 								"647b9bde599105c3932d2576"
 							]
@@ -234,7 +234,7 @@
 					"response": []
 				},
 				{
-					"name": "carts/:cid/products/:pid",
+					"name": "api/carts/:cid/products/:pid",
 					"request": {
 						"method": "DELETE",
 						"header": [],

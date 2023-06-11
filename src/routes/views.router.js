@@ -1,11 +1,14 @@
 import express from 'express';
 import ProductService from '../services/products.service.js';
-import { parse as parseUrl } from 'url';
-import { parse as parseQuerystring } from 'querystring';
-import { error } from 'console';
 
 const viewsRouter = express.Router();
 const productService = new ProductService;
+
+viewsRouter.get('/carts/:cid', async (req, res)=> {
+
+    res.render('cart', {/* el array de productos del cart /:cid populado para que se vea todo el producto y no solo el id y qty*/})
+  
+})
 
 viewsRouter.get('/products', async (req, res)=> {
     try{
@@ -52,10 +55,6 @@ viewsRouter.get('/products', async (req, res)=> {
         msg: error.message,
         });
     }
-})
-
-viewsRouter.get('/carts/:cid', async (req, res)=> {
-
 })
 
 viewsRouter.get('/', async (req, res)=> {
