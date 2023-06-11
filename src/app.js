@@ -63,6 +63,8 @@ app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 app.use('/', viewsRouter); 
 app.use('/realTimeProducts', viewsRouter); 
+app.use('/products', viewsRouter);
+//app.use('/carts/:cid', viewsRouter);
 app.get('*',(req, res)=>{
     return res.status(404).json({
         status: 'error',

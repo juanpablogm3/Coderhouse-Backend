@@ -1,7 +1,7 @@
 import { ProductModel } from "../dao/models/products.model.js";
 
 class ProductService {
-    async getAllProducts(page, limit, sort) {
+    async getAllProducts(page, limit, sort, category, status) {
         try {
             const options = {}
             if(page){
@@ -13,7 +13,17 @@ class ProductService {
             if(sort){
                 options.sort = { price: sort === 'desc' ? -1 : 1 };
             }
-            const products = await ProductModel.paginate({}, options);
+
+            const filter = {};
+            if(category){
+                filter.category = category || '';
+            }
+            if(status){
+                filter.status = status || true;
+            }
+
+            const products = await ProductModel.paginate(filter, options);
+
             return products;
         } catch (error) {
             throw error;
