@@ -24,12 +24,29 @@ viewsRouter.get('/products', async (req, res)=> {
                 status: product.status              
             }
         });
+       /*  const response = {
+            status: 'success',
+            payload: prods,
+            totalPages: paginationInfo.totalPages,
+            prevPage: paginationInfo.prevPage,  
+            nextPage: paginationInfo.nextPage,
+            page: paginationInfo.page,
+            hasPrevPage: paginationInfo.hasPrevPage,
+            hasNextPage: paginationInfo.hasNextPage,
+            prevLink: paginationInfo.hasPrevPage ? `/?page=${prevPage}&limit=${limit}&sort=${sort}&category=${category}&status=${status}` : null,
+            nextLink: paginationInfo.hasNextPage ? `/?page=${nextPage}&limit=${limit}&sort=${sort}&category=${category}&status=${status}` : null
+        }; */
 
         const nextPage = parseInt(page)+1;
         const nextPageUrl = `/?page=${nextPage}&limit=${limit}&sort=${sort}&category=${category}&status=${status}`;
-        res.render('products', {prods, paginationInfo, nextPageUrl, sort, category, status});
+        res.render('products', {prods, paginationInfo, nextPageUrl, sort, category, status})
+        //res.json(response)
     } catch(error) {
-        console.log(error)
+        console.error(error);
+        return res.status(400).json({
+        status: 'error',
+        msg: error.message,
+        });
     }
 })
 
