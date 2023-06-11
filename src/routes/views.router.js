@@ -2,6 +2,7 @@ import express from 'express';
 import ProductService from '../services/products.service.js';
 import { parse as parseUrl } from 'url';
 import { parse as parseQuerystring } from 'querystring';
+import { error } from 'console';
 
 const viewsRouter = express.Router();
 const productService = new ProductService;
@@ -24,23 +25,26 @@ viewsRouter.get('/products', async (req, res)=> {
                 status: product.status              
             }
         });
-       /*  const response = {
+        const response = {
             status: 'success',
             payload: prods,
             totalPages: paginationInfo.totalPages,
-            prevPage: paginationInfo.prevPage,  
+            prevPage: paginationInfo.prevPage,
             nextPage: paginationInfo.nextPage,
-            page: paginationInfo.page,
+            page: parseInt(paginationInfo.page),
             hasPrevPage: paginationInfo.hasPrevPage,
             hasNextPage: paginationInfo.hasNextPage,
-            prevLink: paginationInfo.hasPrevPage ? `/?page=${prevPage}&limit=${limit}&sort=${sort}&category=${category}&status=${status}` : null,
-            nextLink: paginationInfo.hasNextPage ? `/?page=${nextPage}&limit=${limit}&sort=${sort}&category=${category}&status=${status}` : null
-        }; */
-
-        const nextPage = parseInt(page)+1;
+        };
+        const prevPage = parseInt(page) - 1;
+        response.hasPrevPage ? response.prevLink = `localhost:8080/products/?page=${prevPage}&limit=${limit}&sort=${sort}&category=${category}&status=${status}` : response.prevLink = null;
+        const nextPage = parseInt(page) + 1;
+        response.hasNextPage ? response.nextLink = `localhost:8080/products/?page=${nextPage}&limit=${limit}&sort=${sort}&category=${category}&status=${status}` : response.nextLink = null;
+        if (parseInt(page) > paginationInfo.totalPages || parseInt(page) < 1) {
+            throw new Error('La página solicitada no existe');
+        }
         const nextPageUrl = `/?page=${nextPage}&limit=${limit}&sort=${sort}&category=${category}&status=${status}`;
         res.render('products', {prods, paginationInfo, nextPageUrl, sort, category, status})
-        //res.json(response)
+        console.log(response);
     } catch(error) {
         console.error(error);
         return res.status(400).json({
