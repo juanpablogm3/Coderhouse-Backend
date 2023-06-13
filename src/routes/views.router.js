@@ -1,13 +1,30 @@
 import express from 'express';
 import ProductService from '../services/products.service.js';
+import CartService from '../services/carts.service.js';
 
 const viewsRouter = express.Router();
 const productService = new ProductService;
+const cartService  = new CartService;
 
 viewsRouter.get('/carts/:cid', async (req, res)=> {
-
-    res.render('cart', {/* el array de productos del cart /:cid populado para que se vea todo el producto y no solo el id y qty*/})
-  
+    try{
+        const cartId = req.params.cid;
+        const cart = await cartService.getCartById({_id: cartId});
+        console.log(cart);
+        if(!cart){
+            return res.status(404).json({
+              status: 'error',
+              msg: 'Cart not found',
+            });
+        }
+        res.render('cart', {cart})
+    } catch(error) {
+        console.error(error);
+        return res.status(400).json({
+        status: 'error',
+        msg: error.message,
+        });
+    }   
 })
 
 viewsRouter.get('/products', async (req, res)=> {
@@ -45,8 +62,7 @@ viewsRouter.get('/products', async (req, res)=> {
         if (parseInt(page) > paginationInfo.totalPages || parseInt(page) < 1) {
             throw new Error('La página solicitada no existe');
         }
-        const nextPageUrl = `/?page=${nextPage}&limit=${limit}&sort=${sort}&category=${category}&status=${status}`;
-        res.render('products', {prods, paginationInfo, nextPageUrl, sort, category, status})
+        res.render('products', {prods, paginationInfo, sort, category, status})
         console.log(response);
     } catch(error) {
         console.error(error);
