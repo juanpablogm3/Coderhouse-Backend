@@ -98,7 +98,6 @@ export default class CartService {
             if (!cart) {
                 throw new Error('Cart not found');
             }
-            //await CartModel.replaceProdsInCart()
             cart.products = [];
             await cart.save();
             
@@ -149,25 +148,6 @@ export default class CartService {
         }
     }
     
-    
-    
-    async updateAllProductsInCart(cartID){
-        try {
-            
-        } catch (error) {
-            throw error;
-        }
-        
-    }
-    
-    async updateOneProductQtyInCart(cartID, prodId){
-        try {
-            
-        } catch (error) {
-            throw error;
-        }
-        
-    }
     async deleteCartById(cartId) {
         try {
             const cart = await CartModel.findByIdAndDelete(cartId);
