@@ -1,7 +1,14 @@
 function addToCart(productId) {
     const cartId = '6487ea862744b89db2fde101'; // ID del carrito harcodeado x ahora
   
-    fetch(`/api/carts/${cartId}/products/${productId}`, {method: 'POST', headers: {'Content-Type': 'application/json'}})
+    fetch(`/api/carts/${cartId}/products/${productId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+      })
+    })
     .then(response => {
       if (response.ok) {
         console.log('Product added to cart');
