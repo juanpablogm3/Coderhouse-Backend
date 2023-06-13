@@ -39,9 +39,9 @@ viewsRouter.get('/products', async (req, res)=> {
             hasNextPage: paginationInfo.hasNextPage,
         };
         const prevPage = parseInt(page) - 1;
-        response.hasPrevPage ? response.prevLink = `localhost:8080/products/?page=${prevPage}&limit=${limit}&sort=${sort}&category=${category}&status=${status}` : response.prevLink = null;
+        response.hasPrevPage ? response.prevLink = `/products/?page=${prevPage}&limit=${limit}&sort=${sort}&category=${category}&status=${status}` : response.prevLink = null;
         const nextPage = parseInt(page) + 1;
-        response.hasNextPage ? response.nextLink = `localhost:8080/products/?page=${nextPage}&limit=${limit}&sort=${sort}&category=${category}&status=${status}` : response.nextLink = null;
+        response.hasNextPage ? response.nextLink = `/products/?page=${nextPage}&limit=${limit}&sort=${sort}&category=${category}&status=${status}` : response.nextLink = null;
         if (parseInt(page) > paginationInfo.totalPages || parseInt(page) < 1) {
             throw new Error('La página solicitada no existe');
         }

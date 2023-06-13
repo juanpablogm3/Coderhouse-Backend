@@ -4,15 +4,14 @@ import CartService from '../services/carts.service.js';
 export const cartsRouter = express.Router();
 const cartService = new CartService();
 
-cartsRouter.put("api/carts/:cid", async (req, res) => { // borrar contenido de products y cargar arreglo nuevo
+cartsRouter.put("/:cid", async (req, res) => { // borrar contenido de products y cargar arreglo nuevo
   try {
     const cartId = req.params.cid;
-    const newProds = req.body;
-    await replaceProdsInCart(cartId, newProds);
+    const newProds = req.body; // el idProduct tiene que ser de 24 caracteres de largo como el _id que asigna Mongoose sinó da error
+    await cartService.replaceProdsInCart(cartId, newProds);
     return res.status(200).json({
       status: 'success',
-      msg: 'Cart updated',
-      payload: cart
+      msg: 'Cart updated'
     });
   } catch (error) {
     console.error(error);
@@ -23,16 +22,15 @@ cartsRouter.put("api/carts/:cid", async (req, res) => { // borrar contenido de p
   }
 });
 
-cartsRouter.put("api/carts/:cid/products/:pid", async (req, res) => { // modificar cantidad del producto
+cartsRouter.put("/:cid/products/:pid", async (req, res) => { // modificar SOLO cantidad del producto
   try {
     const cartId = req.params.cid;
-    const prodId = req.params.pid;
-    const prodQty = req.body;
-    await modifyProdQty(cartId, prodId, prodQty);
+    const productId = req.params.pid;
+    const productQty = req.body.quantity;
+    await cartService.modifyProdQty(cartId, productId, productQty);
     return res.status(200).json({
       status: 'success',
-      msg: 'Product in cart updated',
-      payload: cart
+      msg: 'Product in cart updated'
     });
   } catch (error) {
     console.error(error);
@@ -45,11 +43,13 @@ cartsRouter.put("api/carts/:cid/products/:pid", async (req, res) => { // modific
 
 cartsRouter.post("/:cid/products/:pid", async (req, res)=>{
   try{
-    const idCart = parseInt(req.params.cid);
-    const idProduct = parseInt(req.params.pid);
+    const idCart = req.params.cid;
+    const idProduct = req.params.pid;
     await cartService.addProductToCart(idCart, idProduct);
     res.status(200).json({
-      success: true
+      status: 'success',
+      msg: 'Product added to cart'
+
     })
   } catch (error) {
     console.error(error);
@@ -77,10 +77,17 @@ cartsRouter.post("/", async (req, res) => {
   }
 });
 
-cartsRouter.get("api/carts/:cid", async (req, res) => {
+cartsRouter.get("/:cid", async (req, res) => {
   try {
     const idCart = req.params.cid;
     const cart = await cartService.getCartById(idCart);
+    if(!cart){
+      return res.status(404).json({
+        status: 'error',
+        msg: 'Cart not found',
+        payload: cart
+      });
+    }
     return res.status(200).json({
       status: 'success',
       msg: 'Cart found',
@@ -113,13 +120,13 @@ cartsRouter.get("/:cid", async (req, res) => {
   }
 });
 
-cartsRouter.delete("api/carts/:cid", async (req, res) => { 
+cartsRouter.delete("/:cid", async (req, res) => { //borra TODOS los productos del carrito 
 try {
-  const idCart = req.params.cid;
-  const cart = await cartService.deleteCartById(idCart);
+  const cartId = req.params.cid;
+  const cart = await cartService.deleteProductsInCartById(cartId);
   return res.status(200).json({
     status: 'success',
-    msg: 'Cart deleted',
+    msg: 'Products in cart deleted',
     payload: cart
   });
 } catch (error) {
@@ -131,7 +138,7 @@ try {
 }
 });
 
-cartsRouter.post("api/carts/:cid/products/:pid", async (req, res) => {
+cartsRouter.post("/:cid/products/:pid", async (req, res) => {
 try {
   const idCart = req.params.cid;
   const idProd = req.params.pid;
@@ -150,11 +157,11 @@ try {
 }
 });
 
-cartsRouter.delete("api/carts/:cid/products/:pid", async (req, res) => { //borra el producto del carrito por completo
+cartsRouter.delete("/:cid/products/:pid", async (req, res) => { //borra el producto del carrito por completo
 try {
-  const idCart = req.params.cid;
-  const idProd = req.params.pid;
-  const cart = await cartService.removeProductFromCart(idCart, idProd);
+  const cartId = req.params.cid;
+  const productId = req.params.pid;
+  const cart = await cartService.removeProductFromCart(cartId, productId);
   return res.status(200).json({
     status: 'success',
     msg: 'Product removed from cart',

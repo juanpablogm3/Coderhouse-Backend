@@ -15,6 +15,8 @@
             <h3 class="card-title">{{this.title}}</h3>
             <p class="card-text">{{this.description}}</p>
             <p class="card-text">$ {{this.price}}</p>
+            <a id="addtocart-{{this.id}}" type="submit" class="btn btn-primary" onclick="addToCart({{this.id}})">Agregar al carrito</a>
+            {{!-- <button id="addtocart-{{this.id}}" onclick="addToCart('{{this.id}}') type="submit" class="btn btn-primary">Agregar al carrito</button> --}}
         </div>
     </div>
     {{/each}}
@@ -30,3 +32,4 @@
     {{/if}}
   </div>
 </div>
+<script src="/js/products.js"></script>
