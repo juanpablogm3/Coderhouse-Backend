@@ -155,6 +155,4 @@ export default class CartService {
             throw error;
         }
     }
-
-
 }

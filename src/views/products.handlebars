@@ -1,6 +1,19 @@
 <div class="row product justify-content-evenly">
+  {{#if user}}
+    <h1 style="padding-left: 30px; padding-top: 30px">
+      BIENVENIDO {{user.first_name}}
+      <a style="font-size:medium" href="http://localhost:8080/auth/perfil">Mi perfil</a>
+      <a style="font-size:medium" href="http://localhost:8080/auth/logout">Cerrar sesión</a>
+      {{!-- <a style="font-size:medium" href="localhost:8080/carts/{{cid}}">Mi carrito</a> --}}
+    </h1>
+  {{else}}
+    <h1 style="padding-left: 30px; padding-top: 30px">
+      BIENVENIDO 
+      <a style="font-size:medium" href="http://localhost:8080/auth/login">Iniciar sesión</a>
+    </h1>
+  {{/if}}
   <div style="display: flex; justify-content: space-between; padding: 30px">
-      <h1>LISTADO DE PRODUCTOS</h1>
+      <h2>LISTADO DE PRODUCTOS</h2>
       <div> ORDENAR
         <a href="?page=1&limit={{paginationInfo.limit}}&sort=asc&category={{category}}&status={{status}}">&#8593;</a>
         <a href="?page=1&limit={{paginationInfo.limit}}&sort=desc&category={{category}}&status={{status}}">&#8595;</a>
