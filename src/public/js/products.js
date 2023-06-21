@@ -1,8 +1,8 @@
 function addToCart(cartId, productId) {
-  alert('hola mundo');
+  alert('Entró en addToCart');
+  cartId = '64938316e83c4003ad1730ab'; // ID del carrito harcodeado x ahora
   console.log(cartId);
   console.log(productId);
-  //const cartId = '6487ea862744b89db2fde101'; // ID del carrito harcodeado x ahora
   fetch(`/api/carts/${cartId}/products/${productId}`, {
     method: 'POST',
     headers: {
