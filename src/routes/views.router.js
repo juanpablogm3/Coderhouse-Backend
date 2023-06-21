@@ -1,16 +1,16 @@
 import express from 'express';
 import ProductService from '../services/products.service.js';
 import CartService from '../services/carts.service.js';
+import { isUser } from '../middlewares/auth.js';
 
 const viewsRouter = express.Router();
 const productService = new ProductService;
 const cartService  = new CartService;
 
-viewsRouter.get('/carts/:cid', async (req, res)=> {
+viewsRouter.get('/carts/:cid', isUser, async (req, res)=> {
     try{
         const cartId = req.params.cid;
         const cart = await cartService.getCartById({_id: cartId});
-        console.log(cart);
         if(!cart){
             return res.status(404).json({
               status: 'error',
@@ -63,7 +63,8 @@ viewsRouter.get('/products', async (req, res)=> {
             throw new Error('La página solicitada no existe');
         }
         const user = req.session.user;
-        res.render('products', {prods, paginationInfo, sort, category, status, user/* , cid */})
+        const cartId = user.cartId;
+        res.render('products', {prods, paginationInfo, sort, category, status, user, cartId})
         console.log(response);
     } catch(error) {
         console.error(error);

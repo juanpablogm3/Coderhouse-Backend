@@ -29,7 +29,7 @@ usersRouter.post('/', async (req, res) => {
   try {
     const { first_name, last_name, email, age } = req.body;
     const cart = await cartService.createCart();
-    //console.log(cart);
+    console.log(cart);
     const cartId = cart._id;
     const userCreated = await Service.createOne(first_name, last_name, email, age, cartId);
 
