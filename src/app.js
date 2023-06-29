@@ -65,7 +65,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
     session({
         store: MongoStore.create({ mongoUrl: 'mongodb+srv://juanpablogm3:XiCzZNy60lfaLajA@jpcluster.4kxbuid.mongodb.net/ecommerce?retryWrites=true&w=majority', ttl: 7200 }),
-        secret: 'un-re-secreto',
+        secret: 'secret',
         resave: true,
         saveUninitialized: true,
     })

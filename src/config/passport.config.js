@@ -1,5 +1,6 @@
 import passport from 'passport';
 import local from 'passport-local';
+import GithubStrategy from 'passport-github2';
 import { createHash, isValidPassword } from '../utils.js';
 import { UserModel } from '../dao/models/users.model.js'
 import CartService from '../services/carts.service.js';
@@ -64,6 +65,46 @@ export function iniPassport() {
           console.log('Error in register');
           console.log(e);
           return done(e);
+        }
+      }
+    )
+  );
+
+  passport.use(
+    'github',
+    new GithubStrategy(
+      {
+        clientID: 'Iv1.63c2188b884a63a6',
+        clientSecret: 'f5106e0132aa6ba7a90f0ffac71e8b1a199ee4f3',
+        callbackURL: 'http://localhost:8080/auth/githubcallback',
+      },
+      async (accessToken, refreshToken, profile, done) => {
+        try {
+          console.log(profile);
+          // Verificar si el usuario ya existe en la base de datos
+          const existingUser = await UserModel.findOne({ 'email': profile.id });
+
+          if (existingUser) {
+            return done(null, existingUser);
+          }
+          const cart = await cartService.createCart();
+          const cartId = cart._id;
+
+          // Crear un nuevo usuario con los datos de GitHub
+          const newUser = new UserModel({
+            'email': profile.id,
+            'age': 21,
+            'first_name': profile.displayName,
+            'last_name': profile.displayName,         
+            'role': 'user',
+            'password': null,
+            'cartId': cartId
+          });
+
+          const userCreated = await newUser.save();
+          return done(null, userCreated);
+        } catch (err) {
+          return done(err);
         }
       }
     )
