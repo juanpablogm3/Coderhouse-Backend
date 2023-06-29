@@ -76,3 +76,27 @@ authRouter.get('/administracion', isAdmin, (req, res) => {
     const user = req.session.user;
     res.render('admin',{user});
 });
+
+authRouter.get('/github', passport.authenticate('github'));
+
+authRouter.get(
+  '/githubcallback',
+  passport.authenticate('github', { failureRedirect: '/auth/faillogin' }),
+  async (req, res) => {
+    if (!req.user) {
+      return res.json({ error: 'Invalid credentials' });
+    }
+
+    req.session.user = {
+      _id: req.user._id,
+      email: null,
+      first_name: null,
+      last_name: null,
+      age: null,
+      role: 'user',
+      cartId: req.user.cartId
+    };
+
+    return res.redirect('/auth/githubcallback');
+  }
+);

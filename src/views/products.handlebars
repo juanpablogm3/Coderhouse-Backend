@@ -4,7 +4,7 @@
       BIENVENIDO {{user.first_name}}
       <a style="font-size:medium" href="http://localhost:8080/auth/perfil">Mi perfil</a>
       <a style="font-size:medium" href="http://localhost:8080/auth/logout">Cerrar sesión</a>
-      <a style="font-size:medium" href="http://localhost:8080/carts/{{cartId}}">Mi carrito</a>
+      <a style="font-size:medium" href="http://localhost:8080/carts/{{user.cartId}}">Mi carrito</a>
     </h1>
   {{else}}
     <h1 style="padding-left: 30px; padding-top: 30px">
