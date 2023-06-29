@@ -63,9 +63,8 @@ viewsRouter.get('/products', async (req, res)=> {
             throw new Error('La página solicitada no existe');
         }
         const user = req.session.user;
-        console.log(user);
-        //const cartId = user.cartId;
-        res.render('products', {prods, paginationInfo, sort, category, status, user/* , cartId */})
+        const cartId = user.cartId;
+        res.render('products', {prods, paginationInfo, sort, category, status, user, cartId})
         console.log(response);
     } catch(error) {
         console.error(error);
