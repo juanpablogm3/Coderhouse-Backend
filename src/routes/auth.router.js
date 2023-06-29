@@ -90,13 +90,17 @@ authRouter.get(
     req.session.user = {
       _id: req.user._id,
       email: null,
-      first_name: null,
+      first_name: req.user.first_name,
       last_name: null,
       age: null,
       role: 'user',
       cartId: req.user.cartId
     };
 
-    return res.redirect('/auth/githubcallback');
+    return res.redirect('auth/githubcallbackResp');
   }
 );
+
+authRouter.get('/auth/githubcallbackResp', (req, res) => {
+  return res.render('githubcallbackResp',{});
+});

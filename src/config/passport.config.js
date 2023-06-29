@@ -80,7 +80,6 @@ export function iniPassport() {
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
-          console.log(profile);
           // Verificar si el usuario ya existe en la base de datos
           const existingUser = await UserModel.findOne({ 'email': profile.id });
 

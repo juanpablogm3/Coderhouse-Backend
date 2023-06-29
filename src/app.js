@@ -85,6 +85,8 @@ app.use('/api/carts/:cid', cartsRouter);
 app.use('/api/carts/:cid/products/:pid', cartsRouter);
 app.use('/auth', authRouter);
 app.use('/api/users', usersRouter);
+
+
 app.get('*',(req, res)=>{
     return res.status(404).json({
         status: 'error',

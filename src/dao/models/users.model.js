@@ -9,7 +9,7 @@ const usersSchema = new Schema({
     },
     last_name: {
         type: String,
-        required: true,
+        required: false,
         max: 100,
     },
     age: {
@@ -29,12 +29,10 @@ const usersSchema = new Schema({
     },
     cartId: {
         type: Schema.Types.ObjectId,
-        ref: 'carts',
-        //required: true,
+        ref: 'carts'
     },
     role: {
         type: String,
-        required: true,
         default: 'user',
     },
     }, { 
