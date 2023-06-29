@@ -16,7 +16,15 @@ authRouter.post('/register', passport.authenticate('register', { failureRedirect
     if (!req.user) {
         return res.json({ error: 'something went wrong' });
     }
-    req.session.user = { _id: req.user._id, email: req.user.email, first_name: req.user.first_name, last_name: req.user.last_name, age: req.user.age, role: req.user.role };
+    req.session.user = {
+      _id: req.user._id,
+      email: req.user.email,
+      first_name: req.user.first_name,
+      last_name: req.user.last_name,
+      age: req.user.age,
+      role: req.user.role,
+      cartId: req.user.cartId
+    };
     console.log({ msg: 'ok', payload: req.user });
     return res.redirect('/auth/login')
 });
@@ -33,7 +41,15 @@ authRouter.post('/login', passport.authenticate('login', { failureRedirect: '/au
   if (!req.user) {
     return res.json({ error: 'invalid credentials' });
   }
-  req.session.user = { _id: req.user._id, email: req.user.email, first_name: req.user.first_name, last_name: req.user.last_name, age: req.user.age, role: req.user.role };
+  req.session.user = {
+    _id: req.user._id,
+    email: req.user.email,
+    first_name: req.user.first_name,
+    last_name: req.user.last_name,
+    age: req.user.age,
+    role: req.user.role,
+    cartId: req.user.cartId
+  };
   console.log({ msg: 'ok', payload: req.user });
   return res.redirect('/products')
 });

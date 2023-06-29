@@ -28,8 +28,7 @@ usersRouter.get('/', async (req, res) => {
 usersRouter.post('/', async (req, res) => {
   try {
     const { first_name, last_name, email, age } = req.body;
-    const cart = await cartService.createCart();
-    //console.log(cart);
+    const cart = await cartService.createCart().lean();
     const cartId = cart._id;
     const userCreated = await Service.createOne(first_name, last_name, email, age, cartId);
 

@@ -2,6 +2,9 @@ import passport from 'passport';
 import local from 'passport-local';
 import { createHash, isValidPassword } from '../utils.js';
 import { UserModel } from '../dao/models/users.model.js'
+import CartService from '../services/carts.service.js';
+
+const cartService = new CartService();
 const LocalStrategy = local.Strategy;
 
 export function iniPassport() {
@@ -36,6 +39,8 @@ export function iniPassport() {
       async (req, username, password, done) => {
         try {
           const { email, first_name, last_name, age } = req.body;
+          const cart = await cartService.createCart();
+          const cartId = cart._id;
           let user = await UserModel.findOne({ email: username });
           if (user) {
             console.log('User already exists');
@@ -49,6 +54,7 @@ export function iniPassport() {
             age,
             role: 'user',
             password: createHash(password),
+            cartId: cartId
           };
           let userCreated = await UserModel.create(newUser);
           console.log(userCreated);
