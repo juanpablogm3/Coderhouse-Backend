@@ -1,6 +1,6 @@
 function addToCart(cartId, productId) {
-  alert('Entró en addToCart con el carrito harcodeado');
-  cartId = '64938316e83c4003ad1730ab'; // ID del carrito harcodeado x ahora
+  alert('Entró en addToCart con cookie');
+  cartId = '64938316e83c4003ad1730ab'; // ID del carrito harcodeado x ahora // getCookie('cartId');
   console.log(cartId);
   console.log(productId);
   fetch(`/api/carts/${cartId}/products/${productId}`, {
@@ -21,4 +21,19 @@ function addToCart(cartId, productId) {
   .catch(error => {
     console.error(error);
   });
+}
+
+function getCookie(name) {
+  const cookieString = document.cookie;
+  console.log(cookieString);
+  const cookies = cookieString.split(';');
+
+  for (let i = 0; i < cookies.length; i++) {
+    const cookie = cookies[i].trim();
+    if (cookie.startsWith(name + '=')) {
+      return cookie.substring(name.length + 1);
+    }
+  }
+
+  return null;
 }

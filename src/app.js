@@ -13,6 +13,7 @@ import { authRouter } from './routes/auth.router.js';
 import { usersRouter } from './routes/users.router.js';
 import { iniPassport } from './config/passport.config.js';
 import passport from 'passport';
+import cookieParser from 'cookie-parser';
 
 await connectMongo();
 
@@ -62,6 +63,7 @@ app.use(express.static(__dirname+'/public'));
 app.use(express.static('./public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(
     session({
         store: MongoStore.create({ mongoUrl: 'mongodb+srv://juanpablogm3:XiCzZNy60lfaLajA@jpcluster.4kxbuid.mongodb.net/ecommerce?retryWrites=true&w=majority', ttl: 7200 }),

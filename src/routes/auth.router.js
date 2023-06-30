@@ -1,6 +1,8 @@
 import express from 'express';
 import passport from 'passport';
 import { isAdmin, isUser } from '../middlewares/auth.js';
+import cookie from 'cookie';
+
 
 export const authRouter = express.Router();
 
@@ -50,7 +52,9 @@ authRouter.post('/login', passport.authenticate('login', { failureRedirect: '/au
     role: req.user.role,
     cartId: req.user.cartId
   };
+  const cartId = req.session.user.cartId;
   console.log({ msg: 'ok', payload: req.user });
+  res.setHeader('Set-Cookie', cookie.serialize('cartId', cartId));
   return res.redirect('/products')
 });
 
