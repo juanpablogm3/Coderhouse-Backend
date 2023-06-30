@@ -1,5 +1,5 @@
 function addToCart(cartId, productId) {
-  alert('Entró en addToCart con cookie');
+  alert('Entró en addToCart con carrito harcodeado por ahora');
   cartId = '64938316e83c4003ad1730ab'; // ID del carrito harcodeado x ahora // getCookie('cartId');
   console.log(cartId);
   console.log(productId);
