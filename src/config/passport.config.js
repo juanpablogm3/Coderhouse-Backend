@@ -11,7 +11,7 @@ const LocalStrategy = local.Strategy;
 export function iniPassport() {
   passport.use(
     'login',
-    new LocalStrategy({ usernameField: 'email' }, async (username, password, done) => {
+    new LocalStrategy({ usernameField: 'email' }, async (username, password, done, req) => {
       try {
         const user = await UserModel.findOne({ email: username });
         if (!user) {

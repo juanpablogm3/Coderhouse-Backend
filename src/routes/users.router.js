@@ -31,7 +31,6 @@ usersRouter.post('/', async (req, res) => {
     const cart = await cartService.createCart().lean();
     const cartId = cart._id;
     const userCreated = await Service.createOne(first_name, last_name, email, age, cartId);
-
     return res.status(201).json({
       status: 'success',
       msg: 'user created',

@@ -1,11 +1,6 @@
 function addToCart(cartId, productId) {
-<<<<<<< HEAD
-  alert('hola mundo');
-  cartId = '64938316e83c4003ad1730ab'; // ID del carrito harcodeado... x ahora?
-=======
-  alert('Entró en addToCart');
+  alert('Entró en addToCart con el carrito harcodeado');
   cartId = '64938316e83c4003ad1730ab'; // ID del carrito harcodeado x ahora
->>>>>>> bddce638091ba9c8bdb26039dbfe949ab8fb866b
   console.log(cartId);
   console.log(productId);
   fetch(`/api/carts/${cartId}/products/${productId}`, {
