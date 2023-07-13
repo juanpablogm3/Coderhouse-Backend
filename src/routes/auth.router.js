@@ -10,6 +10,10 @@ authRouter.get('/session', (req, res) => {
   return res.send(JSON.stringify(req.session));
 });
 
+authRouter.get('/session/current', (req, res) => {
+  return res.send(JSON.stringify(req.session.user));
+});
+
 authRouter.get('/register', (req, res) => {
   return res.render('register', {});
 });

@@ -3,6 +3,7 @@ function addToCart(productId) {
   const cartId = cartInfoElement.getAttribute('id');
   if (cartInfoElement === undefined) {
     window.location.href = 'http://localhost:8080/auth/login';
+    return;
   }
   console.log(cartId);
   console.log(productId);
