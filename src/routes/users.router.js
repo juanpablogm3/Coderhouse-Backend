@@ -1,11 +1,24 @@
 import express from 'express';
-import { UserService } from '../services/users.service.js';
-import CartService from '../services/carts.service.js' ;
-//import { CartModel } from '../dao/models/carts.model.js';
+import { userController } from '../controllers/users.controller.js';
 
 export const usersRouter = express.Router();
+
+usersRouter.get('/', userController.getUsers());
+usersRouter.post('/', userController.createUser());
+usersRouter.delete('/:id', userController.deleteUser());
+usersRouter.put('/:id', userController.updateUser());
+
+
+/* import express from 'express';
+import { UserService } from '../services/users.service.js';
+import CartService from '../services/carts.service.js' ;
+ *///import { CartModel } from '../dao/models/carts.model.js';
+
+/* export const usersRouter = express.Router();
 const Service = new UserService();
 const cartService = new CartService();
+
+
 
 usersRouter.get('/', async (req, res) => {
   try {
@@ -85,4 +98,4 @@ usersRouter.put('/:id', async (req, res) => {
       data: {},
     });
   }
-});
+}); */
