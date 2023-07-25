@@ -1,7 +1,7 @@
 import { UserModel } from "../mongoose/users.model.js";
 
 
-class UserModel{
+class UsersModel{
 
     async getAll() {
         const users = await UserModel.find({});
@@ -24,4 +24,4 @@ class UserModel{
     }
 }
 
-export const userModel = new UserModel();
+export const userModel = new UsersModel();

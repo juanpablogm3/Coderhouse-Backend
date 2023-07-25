@@ -1,7 +1,6 @@
 import { userService } from '../services/users.service.js';
-import CartService from '../services/carts.service.js';
+import { cartService } from '../services/carts.service.js';
 
-const cartService = new CartService();
 
 class UserController{
     async getUsers(req, res){
@@ -10,7 +9,7 @@ class UserController{
             return res.status(200).json({
                 status: 'success',
                 msg: 'listado de usuarios',
-                data: users,
+                data: users
                 });
         }   catch (e) {
                 console.log(e);

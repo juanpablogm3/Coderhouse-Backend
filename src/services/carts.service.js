@@ -1,5 +1,5 @@
-import { cartsModelartModel } from '../dao/models/carts.model.js';
-import { ProductModel } from '../dao/models/products.model.js';
+import { cartsModel } from '../dao/models/carts.model.js';
+import { ProductModel } from '../dao/mongoose/products.model.js';
 
 class CartService {
     async createCart() {

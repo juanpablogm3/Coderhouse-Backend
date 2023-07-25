@@ -1,11 +1,10 @@
 import express from 'express';
 import ProductService from '../services/products.service.js';
-import CartService from '../services/carts.service.js';
+import {cartService} from '../services/carts.service.js';
 import { isUser } from '../middlewares/auth.js';
 
 const viewsRouter = express.Router();
 const productService = new ProductService;
-const cartService  = new CartService;
 
 viewsRouter.get('/carts/:cid', isUser, async (req, res)=> {
     try{

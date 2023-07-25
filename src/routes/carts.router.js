@@ -2,15 +2,15 @@ import express from 'express';
 import {cartController} from "../controllers/carts.controller.js"
 export const cartsRouter = express.Router();
 
-cartsRouter.post('/', cartsController.createCart);
-cartsRouter.get('/:cid', cartsController.getCartById);
-cartsRouter.put('/:cid', cartsController.replaceProductsInCart);
-cartsRouter.put('/:cid/products/:pid', cartsController.modifyProductQuantity);
-cartsRouter.post('/:cid/products/:pid', cartsController.addProductToCart);
-cartsRouter.delete('/:cid/products/:pid', cartsController.removeProductFromCart);
-cartsRouter.delete('/:cid', cartsController.deleteProductsInCart);
-cartsRouter.delete('/:cid/products/:pid/units', cartsController.removeProductFromCartByUnit);
-cartsRouter.delete('/:cid', cartsController.deleteCartById);
+cartsRouter.post('/', cartController.createCart);
+cartsRouter.get('/:cid', cartController.getCartById);
+cartsRouter.put('/:cid', cartController.replaceProductsInCart);
+cartsRouter.put('/:cid/products/:pid', cartController.modifyProductQuantity);
+cartsRouter.post('/:cid/products/:pid', cartController.addProductToCart);
+cartsRouter.delete('/:cid/products/:pid', cartController.removeProductFromCart);
+cartsRouter.delete('/:cid', cartController.deleteProductsInCart);
+cartsRouter.delete('/:cid/products/:pid/units', cartController.removeProductFromCartByUnit);
+cartsRouter.delete('/:cid', cartController.deleteCartById);
 
 /* cartsRouter.put("/:cid", async (req, res) => { // borrar contenido de products y cargar arreglo nuevo
   try {

@@ -2,10 +2,9 @@ import passport from 'passport';
 import local from 'passport-local';
 import GithubStrategy from 'passport-github2';
 import { createHash, isValidPassword } from '../utils.js';
-import { UserModel } from '../dao/models/users.model.js'
-import CartService from '../services/carts.service.js';
+import { userModel } from '../dao/models/users.model.js'
+import { cartService } from '../services/carts.service.js';
 
-const cartService = new CartService();
 const LocalStrategy = local.Strategy;
 
 export function iniPassport() {
