@@ -1,45 +1,27 @@
-import { Schema, model } from 'mongoose';
-import mongoosePaginate from 'mongoose-paginate-v2';
+import { UserModel } from "../mongoose/users.model.js";
 
-const usersSchema = new Schema({
-    first_name: {
-        type: String,
-        required: true,
-        max: 100,
-    },
-    last_name: {
-        type: String,
-        required: false,
-        max: 100,
-    },
-    age: {
-        type: Number,
-        required: true,
-    },
-    email: {
-        type: String,
-        required: true,
-        max: 100,
-        unique: true,
-    },
-    password: {
-        type: String,
-        required: false,
-        max: 100,
-    },
-    cartId: {
-        type: Schema.Types.ObjectId,
-        ref: 'carts'
-    },
-    role: {
-        type: String,
-        default: 'user',
-    },
-    }, { 
-        versionKey: false 
+
+class UserModel{
+
+    async getAll() {
+        const users = await UserModel.find({});
+        return users;
     }
-);
 
-usersSchema.plugin(mongoosePaginate);
+    async createOne(first_name, last_name, email, age, cartId) {
+        const userCreated = await UserModel.create({ first_name, last_name, email, age, cartId });
+        return userCreated;
+    }
 
-export const UserModel = model('users', usersSchema);
+    async deleteOne(_id) {
+        const deleted = await UserModel.deleteOne({ _id });
+        return deleted;
+    }
+
+    async updateOne(id, first_name, last_name, email, age, cartId) {
+        const userUpdated = await UserModel.updateOne({ _id: id }, { first_name, last_name, email, age, cartId });
+        return userUpdated;
+    }
+}
+
+export const userModel = new UserModel();

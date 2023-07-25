@@ -1,10 +1,18 @@
 import express from 'express';
-import CartService from '../services/carts.service.js';
-
+import {cartController} from "../controllers/carts.controller.js"
 export const cartsRouter = express.Router();
-const cartService = new CartService();
 
-cartsRouter.put("/:cid", async (req, res) => { // borrar contenido de products y cargar arreglo nuevo
+cartsRouter.post('/', cartsController.createCart);
+cartsRouter.get('/:cid', cartsController.getCartById);
+cartsRouter.put('/:cid', cartsController.replaceProductsInCart);
+cartsRouter.put('/:cid/products/:pid', cartsController.modifyProductQuantity);
+cartsRouter.post('/:cid/products/:pid', cartsController.addProductToCart);
+cartsRouter.delete('/:cid/products/:pid', cartsController.removeProductFromCart);
+cartsRouter.delete('/:cid', cartsController.deleteProductsInCart);
+cartsRouter.delete('/:cid/products/:pid/units', cartsController.removeProductFromCartByUnit);
+cartsRouter.delete('/:cid', cartsController.deleteCartById);
+
+/* cartsRouter.put("/:cid", async (req, res) => { // borrar contenido de products y cargar arreglo nuevo
   try {
     const cartId = req.params.cid;
     const newProds = req.body; // el idProduct tiene que ser de 24 caracteres de largo como el _id que asigna Mongoose sinó da error
@@ -174,4 +182,4 @@ try {
     msg: error.message,
   });
 }
-});
+}); */

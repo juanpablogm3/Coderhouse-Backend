@@ -1,4 +1,4 @@
-import { UserModel } from '../dao/models/users.model.js';
+import { userModel } from '../dao/models/users.model.js';
 
 class UserService {
   validateUser(first_name, last_name, email, age, cartId) {
@@ -9,25 +9,25 @@ class UserService {
   }
 
   async getAll() {
-    const users = await UserModel.find({});
+    const users = await userModel.getAll({});
     return users;
   }
 
   async createOne(first_name, last_name, email, age, cartId) {
     this.validateUser(first_name, last_name, email, age, cartId);
-    const userCreated = await UserModel.create({ first_name, last_name, email, age, cartId });
+    const userCreated = await userModel.create({ first_name, last_name, email, age, cartId });
     return userCreated;
   }
 
   async deleteOne(_id) {
-    const deleted = await UserModel.deleteOne({ _id });
+    const deleted = await userModel.deleteOne({ _id });
     return deleted;
   }
 
   async updateOne(id, first_name, last_name, email, age, cartId) {
     if (!id) throw new Error('invalid _id');
     this.validateUser(first_name, last_name, email, age, cartId);
-    const userUpdated = await UserModel.updateOne({ _id: id }, { first_name, last_name, email, age, cartId });
+    const userUpdated = await userModel.updateOne({ _id: id }, { first_name, last_name, email, age, cartId });
     return userUpdated;
   }
 }

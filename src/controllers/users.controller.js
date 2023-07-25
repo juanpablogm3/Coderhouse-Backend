@@ -1,4 +1,4 @@
-import { userServiceserService } from '../services/users.service.js';
+import { userService } from '../services/users.service.js';
 import CartService from '../services/carts.service.js';
 
 const cartService = new CartService();
