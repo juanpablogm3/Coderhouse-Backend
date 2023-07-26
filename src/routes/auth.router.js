@@ -18,4 +18,4 @@ authRouter.get('/perfil', isUser, authController.getUserProfile);
 authRouter.get('/administracion', isAdmin, authController.getAdminPage);
 authRouter.get('/github', passport.authenticate('github'));
 authRouter.get('/githubcallback', passport.authenticate('github', { failureRedirect: '/auth/faillogin' }), authController.githubCallback);
-authRouter.get('/auth/githubcallbackResp', authController.githubCallbackResp);
+authRouter.get('/githubcallbackResp', authController.githubCallbackResp);

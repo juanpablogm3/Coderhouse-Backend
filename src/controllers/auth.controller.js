@@ -195,6 +195,8 @@ class AuthController {
                 role: 'user',
                 cartId: req.user.cartId
             };
+            return res.redirect('/auth/githubcallbackResp');
+
         } catch (error) {
         console.error(error);
         return res.status(500).json({
