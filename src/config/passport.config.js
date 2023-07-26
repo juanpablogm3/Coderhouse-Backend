@@ -2,10 +2,10 @@ import passport from 'passport';
 import local from 'passport-local';
 import GithubStrategy from 'passport-github2';
 import { createHash, isValidPassword } from '../utils.js';
-import { UserModel } from '../dao/models/users.model.js'
-import CartService from '../services/carts.service.js';
+import { UserModel } from '../dao/mongoose/users.model.js'
+import { cartService } from '../services/carts.service.js';
+import 'dotenv/config';
 
-const cartService = new CartService();
 const LocalStrategy = local.Strategy;
 
 export function iniPassport() {
@@ -74,9 +74,9 @@ export function iniPassport() {
     'github',
     new GithubStrategy(
       {
-        clientID: 'Iv1.63c2188b884a63a6',
-        clientSecret: 'f5106e0132aa6ba7a90f0ffac71e8b1a199ee4f3',
-        callbackURL: 'http://localhost:8080/auth/githubcallback',
+        clientID: `${process.env.clientID}`,
+        clientSecret: `${process.env.clientSecret}`,
+        callbackURL: `${process.env.callbackURL}`,
       },
       async (accessToken, refreshToken, profile, done) => {
         try {

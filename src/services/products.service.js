@@ -1,6 +1,8 @@
-import { ProductModel } from "../dao/models/products.model.js";
+import { productsModel } from '../dao/models/products.model.js';
+import {ProductModel} from '../dao/mongoose/products.model.js';
 
 class ProductService {
+
     async getAllProducts(page, limit, sort, category, status) {
         try {
             const options = {}
@@ -32,7 +34,7 @@ class ProductService {
 
     async getProductById(productId) {
         try {
-            const product = await ProductModel.findById(productId);
+            const product = await productsModel.getProductById(productId);
             return product;
         } catch (error) {
             throw error;
@@ -41,7 +43,7 @@ class ProductService {
 
     async createProduct(productData) {
         try {
-            const product = await ProductModel.create(productData);
+            const product = await productsModel.createProduct(productData);
             return product;
         } catch (error) {
             throw error;
@@ -50,11 +52,7 @@ class ProductService {
 
     async updateProduct(productId, productData) {
         try {
-            const product = await ProductModel.findByIdAndUpdate(
-                productId,
-                productData,
-                { new: true }
-            );
+            const product = await productsModel.updateProduct(productId, productData, { new: true });
             return product;
         } catch (error) {
             throw error;
@@ -63,12 +61,12 @@ class ProductService {
 
     async deleteProduct(productId) {
         try {
-            const product = await ProductModel.findByIdAndDelete(productId);
+            const product = await productsModel.deleteProduct(productId);
             return product;
         } catch (error) {
             throw error;
         }
     }
-};
+}
 
-export default ProductService;
+export const productService = new ProductService();

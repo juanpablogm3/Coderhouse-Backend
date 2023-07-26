@@ -6,7 +6,7 @@ import { __dirname, __filename, connectMongo } from './utils.js';
 import handlebars from 'express-handlebars';
 import http from 'http';
 import { Server as SocketServer } from 'socket.io';
-import ProductService from './services/products.service.js';
+import {productService} from './services/products.service.js';
 import MongoStore from 'connect-mongo';
 import session from 'express-session';
 import { authRouter } from './routes/auth.router.js';
@@ -17,11 +17,10 @@ import cookieParser from 'cookie-parser';
 
 await connectMongo();
 
-const productService = new ProductService;
 const port = 8080;
 const app = express();
 
-
+//Websockets
 const httpServer = http.createServer(app);
 const io = new SocketServer(httpServer);
 const serverConnected = httpServer.listen(port, ()=> console.log(`Server listening on port: ${port}`));

@@ -1,18 +1,55 @@
-import { Schema, model } from "mongoose";
-import mongoosePaginate from 'mongoose-paginate-v2';
+import { ProductModel } from "../mongoose/products.model.js";
 
-const productSchema = new Schema({
-  title: { type: String, required: true },
-  description: { type: String, required: true },
-  price: { type: Number, required: true },
-  thumbnail: { type: String, required: true },
-  code: { type: String, required: true, unique: true },
-  stock: { type: Number, required: true },
-  category: { type: String, required: true },
-  status: { type: Boolean, default: true }
-}, { versionKey: false });
+class ProductsModel {
 
-productSchema.plugin(mongoosePaginate);
+    async getAllProducts() {
+        try {
+            const products = await ProductModel.find({});
+            return products;
+        } catch (error) {
+            throw error;
+        }
+    }
 
-export const ProductModel = model('products', productSchema);
+    async getProductById(productId) {
+        try {
+            const product = await ProductModel.findById(productId);
+            return product;
+        } catch (error) {
+            throw error;
+        }
+    }
 
+    async createProduct(productData) {
+        try {
+            const product = await ProductModel.create(productData);
+            return product;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async updateProduct(productId, productData) {
+        try {
+            const product = await ProductModel.findByIdAndUpdate(productId, productData, { new: true });
+            return product;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async deleteProduct(productId) {
+        try {
+            const product = await ProductModel.findByIdAndDelete(productId);
+            return product;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+
+
+
+}
+
+export const productsModel = new ProductsModel();
