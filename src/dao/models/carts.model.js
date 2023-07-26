@@ -13,7 +13,7 @@ class CartsModel {
 
     async getCartById(cartId) {
         try {
-        const cart = await CartModel.findById(cartId);
+        const cart = await CartModel.findById(cartId).populate('products.idProduct');
         return cart;
         } catch (error) {
         throw error;
