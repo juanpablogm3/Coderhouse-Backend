@@ -147,6 +147,17 @@ class CartService {
         throw error;
         }
     }
+
+    async finishPurchase(cartId) {
+        try {
+
+            
+        /* const cart = await cartModel.finishPurchase(cartId);
+        return cart; */
+        } catch (error) {
+        throw error;
+        }
+    }
 }
 
 export const cartService = new CartService();

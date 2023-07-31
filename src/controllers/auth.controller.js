@@ -1,4 +1,6 @@
 import cookie from 'cookie';
+import UserDTO from '../dao/DTO/userDTO.js';
+
 
 
 class AuthController {
@@ -17,12 +19,13 @@ class AuthController {
 
     async getCurrentSessionUser(req, res) {
         try {
-            return res.send(JSON.stringify(req.session.user));
+            const user = new UserDTO(req.session.user)
+            return res.send(JSON.stringify(user.filter()));
         } catch (error) {
         console.error(error);
         return res.status(500).json({
             status: 'error',
-            msg: 'something went wrong :(',
+            msg: 'OOps... something went wrong :(',
             data: {},
         });
         }

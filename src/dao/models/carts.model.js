@@ -136,6 +136,15 @@ class CartsModel {
         throw error;
         }
     }
+
+    async finishPurchase(cartId) {
+        try {
+        //const cart = await CartModel.findByIdAndDelete(cartId);
+        return cart;
+        } catch (error) {
+        throw error;
+        }
+    }
 }
 
 export const cartsModel = new CartsModel()
