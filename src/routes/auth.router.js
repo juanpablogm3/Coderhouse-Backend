@@ -6,7 +6,7 @@ import { authController } from '../controllers/auth.controller.js';
 export const authRouter = express.Router();
 
 authRouter.get('/session', authController.getSession);
-authRouter.get('/session/current', authController.getCurrentSessionUser);
+authRouter.get('/session/current', isUserOrAdmin, authController.getCurrentSessionUser);
 authRouter.get('/register', authController.getRegisterPage);
 authRouter.post('/register',passport.authenticate('register', { failureRedirect: '/auth/failregister' }), authController.registerUser);
 authRouter.get('/failregister', authController.failRegister);

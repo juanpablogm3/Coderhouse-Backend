@@ -19,6 +19,12 @@ class AuthController {
 
     async getCurrentSessionUser(req, res) {
         try {
+            if(!req.session.user){
+                return res.json({
+                    status: 'error',
+                    msg: 'No user logged in!',
+                })
+            }
             const user = new UserDTO(req.session.user)
             return res.send(JSON.stringify(user.filter()));
         } catch (error) {

@@ -8,5 +8,5 @@ viewsRouter.get('/carts/:cid', isUserOrAdmin, viewsController.getCartById);
 viewsRouter.get('/products', viewsController.getAllProducts);
 viewsRouter.get('/', viewsController.getIndexPage);
 viewsRouter.get('/realtimeproducts', viewsController.getRealtimeProducts);
-
+viewsRouter.get('/chat', isUser, viewsController.getAllMessages);
 export default viewsRouter;

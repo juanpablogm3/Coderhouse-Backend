@@ -1,4 +1,6 @@
 const socket = io();
+
+
 const form = document.getElementById('form');
 let newProduct ={};
 form.addEventListener('submit', (event) => {
@@ -47,5 +49,38 @@ socket.on('updatedProducts', (data) => {
       `).join('')}
     `;
   });
+
+/*   // Chat Section
+if (chatForm) {
+  chatForm.onsubmit = (e) => {
+    e.preventDefault();
+    const msg = {
+      user: user.value,
+      message: textInput.value,
+    };
+    socket.emit('new-message', msg);
+    textInput.value = '';
+  };
+}
+
+socket.on('chat-message', (data) => {
+  renderAllMessages(data);
+});
+
+const renderAllMessages = (data) => {
+  const html = data
+    .map((elem) => {
+      let fragment = `
+
+          <div class="messages">
+              <span><b>${elem.user}</b></span><br />
+              <span>${elem.message}</span>
+          </div>
+     `;
+      return fragment;
+    })
+    .join('\n');
+  document.getElementById('divChat').innerHTML = html;
+}; */
 
 

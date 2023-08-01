@@ -1,5 +1,6 @@
 import express from 'express';
 import { productsRouter } from './routes/products.router.js';
+import { chatService } from './services/chat.service.js';
 import { cartsRouter } from './routes/carts.router.js';
 import viewsRouter from './routes/views.router.js';
 import { __dirname, __filename, connectMongo } from './utils.js';
@@ -50,6 +51,16 @@ io.on('connection', (socket)=> {
             socket.emit('productDeleteError', { error: 'Ocurrió un error al eliminar el producto' });
         }
     });
+    socket.on('new-message', async (data) => {
+        try {
+          const newMessage = await chatService.addMessage(data);
+          const allMsgs = await chatService.getAllMessages();
+  
+          io.emit('chat-message', allMsgs);
+        } catch (error) {
+          console.log(error);
+        }
+    });
 });
 
 //Handlebars
@@ -79,6 +90,7 @@ app.use(passport.session());
 app.use('/', viewsRouter); 
 app.use('/realTimeProducts', viewsRouter); 
 app.use('/products', viewsRouter);
+app.use('/chat', viewsRouter);
 app.use('/carts/:cid', viewsRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);

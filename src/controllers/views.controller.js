@@ -1,5 +1,6 @@
 import { productService } from '../services/products.service.js';
 import { cartService } from '../services/carts.service.js';
+import { chatService } from '../services/chat.service.js';
 
 class ViewsController {
   async getCartById(req, res) {
@@ -129,6 +130,19 @@ class ViewsController {
       });
     }
   }
+
+  async getAllMessages(req, res){
+    try {
+        const messages = await chatService.getAllMessages();
+        return res.render('chat', { messages });
+    } catch (error) {
+        console.error(error);
+        return res.status(400).json({
+            status: 'error',
+            msg: error.message,
+        });
+    }
+}
 }
 
-export const viewsController = new ViewsController();
+export const viewsController = new ViewsController(); 
