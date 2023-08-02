@@ -1,6 +1,6 @@
 <div class="container">
 
-  <h2 class="text-center pt-5 mt-4">Chat Handlebars with Sockets</h2>
+  <h2 class="text-center pt-5 mt-4">Chat con websockets</h2>
 
   <div class="row">
     <div class="col-md-8">
@@ -39,8 +39,6 @@
                     align-items: center;
                     "
         >
-          <strong>Bienvenido al Chat</strong>
-          <br />
           <label for="nombre"> Ingrese su Email: </label>
           <input
             type="email"
@@ -49,12 +47,13 @@
             style="margin-bottom: 16px"
             class="input-file"
             required
-            pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+
           />
           <label for="nombre"> Escriba su mensaje: </label>
           <textarea
             name="textInput"
             id="text-input"
+            style="margin-bottom: 30px"
             style="height: 150px; resize: none;"
             required
           ></textarea>
