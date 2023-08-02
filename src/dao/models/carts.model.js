@@ -1,5 +1,5 @@
 import { CartModel } from "../mongoose/carts.model.js";
-import {ProductModel } from "../mongoose/products.model.js"
+import { ProductModel } from "../mongoose/products.model.js"
 
 class CartsModel {
     

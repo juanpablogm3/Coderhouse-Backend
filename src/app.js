@@ -98,6 +98,7 @@ app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 app.use('/api/carts/:cid', cartsRouter);
 app.use('/api/carts/:cid/products/:pid', cartsRouter);
+app.use('/api/carts/:cid/purchase', cartsRouter);
 app.use('/auth', authRouter);
 app.use('/api/users', usersRouter);
 

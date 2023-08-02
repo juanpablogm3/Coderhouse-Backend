@@ -1,4 +1,6 @@
 import { cartsModel } from '../dao/models/carts.model.js';
+import { productsModel } from '../dao/models/products.model.js';
+import { ticketsModel } from '../dao/models/tickets.model.js';
 
 class CartService {
     async createCart() {
@@ -126,16 +128,50 @@ class CartService {
         }
     }
 
-    /* async finishPurchase(cartId) {
+    async finishPurchase(cid, purchaser) {
         try {
+            const cart = await cartsModel.getCartById(cid);
+            const products = await productsModel.getAllProducts();
 
+            // Array para almacenar los elementos disponibles
+            const disponibles = [];
+
+            // Recorremos el array cart.products en orden inverso para evitar problemas al eliminar elementos
+            for (let i = cart.products.length - 1; i >= 0; i--) {
+                const cartItem = cart.products[i];
+
+                // Buscamos el elemento correspondiente en el array products por idProduct
+                const productItem = products.find((product) => product._id === cartItem.idProduct);
+
+                // Si encontramos el elemento y la quantity de cart es menor o igual que la stock de products
+                if (productItem && cartItem.quantity <= productItem.stock) {
+                    // Actualizamos el stock en el array products restando la quantity del carrito
+                    const newStock = productItem.stock - cartItem.quantity;
+                    await productsModel.updateProduct(cartItem.idProduct, { stock: newStock });
+
+                    // Agregamos el elemento al array disponibles
+                    disponibles.push(cartItem);
+
+                    // Eliminamos el elemento del array cart.products ya que está disponible
+                    cart.products.splice(i, 1);
+                }
+            }
+
+            const totalAmount = disponibles.reduce((total, product) => total + product.price * product.quantity, 0);
+
+            const ticketData = {
+                amount: totalAmount,
+                purchaser: purchaser
+            }
+
+            const newTicket = await ticketsModel.createTicket(ticketData);
             
-        const cart = await cartModel.finishPurchase(cartId);
-        return cart;
+            return cart.products;
+
         } catch (error) {
-        throw error;
+            throw error;
         }
-    } */
+    }
 }
 
 export const cartService = new CartService();

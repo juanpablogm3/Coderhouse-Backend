@@ -170,10 +170,11 @@ class CartController{
     async finishPurchase(req, res) {
         try {
             const { cid } = req.params;
-            await cartService.finishPurchase(cid);
-            return res.status(200).json({// acá iria un res.render que mande a una vista o lo de devolver lo que no se pudo comprar en un json
-            status: 'success',
-            msg: 'Purchase completed!'
+            const purchaser = req.session.user.email;
+            const remainingCart = await cartService.finishPurchase(cid, purchaser);
+            return res.status(200).json({
+                msg: 'Purchase completed!',
+                payload: remainingCart
             });
         } catch (error) {
             console.error(error);
