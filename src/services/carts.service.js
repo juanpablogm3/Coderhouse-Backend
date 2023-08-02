@@ -1,6 +1,7 @@
 import { cartsModel } from '../dao/models/carts.model.js';
 import { productsModel } from '../dao/models/products.model.js';
 import { ticketsModel } from '../dao/models/tickets.model.js';
+import { v4 as uuidv4 } from 'uuid';
 
 class CartService {
     async createCart() {
@@ -139,34 +140,38 @@ class CartService {
             // Recorremos el array cart.products en orden inverso para evitar problemas al eliminar elementos
             for (let i = cart.products.length - 1; i >= 0; i--) {
                 const cartItem = cart.products[i];
-
+                
                 // Buscamos el elemento correspondiente en el array products por idProduct
-                const productItem = products.find((product) => product._id === cartItem.idProduct);
-
+                const productItem = products.find((product) => product._id.toString() === cartItem.idProduct._id.toString());
                 // Si encontramos el elemento y la quantity de cart es menor o igual que la stock de products
                 if (productItem && cartItem.quantity <= productItem.stock) {
                     // Actualizamos el stock en el array products restando la quantity del carrito
                     const newStock = productItem.stock - cartItem.quantity;
-                    await productsModel.updateProduct(cartItem.idProduct, { stock: newStock });
-
+                    await productsModel.updateProduct(cartItem.idProduct, { stock: newStock }); 
+                    
                     // Agregamos el elemento al array disponibles
                     disponibles.push(cartItem);
-
+                    
                     // Eliminamos el elemento del array cart.products ya que está disponible
                     cart.products.splice(i, 1);
+                    console.log(cart);
+                    
+                    await cartsModel.replaceProductsInCart(cid, cart.products);
                 }
             }
-
-            const totalAmount = disponibles.reduce((total, product) => total + product.price * product.quantity, 0);
-
+            
+            const totalAmount = disponibles.reduce((total, product) => total + product.idProduct.price * product.quantity, 0);
+            
             const ticketData = {
+                code: uuidv4(),
                 amount: totalAmount,
                 purchaser: purchaser
             }
-
-            const newTicket = await ticketsModel.createTicket(ticketData);
+            if (disponibles.length > 0){
+                await ticketsModel.createTicket(ticketData);
+            }
             
-            return cart.products;
+            return "remains in cart due to lack of stocck: " +cart.products.idProduct;
 
         } catch (error) {
             throw error;

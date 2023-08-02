@@ -12,4 +12,4 @@ cartsRouter.delete('/:cid/products/:pid', isUser, cartController.removeProductFr
 cartsRouter.delete('/:cid', cartController.deleteProductsInCart);
 cartsRouter.delete('/:cid/products/:pid/units', cartController.removeProductFromCartByUnit);
 cartsRouter.delete('/:cid', cartController.deleteCartById);
-cartsRouter.get('/:cid/purchase', cartController.finishPurchase);
+cartsRouter.post('/:cid/purchase', cartController.finishPurchase);

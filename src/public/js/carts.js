@@ -6,8 +6,6 @@ function removeFromCart(productId) {
         return;
     }
     const cartId = cartInfoElement.getAttribute('id');
-    console.log(cartId);
-    console.log(productId);
     fetch(`http://localhost:8080/api/carts/${cartId}/products/${productId}`, {
         method: 'DELETE',
         headers: {
@@ -45,7 +43,7 @@ function finishPurchase(){
     })
     .then(response => {
         if (response.ok) {
-            alert('Ticket created!');
+            alert('Purchase completed');
             location.reload()
         } else {
             throw new Error('Failed to create ticket');
