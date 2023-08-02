@@ -15,6 +15,7 @@ import { usersRouter } from './routes/users.router.js';
 import { iniPassport } from './config/passport.config.js';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 await connectMongo();
 
@@ -73,6 +74,7 @@ app.use(express.static(__dirname+'/public'));
 app.use(express.static('./public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 app.use(cookieParser());
 app.use(
     session({
@@ -88,8 +90,8 @@ app.use(passport.session());
 
 //routes
 app.use('/', viewsRouter); 
-app.use('/realTimeProducts', viewsRouter); 
 app.use('/products', viewsRouter);
+app.use('/realTimeProducts', viewsRouter); 
 app.use('/chat', viewsRouter);
 app.use('/carts/:cid', viewsRouter);
 app.use('/api/products', productsRouter);

@@ -1,4 +1,5 @@
 import { CartModel } from "../mongoose/carts.model.js";
+import {ProductModel } from "../mongoose/products.model.js"
 
 class CartsModel {
     
@@ -53,22 +54,22 @@ class CartsModel {
 
     async addProductToCart(cartId, productId) {
         try {
-        const cart = await CartModel.findById(cartId);
-        if (!cart) {
-            throw new Error('Cart not found');
-        }
-        const product = await ProductModel.findById(productId);
-        if (!product) {
-            throw new Error('Product not found');
-        }
-        const existingProduct = cart.products.find((product) => product.idProduct.toString() === productId);
-        if (existingProduct) {
-            existingProduct.quantity += 1;
-        } else {
-            cart.products.push({ idProduct: productId, quantity: 1 });
-        }
-        const savedCart = await cart.save();
-        return savedCart;
+            const cart = await CartModel.findById(cartId);
+            if (!cart) {
+                throw new Error('Cart not found');
+            }
+            const product = await ProductModel.findById(productId);
+            if (!product) {
+                throw new Error('Product not found');
+            }
+            const existingProduct = cart.products.find((product) => product.idProduct.toString() === productId);
+            if (existingProduct) {
+                existingProduct.quantity += 1;
+            } else {
+                cart.products.push({ idProduct: productId, quantity: 1 });
+            }
+            const savedCart = await cart.save();
+            return savedCart;
         } catch (error) {
         throw error;
         }
@@ -137,14 +138,14 @@ class CartsModel {
         }
     }
 
-    async finishPurchase(cartId) {
+    /* async finishPurchase(cartId) {
         try {
         //const cart = await CartModel.findByIdAndDelete(cartId);
         return cart;
         } catch (error) {
         throw error;
         }
-    }
+    } */
 }
 
 export const cartsModel = new CartsModel()

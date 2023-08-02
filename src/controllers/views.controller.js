@@ -13,7 +13,7 @@ class ViewsController {
               msg: 'Cart not found',
             });
         }
-        res.render('cart', {cart})
+        res.render('cart', {cart , cartId})
     } catch (error) {
       console.error(error);
       return res.status(400).json({

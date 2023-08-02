@@ -117,12 +117,13 @@ class CartController{
 
     async removeProductFromCart(req, res) {
         try {
-            const { cid, pid } = req.params;
-            await cartService.removeProductFromCart(cid, pid);
+            const cartId = req.params.cid;
+            const pid= req.params.pid;
+            await cartService.removeProductFromCart(cartId, pid);
             return res.status(200).json({
                 status: 'success',
-                msg: 'Product removed from cart',
-            });
+                msg: 'Product removed from cart'
+            })
         } catch (error) {
             console.error(error);
             return res.status(400).json({

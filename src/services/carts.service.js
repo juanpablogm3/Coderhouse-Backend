@@ -1,5 +1,4 @@
 import { cartsModel } from '../dao/models/carts.model.js';
-import { ProductModel } from '../dao/mongoose/products.model.js';
 
 class CartService {
     async createCart() {
@@ -24,6 +23,7 @@ class CartService {
             stock: elem.idProduct.stock,
             category: elem.idProduct.category,
             status: elem.idProduct.status,
+            quantity: elem.quantity
         }));
         return prods;
         } catch (error) {
@@ -33,7 +33,7 @@ class CartService {
 
     async modifyProductQuantity(cartId, productId, productQty) {
         try {
-        const cart = await cartModel.getCartById(cartId);
+        const cart = await cartsModel.getCartById(cartId);
         if (!cart) {
             throw new Error('Cart not found');
         }
@@ -50,7 +50,7 @@ class CartService {
 
     async replaceProductsInCart(cartId, newProds) {
         try {
-        const cart = await cartModel.getCartById(cartId);
+        const cart = await cartsModel.getCartById(cartId);
         if (!cart) {
             throw new Error('Cart not found');
         }
@@ -64,30 +64,16 @@ class CartService {
 
     async addProductToCart(cartId, productId) {
         try {
-        const cart = await cartsModel.getCartById(cartId);
-        if (!cart) {
-            throw new Error('Cart not found');
-        }
-        const product = await ProductModel.findById(productId);
-        if (!product) {
-            throw new Error('Product not found');
-        }
-        const existingProduct = cart.products.find((product) => product.idProduct.toString() === productId);
-        if (existingProduct) {
-            existingProduct.quantity += 1;
-        } else {
-            cart.products.push({ idProduct: productId, quantity: 1 });
-        }
-        const savedCart = await cart.save();
-        return savedCart;
+            const cart = cartsModel.addProductToCart(cartId, productId)
+            return cart;
         } catch (error) {
-        throw error;
+            throw error;
         }
     }
 
     async deleteProductsInCart(cartId) {
         try {
-        const cart = await cartModel.getCartById(cartId);
+        const cart = await cartsModel.getCartById(cartId);
         if (!cart) {
             throw new Error('Cart not found');
         }
@@ -101,17 +87,9 @@ class CartService {
 
     async removeProductFromCart(cartId, productId) {
         try {
-        const cart = await cartModel.getCartById(cartId);
-        if (!cart) {
-            throw new Error('Cart not found');
-        }
-        const productIndex = cart.products.findIndex((product) => product.idProduct.toString() === productId);
-        if (productIndex === -1) {
-            throw new Error('Product not found in cart');
-        }
-        cart.products.splice(productIndex, 1);
-        const savedCart = await cart.save();
-        return savedCart;
+            const cart= await cartsModel.removeProductFromCart(cartId, productId);
+            const savedCart = await cart.save();
+            return savedCart; 
         } catch (error) {
         throw error;
         }
@@ -119,7 +97,7 @@ class CartService {
 
     async removeProductFromCartByUnit(cartId, productId) {
         try {
-        const cart = await cartModel.getCartById(cartId);
+        const cart = await cartsModel.getCartById(cartId);
         if (!cart) {
             throw new Error('Cart not found');
         }
@@ -141,23 +119,23 @@ class CartService {
 
     async deleteCartById(cartId) {
         try {
-        const cart = await cartModel.deleteCartById(cartId);
+        const cart = await cartsModel.deleteCartById(cartId);
         return cart;
         } catch (error) {
         throw error;
         }
     }
 
-    async finishPurchase(cartId) {
+    /* async finishPurchase(cartId) {
         try {
 
             
-        /* const cart = await cartModel.finishPurchase(cartId);
-        return cart; */
+        const cart = await cartModel.finishPurchase(cartId);
+        return cart;
         } catch (error) {
         throw error;
         }
-    }
+    } */
 }
 
 export const cartService = new CartService();
