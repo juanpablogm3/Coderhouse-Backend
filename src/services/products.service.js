@@ -1,5 +1,6 @@
 import { productsModel } from '../dao/models/products.model.js';
 import {ProductModel} from '../dao/mongoose/products.model.js';
+import { generateFakerProducts } from '../utils.js';
 
 class ProductService {
 
@@ -24,6 +25,34 @@ class ProductService {
                 filter.status = status || true;
             }
 
+            const products = await ProductModel.paginate(filter, options);
+
+            return products;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async getAllFakerProducts(page, limit, sort, category, status) {
+        try {
+            const options = {}
+            if(page){
+                options.page = page || 1
+            }
+            if(limit){
+                options.limit = limit || 10
+            }
+            if(sort){
+                options.sort = { price: sort === 'desc' ? -1 : 1 };
+            }
+
+            const filter = {};
+            if(category){
+                filter.category = category || '';
+            }
+            if(status){
+                filter.status = status || true;
+            }
             const products = await ProductModel.paginate(filter, options);
 
             return products;

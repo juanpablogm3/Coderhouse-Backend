@@ -112,4 +112,6 @@ class ProductsController {
     }
 }
 
+
+
 export const productsController = new ProductsController();

@@ -16,6 +16,7 @@ import { iniPassport } from './config/passport.config.js';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import 'dotenv/config';
 
 await connectMongo();
 
@@ -78,7 +79,7 @@ app.use(cors());
 app.use(cookieParser());
 app.use(
     session({
-        store: MongoStore.create({ mongoUrl: 'mongodb+srv://juanpablogm3:XiCzZNy60lfaLajA@jpcluster.4kxbuid.mongodb.net/ecommerce?retryWrites=true&w=majority', ttl: 7200 }),
+        store: MongoStore.create({ mongoUrl: `${process.env.mongo_string}`, ttl: 7200 }),
         secret: 'secret',
         resave: true,
         saveUninitialized: true,
@@ -91,6 +92,7 @@ app.use(passport.session());
 //routes
 app.use('/', viewsRouter); 
 app.use('/products', viewsRouter);
+app.use('/mockingproducts', viewsRouter);
 app.use('/realTimeProducts', viewsRouter); 
 app.use('/chat', viewsRouter);
 app.use('/carts/:cid', viewsRouter);
