@@ -17,6 +17,7 @@ import passport from 'passport';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import 'dotenv/config';
+import errorHandler from "./middlewares/error.js"
 
 await connectMongo();
 
@@ -103,11 +104,10 @@ app.use('/api/carts/:cid/products/:pid', cartsRouter);
 app.use('/api/carts/:cid/purchase', cartsRouter);
 app.use('/auth', authRouter);
 app.use('/api/users', usersRouter);
-
-
 app.get('*',(req, res)=>{
     return res.status(404).json({
         status: 'error',
         msg: 'Route not found'
     });
 });
+app.use(errorHandler);
