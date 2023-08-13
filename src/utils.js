@@ -2,6 +2,7 @@
 import path from "path";
 import { fileURLToPath } from "url";
 import 'dotenv/config';
+import CustomError from "./errors/custom-error.js";
 
 
 export const __filename = fileURLToPath(import.meta.url);
@@ -30,9 +31,13 @@ export async function connectMongo() {
       `mongodb+srv://${process.env.mongo_user}:${process.env.mongo_pass}@jpcluster.4kxbuid.mongodb.net/ecommerce?retryWrites=true&w=majority`
     );
     console.log("plug to mongo!");
-  } catch (e) {
-    console.log(e);
-    throw "can not connect to the db";
+  } catch (error) {
+    CustomError.createError({
+      name: "Connection to database error",
+      cause: "The connection to the database has failed",
+      message: "Error de conexión a MongoDB",
+      code: EErros.MONGO_CONNECT_FAIL,
+    })
   }
 }
 

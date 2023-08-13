@@ -1,20 +1,47 @@
+import CustomError from "../errors/custom-error.js";
+import EErros from "../errors/enums.js";
+
 export function isUser(req, res, next) {
-    if (req.session?.user?.role==='user') {
+  try {
+    if (req.session?.user?.role === 'user') {
       return next();
     }
-    return res.status(401).render('error', { error: 'error de autenticacion!' });
+  } catch (error) {
+    CustomError.createError({
+      name: "Authentication error",
+      cause: "Invalid or not existing user credentials",
+      message: "Error de autenticación",
+      code: EErros.AUTHENTICATION_ERROR,
+    })
+  }
 }
   
 export function isAdmin(req, res, next) {
-    if (req.session?.user?.role==='admin') {
+  try {
+    if (req.session?.user?.role === 'admin') {
       return next();
     }
-    return res.status(403).render('error', { error: 'error de autorización!' });
+  } catch (error) {
+    CustomError.createError({
+      name: "Authorization error",
+      cause: "The client has valid credentials but does not have permission to access the requested resource",
+      message: "Error de autenticación",
+      code: EErros.AUTHORIZATION_ERROR,
+    })
+  }
 }
 
 export function isUserOrAdmin(req, res, next) {
-  if (req.session?.user?.role==='user'||'admin') {
-    return next();
+  try{
+    if (req.session?.user?.role === 'user' || req.session?.user?.role === 'admin') {
+      return next();
+    }
+  } catch (error){
+    CustomError.createError({
+      name: "Authentication error",
+      cause: "Invalid or not existing user credentials",
+      message: "Error de autenticación",
+      code: EErros.AUTHENTICATION_ERROR,
+    })
   }
-  return res.status(401).render('error', { error: 'error de autenticacion!' });
 }

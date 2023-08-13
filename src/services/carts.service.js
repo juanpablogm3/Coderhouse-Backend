@@ -2,6 +2,8 @@ import { cartsModel } from '../dao/models/carts.model.js';
 import { productsModel } from '../dao/models/products.model.js';
 import { ticketsModel } from '../dao/models/tickets.model.js';
 import { v4 as uuidv4 } from 'uuid';
+import CustomError from '../errors/custom-error.js';
+import EErros from '../errors/enums.js';
 
 class CartService {
     async createCart() {
@@ -30,7 +32,12 @@ class CartService {
         }));
         return prods;
         } catch (error) {
-        throw error;
+            CustomError.createError({
+                name: "Cart not found",
+                cause: "The cart does not exist",
+                message: "El carrito solicitado no existe",
+                code: EErros.CART_DOESNT_EXIST,
+            })
         }
     }
 

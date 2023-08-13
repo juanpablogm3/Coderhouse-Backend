@@ -1,6 +1,7 @@
 import { productsModel } from '../dao/models/products.model.js';
 import {ProductModel} from '../dao/mongoose/products.model.js';
 import { generateFakerProducts } from '../utils.js';
+import CustomError from '../errors/custom-error.js';
 
 class ProductService {
 
@@ -66,7 +67,12 @@ class ProductService {
             const product = await productsModel.getProductById(productId);
             return product;
         } catch (error) {
-            throw error;
+            CustomError.createError({
+                name: "Product not in cart",
+                cause: "Product does not exist in this cart",
+                message: "El producto solicitado no existe en este carro",
+                code: EErros.PRODUCT_NOT_IN_CART,
+            })
         }
     }
 
