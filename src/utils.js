@@ -3,6 +3,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import 'dotenv/config';
 import CustomError from "./errors/custom-error.js";
+import EErros from "./errors/enums.js";
 
 
 export const __filename = fileURLToPath(import.meta.url);

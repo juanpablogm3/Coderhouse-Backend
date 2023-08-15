@@ -17,6 +17,7 @@ import passport from 'passport';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import 'dotenv/config';
+import config from "./config/config.js"
 import errorHandler from "./middlewares/error.js"
 
 await connectMongo();
