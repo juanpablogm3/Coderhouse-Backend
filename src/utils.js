@@ -4,6 +4,8 @@ import { fileURLToPath } from "url";
 import 'dotenv/config';
 import CustomError from "./errors/custom-error.js";
 import EErros from "./errors/enums.js";
+import winston from 'winston';
+import 'dotenv/config';
 
 
 export const __filename = fileURLToPath(import.meta.url);
@@ -28,10 +30,11 @@ export const uploader = multer({ storage });
 import { connect } from "mongoose";
 export async function connectMongo() {
   try {
+    logger.debug("Connecting to the MongoDB...");
     await connect(
       `mongodb+srv://${process.env.mongo_user}:${process.env.mongo_pass}@jpcluster.4kxbuid.mongodb.net/ecommerce?retryWrites=true&w=majority`
     );
-    console.log("plug to mongo!");
+    logger.info("plug to mongo!");
   } catch (error) {
     CustomError.createError({
       name: "Connection to database error",
@@ -69,3 +72,53 @@ export function generateFakerProducts() {
   }
   return fakerProducts;
 }
+
+/* ****************  LOGGER  ********************** */
+
+const logLevels = {
+  fatal: 0,
+  error: 1,
+  warning: 2,
+  info: 3,
+  http: 4,
+  debug: 5,
+};
+
+const logColors = {
+  fatal: 'red',
+  error: 'red',
+  warning: 'yellow',
+  info: 'green',
+  http: 'blue',
+  debug: 'gray',
+};
+
+winston.addColors(logColors);
+
+const getLogger = () => {
+  if (process.env.ENVIRONMENT === 'DEVELOPMENT') {
+    return winston.createLogger({
+      levels: logLevels,
+      format: winston.format.combine(
+        winston.format.colorize(),
+        winston.format.simple()
+      ),
+      transports: [
+        new winston.transports.Console()
+      ],
+      level: 'debug'
+    });
+  } else {
+    return winston.createLogger({
+      levels: logLevels,
+      transports: [
+        new winston.transports.File({ filename: 'errors.log', level: 'error' })
+      ],
+      level: 'info'
+    });
+  }
+};
+
+const logger = getLogger(); // Llama a la función para obtener el logger correcto
+
+export { logger };
