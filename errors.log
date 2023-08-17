@@ -14,3 +14,5 @@
 {"level":"fatal","message":"Fatal message"}
 {"level":"error","message":"Error message - Production"}
 {"level":"fatal","message":"Fatal message - Production"}
+{"level":"error","message":"Connecting to the MongoDB..."}
+{"level":"error","message":"plug to mongo!"}

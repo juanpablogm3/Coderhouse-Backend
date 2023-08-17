@@ -4,13 +4,15 @@ import { Command } from 'commander';
 const program = new Command();
 program.option('--mode <mode>', 'Modo de trabajo', 'DEVELOPMENT');
 program.parse();
-console.log(program.opts());
 
 dotenv.config({
   path: program.opts().mode === 'DEVELOPMENT' ? './.development.env' : './.production.env',
 });
 
 const config = {
+    // ENVIROMENT
+    enviroment: process.env.enviroment,
+
     // MONGO
     mongo_user: process.env.mongo_user,
     mongo_pass: process.env.mongo_pass,
