@@ -25,7 +25,12 @@ class ProductsModel {
             const product = await ProductModel.create(productData);
             return product;
         } catch (error) {
-            throw error;
+            CustomError.createError({
+                name: "Authorization error",
+                cause: "The client has valid credentials but does not have permission to access the requested resource",
+                message: "No tienes permiso para acceder a esta página",
+                code: EErros.ERROR_CREATING_PRODUCT,
+            });
         }
     }
 

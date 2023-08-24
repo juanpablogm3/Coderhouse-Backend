@@ -52,7 +52,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 export function generateFakerProducts() {
   let fakerProducts = [];
-  for (let i=0;i<20;i++){
+  for (let i=0;i<100;i++){
     const fakerProduct={
       id: faker.database.mongodbObjectId(),
       title: faker.commerce.productName(),
@@ -61,7 +61,7 @@ export function generateFakerProducts() {
       thumbnail: faker.image.url(),
       code: uuidv4(),
       stock: faker.number.int({ min: 10, max: 100 }),
-      category: faker.helpers.arrayElements(['cats', 'dogs']),
+      category: faker.helpers.arrayElement(['cats', 'dogs']),
       status: true
     }
     fakerProducts.push(fakerProduct);

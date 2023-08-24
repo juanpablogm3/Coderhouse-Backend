@@ -4,6 +4,8 @@ const EErros = {
     MONGO_CONNECT_FAIL: 3,
     AUTHENTICATION_ERROR: 4,
     AUTHORIZATION_ERROR: 5,
+    INTERNAL_SERVER_ERROR: 6,
+    ERROR_CREATING_PRODUCT: 7
 }
 
 export default EErros;

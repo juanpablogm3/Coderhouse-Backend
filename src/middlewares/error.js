@@ -30,6 +30,16 @@ export default (error, req, res, next) => {
                 .status(403)
                 .render("error", {error});
             break;
+        case EErros.INTERNAL_SERVER_ERROR:
+        res
+            .status(500)
+            .render("error", {error});
+            break;
+        case EErros.ERROR_CREATING_PRODUCT:
+        res
+            .status(403)
+            .render("error", {error});
+            break;
         default:
             res.status(400).json({status: "error", error: "Unhandled error"});
             break;

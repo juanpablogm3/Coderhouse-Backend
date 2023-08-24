@@ -60,9 +60,7 @@ class ViewsController {
             throw new Error('La página solicitada no existe');
         }
         const user = req.session.user;
-        console.log(user);
         res.render('products', {prods, paginationInfo, sort, category, status, user})
-        console.log(response);
     } catch (error) {
       console.error(error);
       return res.status(400).json({
@@ -76,7 +74,7 @@ class ViewsController {
     try {
 
       const { page, limit, sort, category, status }= req.query;
-      const queryResult = await productService.getAllFakerProducts(page, limit, sort, category, status);
+      const queryResult = await productService.getAllProducts(page, limit, sort, category, status);
       let {docs, ...paginationInfo} = queryResult;
       const fakers= generateFakerProducts();
       const prods = fakers.map((product) => {
@@ -102,6 +100,7 @@ class ViewsController {
           hasPrevPage: paginationInfo.hasPrevPage,
           hasNextPage: paginationInfo.hasNextPage,
       };
+      
       const prevPage = parseInt(page) - 1;
       response.hasPrevPage ? response.prevLink = `/products/?page=${prevPage}&limit=${limit}&sort=${sort}&category=${category}&status=${status}` : response.prevLink = null;
       const nextPage = parseInt(page) + 1;

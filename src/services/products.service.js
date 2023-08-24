@@ -2,6 +2,7 @@ import { productsModel } from '../dao/models/products.model.js';
 import {ProductModel} from '../dao/mongoose/products.model.js';
 import { generateFakerProducts } from '../utils.js';
 import CustomError from '../errors/custom-error.js';
+import EErros from '../errors/enums.js';
 
 class ProductService {
 
@@ -81,7 +82,12 @@ class ProductService {
             const product = await productsModel.createProduct(productData);
             return product;
         } catch (error) {
-            throw error;
+            CustomError.createError({
+                name: "Product creation error",
+                cause: "One or more atributes are not present or has bad format",
+                message: "No fue posible crear el producto",
+                code: EErros.ERROR_CREATING_PRODUCT,
+            });
         }
     }
 
