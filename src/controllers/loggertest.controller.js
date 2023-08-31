@@ -2,7 +2,7 @@ import {logger} from '../logger.js'
 import 'dotenv/config';
 
 const loggerTest = (req, res) => {
-  logger.log('debug','\nLog levels')
+  console.log('\nLog levels')
   if(process.env.environment==='DEVELOPMENT'){
     logger.debug('Debug message');
     logger.http('HTTP message');
