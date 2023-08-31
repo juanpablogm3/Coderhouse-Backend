@@ -5,6 +5,7 @@ import { createHash, isValidPassword } from '../utils.js';
 import { UserModel } from '../dao/mongoose/users.model.js'
 import { cartService } from '../services/carts.service.js';
 import 'dotenv/config';
+import { logger } from '../logger.js';
 
 const LocalStrategy = local.Strategy;
 
@@ -15,11 +16,11 @@ export function iniPassport() {
       try {
         const user = await UserModel.findOne({ email: username });
         if (!user) {
-          console.log('User Not Found with username (email) ' + username);
+          logger.error('User Not Found with username (email) ' + username);
           return done(null, false);
         }
         if (!isValidPassword(password, user.password)) {
-          console.log('Invalid Password');
+          logger.warning('Invalid Password');
           return done(null, false);
         }
 
@@ -44,7 +45,7 @@ export function iniPassport() {
           const cartId = cart._id;
           let user = await UserModel.findOne({ email: username });
           if (user) {
-            console.log('User already exists');
+            logger.warning('User already exists');
             return done(null, false);
           }
 
@@ -58,12 +59,12 @@ export function iniPassport() {
             cartId: cartId
           };
           let userCreated = await UserModel.create(newUser);
-          console.log(userCreated);
-          console.log('User Registration succesful');
+          logger.info(userCreated);
+          logger.info('User Registration succesful');
           return done(null, userCreated);
         } catch (e) {
-          console.log('Error in register');
-          console.log(e);
+          logger.error('Error in register');
+          logger.error(e);
           return done(e);
         }
       }

@@ -1,4 +1,4 @@
-
+import {logger} from "../logger.js"
 import { cartService } from '../services/carts.service.js';
 
 class CartController{
@@ -12,7 +12,7 @@ class CartController{
                 payload: cart
             });
         } catch (error) {
-            console.error(error);
+            logger.error(error);
             return res.status(400).json({
                 status: 'error',
                 msg: error.message,
@@ -37,7 +37,7 @@ class CartController{
                 payload: cart,
             });
         } catch (error) {
-            console.error(error);
+            logger.error(error);
             return res.status(400).json({
                 status: 'error',
                 msg: error.message,
@@ -55,7 +55,7 @@ class CartController{
                 msg: 'Product quantity in cart updated',
             });
         } catch (error) {
-            console.error(error);
+            logger.error(error);
             return res.status(400).json({
                 status: 'error',
                 msg: error.message,

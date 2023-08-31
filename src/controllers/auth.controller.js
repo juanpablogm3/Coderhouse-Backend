@@ -1,5 +1,6 @@
 import cookie from 'cookie';
 import UserDTO from '../dao/DTO/userDTO.js';
+import {logger} from "../logger.js"
 
 
 
@@ -8,7 +9,7 @@ class AuthController {
         try {
             return res.send(JSON.stringify(req.session))
         } catch (error) {
-        console.error(error);
+        logger.error(error);
         return res.status(500).json({
             status: 'error',
             msg: 'something went wrong :(',
@@ -28,7 +29,7 @@ class AuthController {
             const user = new UserDTO(req.session.user)
             return res.send(JSON.stringify(user.filter()));
         } catch (error) {
-        console.error(error);
+        logger.error(error);
         return res.status(500).json({
             status: 'error',
             msg: 'OOps... something went wrong :(',
@@ -41,7 +42,7 @@ class AuthController {
         try {
             return res.render('register', {});
         } catch (error) {
-        console.error(error);
+        logger.error(error);
         return res.status(500).json({
             status: 'error',
             msg: 'something went wrong :(',
@@ -67,7 +68,7 @@ class AuthController {
             console.log({ msg: 'ok', payload: req.user });
             return res.redirect('/auth/login')
         } catch (error) {
-        console.error(error);
+        logger.error(error);
         return res.status(500).json({
             status: 'error',
             msg: 'something went wrong :(',
@@ -80,7 +81,7 @@ class AuthController {
         try {
             return res.json({ error: 'fail to register' });
         } catch (error) {
-        console.error(error);
+        logger.error(error);
         return res.status(500).json({
             status: 'error',
             msg: 'something went wrong :(',
@@ -93,7 +94,7 @@ class AuthController {
         try {
             return res.render('login', {});
         } catch (error) {
-        console.error(error);
+        logger.error(error);
         return res.status(500).json({
             status: 'error',
             msg: 'something went wrong :(',
@@ -117,11 +118,11 @@ class AuthController {
                 cartId: req.user.cartId
             };
             const cartId = req.session.user.cartId;
-            console.log({ msg: 'ok', payload: req.user });
+            logger.info({ msg: 'ok', payload: req.user });
             res.setHeader('Set-Cookie', cookie.serialize('cartId', cartId));
             return res.redirect('/products')
         } catch (error) {
-        console.error(error);
+        logger.error(error);
         return res.status(500).json({
             status: 'error',
             msg: 'something went wrong :(',
@@ -134,7 +135,7 @@ class AuthController {
         try {
             return res.json({ error: 'fail to login' });
         } catch (error) {
-        console.error(error);
+        logger.error(error);
         return res.status(500).json({
             status: 'error',
             msg: 'something went wrong :(',
@@ -152,7 +153,7 @@ class AuthController {
                 return res.redirect('/auth/login');
             });
         } catch (error) {
-        console.error(error);
+        logger.error(error);
         return res.status(500).json({
             status: 'error',
             msg: 'something went wrong :(',
@@ -166,7 +167,7 @@ class AuthController {
             const user = req.session.user;
             return res.render('perfil', { user });
         } catch (error) {
-        console.error(error);
+        logger.error(error);
         return res.status(500).json({
             status: 'error',
             msg: 'something went wrong :(',
@@ -180,7 +181,7 @@ class AuthController {
             const user = req.session.user;
             res.render('admin',{user});
         } catch (error) {
-        console.error(error);
+        logger.error(error);
         return res.status(500).json({
             status: 'error',
             msg: 'something went wrong :(',
@@ -207,7 +208,7 @@ class AuthController {
             return res.redirect('/auth/githubcallbackResp');
 
         } catch (error) {
-        console.error(error);
+            logger.error(error);
         return res.status(500).json({
             status: 'error',
             msg: 'something went wrong :(',
@@ -220,7 +221,7 @@ class AuthController {
         try {
             return res.render('githubcallbackResp',{});
         } catch (error) {
-        console.error(error);
+            logger.error(error);
         return res.status(500).json({
             status: 'error',
             msg: 'something went wrong :(',

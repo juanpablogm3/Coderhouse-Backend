@@ -2,6 +2,7 @@ import express from 'express';
 import passport from 'passport';
 import { isAdmin, isUser, isUserOrAdmin } from '../middlewares/auth.js';
 import { authController } from '../controllers/auth.controller.js';
+import { loggerTest } from '../controllers/loggertest.controller.js';
 
 export const authRouter = express.Router();
 
@@ -19,3 +20,4 @@ authRouter.get('/administracion', isAdmin, authController.getAdminPage);
 authRouter.get('/github', passport.authenticate('github'));
 authRouter.get('/githubcallback', passport.authenticate('github', { failureRedirect: '/auth/faillogin' }), authController.githubCallback);
 authRouter.get('/githubcallbackResp', authController.githubCallbackResp);
+authRouter.get('/loggerTest', loggerTest);
