@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import { Command } from 'commander';
+import {logger} from "../logger.js"
 
 const program = new Command();
 program.option('--mode <mode>', 'Modo de trabajo', 'DEVELOPMENT');
@@ -10,8 +11,8 @@ dotenv.config({
 });
 
 const config = {
-    // ENVIROMENT
-    enviroment: process.env.enviroment,
+    // ENVIRONMENT
+    environment: program.opts().mode,
 
     // MONGO
     mongo_user: process.env.mongo_user,

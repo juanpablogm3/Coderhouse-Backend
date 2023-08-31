@@ -2,7 +2,7 @@ import express from 'express';
 import passport from 'passport';
 import { isAdmin, isUser, isUserOrAdmin } from '../middlewares/auth.js';
 import { authController } from '../controllers/auth.controller.js';
-import { loggerTest } from '../controllers/loggertest.js';
+import { loggerTest } from '../controllers/loggertest.controller.js';
 
 export const authRouter = express.Router();
 

@@ -9,7 +9,7 @@ import { faker } from '@faker-js/faker';
 import { v4 as uuidv4 } from 'uuid';
 import CustomError from "./errors/custom-error.js";
 import EErros from "./errors/enums.js";
-import winston from 'winston';
+import {logger}  from "./logger.js";
 
 
 export const __filename = fileURLToPath(import.meta.url);
@@ -32,17 +32,19 @@ export const uploader = multer({ storage });
 /* **************MONGO ATLAS ************** */
 export async function connectMongo() {
   try {
-    logger.error("Connecting to the MongoDB...");
+    logger.info("Server mode ---> "+ process.env.environment);
+    logger.info("Connecting to the MongoDB...");
     await connect(
-      `mongodb+srv://${process.env.mongo_user}:${process.env.mongo_pass}@jpcluster.4kxbuid.mongodb.net/ecommerce?retryWrites=true&w=majority`
+      `${process.env.mongo_string}`
       );
-      logger.error("plug to mongo!");
+      logger.info("Succesfully connected to MongoDB!");
     } catch (error) {
-      CustomError.createError({
-        name: "Connection to database error",
-        cause: "The connection to the database has failed",
-        message: "Error de conexión a MongoDB",
-        code: EErros.MONGO_CONNECT_FAIL,
+      logger.error("Connection to database error");
+        CustomError.createError({
+          name: "Connection to database error",
+          cause: "The connection to the database has failed",
+          message: "Error de conexión a MongoDB",
+          code: EErros.MONGO_CONNECT_FAIL,
       })
     }
   }
@@ -72,52 +74,3 @@ export function generateFakerProducts() {
   return fakerProducts;
 }
 
-/* ****************  LOGGER  ********************** */
-
-const logLevels = {
-  fatal: 0,
-  error: 1,
-  warning: 2,
-  info: 3,
-  http: 4,
-  debug: 5,
-};
-
-const logColors = {
-  fatal: 'red',
-  error: 'red',
-  warning: 'yellow',
-  info: 'green',
-  http: 'blue',
-  debug: 'gray',
-};
-
-winston.addColors(logColors);
-
-const getLogger = () => {
-  if (process.env.enviroment === 'DEVELOPMENT') {
-    return winston.createLogger({
-      levels: logLevels,
-      format: winston.format.combine(
-        winston.format.colorize(),
-        winston.format.simple()
-        ),
-        transports: [
-          new winston.transports.Console()
-        ],
-        level: 'debug'
-      });
-    } else {
-    return winston.createLogger({
-      levels: logLevels,
-      transports: [
-        new winston.transports.File({ filename: 'errors.log', level: 'error' })
-      ],
-      level: 'info'
-    });
-  }
-};
-
-const logger = getLogger(); // Llama a la función para obtener el logger correcto
-
-export { logger };

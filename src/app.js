@@ -17,8 +17,9 @@ import passport from 'passport';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import 'dotenv/config';
-import config from "./config/config.js"
+import config from "./config/environmentConfig.js"
 import errorHandler from "./middlewares/error.js"
+import {logger} from "./logger.js"
 
 await connectMongo();
 
@@ -28,7 +29,7 @@ const app = express();
 //Websockets
 const httpServer = http.createServer(app);
 const io = new SocketServer(httpServer);
-const serverConnected = httpServer.listen(port, ()=> console.log(`Server listening on port: ${port}`));
+const serverConnected = httpServer.listen(port, ()=> logger.info(`Server listening on port: ${port}`));
 serverConnected.on('error', error => console.log(`Server error: ${error}`))
 io.on('connection', (socket)=> {
     console.log(`New Client Connection with ID: ${socket.id}`);
@@ -104,6 +105,7 @@ app.use('/api/carts/:cid', cartsRouter);
 app.use('/api/carts/:cid/products/:pid', cartsRouter);
 app.use('/api/carts/:cid/purchase', cartsRouter);
 app.use('/auth', authRouter);
+app.use('/loggertest', authRouter);
 app.use('/api/users', usersRouter);
 app.get('*',(req, res)=>{
     return res.status(404).json({
