@@ -1,8 +1,15 @@
 // https://flaviocopes.com/fix-dirname-not-defined-es-module-scope/
+import { connect } from "mongoose";
+import bcrypt from 'bcrypt';
+import multer from "multer";
 import path from "path";
 import { fileURLToPath } from "url";
 import 'dotenv/config';
+import { faker } from '@faker-js/faker';
+import { v4 as uuidv4 } from 'uuid';
 import CustomError from "./errors/custom-error.js";
+import EErros from "./errors/enums.js";
+import {logger}  from "./logger.js";
 
 
 export const __filename = fileURLToPath(import.meta.url);
@@ -10,7 +17,6 @@ export const __dirname = path.dirname(__filename);
 
 
 /* ************* MULTER****************** */
-import multer from "multer";
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, __dirname + "/public");
@@ -24,31 +30,30 @@ export const uploader = multer({ storage });
 
 
 /* **************MONGO ATLAS ************** */
-import { connect } from "mongoose";
 export async function connectMongo() {
   try {
+    logger.info("Server mode ---> "+ process.env.environment);
+    logger.info("Connecting to the MongoDB...");
     await connect(
-      `mongodb+srv://${process.env.mongo_user}:${process.env.mongo_pass}@jpcluster.4kxbuid.mongodb.net/ecommerce?retryWrites=true&w=majority`
-    );
-    console.log("plug to mongo!");
-  } catch (error) {
-    CustomError.createError({
-      name: "Connection to database error",
-      cause: "The connection to the database has failed",
-      message: "Error de conexión a MongoDB",
-      code: EErros.MONGO_CONNECT_FAIL,
-    })
+      `${process.env.mongo_string}`
+      );
+      logger.info("Succesfully connected to MongoDB!");
+    } catch (error) {
+      logger.error("Connection to database error");
+        CustomError.createError({
+          name: "Connection to database error",
+          cause: "The connection to the database has failed",
+          message: "Error de conexión a MongoDB",
+          code: EErros.MONGO_CONNECT_FAIL,
+      })
+    }
   }
-}
-
-/* ***************** bcrypt ************************** */
-import bcrypt from 'bcrypt';
-export const createHash = (password) => bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-export const isValidPassword = (password, hashPassword) => bcrypt.compareSync(password, hashPassword);
-
+  
+  /* ***************** bcrypt ************************** */
+  export const createHash = (password) => bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+  export const isValidPassword = (password, hashPassword) => bcrypt.compareSync(password, hashPassword);
+  
 /* *****************  FAKER *************************** */
-import { faker } from '@faker-js/faker';
-import { v4 as uuidv4 } from 'uuid';
 
 export function generateFakerProducts() {
   let fakerProducts = [];
@@ -68,3 +73,4 @@ export function generateFakerProducts() {
   }
   return fakerProducts;
 }
+
