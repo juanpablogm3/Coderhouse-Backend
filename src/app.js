@@ -3,7 +3,7 @@ import { productsRouter } from './routes/products.router.js';
 import { chatService } from './services/chat.service.js';
 import { cartsRouter } from './routes/carts.router.js';
 import viewsRouter from './routes/views.router.js';
-import { __dirname, __filename, connectMongo } from './utils.js';
+import { __dirname, __dirnameBase, __filename, connectMongo } from './utils.js';
 import handlebars from 'express-handlebars';
 import http from 'http';
 import { Server as SocketServer } from 'socket.io';
@@ -20,6 +20,9 @@ import 'dotenv/config';
 import config from "./config/environmentConfig.js"
 import errorHandler from "./middlewares/error.js"
 import {logger} from "./logger.js"
+import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
+
 
 await connectMongo();
 
@@ -67,6 +70,20 @@ io.on('connection', (socket)=> {
         }
     });
 });
+
+//Swagger
+const options = {
+    definition: {
+        openapi: '3.0.1',
+        info: {
+            title: 'Documentation of project',
+            description: 'Documentation of products and carts endpoints',
+        },
+    },
+    apis: [`${__dirnameBase}/docs/**/*.yaml`]
+};
+const swaggerSpec = swaggerJsdoc(options);
+app.use('/apidocs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 //Handlebars
 app.engine('handlebars', handlebars.engine());

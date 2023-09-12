@@ -1,0 +1,173 @@
+paths:
+  /api/products:
+    get:
+      summary: Get a list of products
+      tags:
+        - Products
+      description: Retrieve a list of all products.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Products'
+    post:
+      summary: Create a new product
+      tags:
+        - Products
+      description: Create a new product with the provided data.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/updateProduct'
+      responses:
+        '201':
+          description: Created a new product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Products'
+  /api/products/{id}:
+    get:
+      summary: Get a product by ID
+      tags:
+        - Products
+      description: Retrieve a product by its unique identifier.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the product to get.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Products'
+    put:
+      summary: Update a product by ID
+      tags:
+        - Products
+      description: Update an existing product with the provided data.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the product to update.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/updateProduct'
+      responses:
+        '200':
+          description: Updated the product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Products'
+    delete:
+      summary: Delete a product by ID
+      tags:
+        - Products
+      description: Delete an existing product by its unique identifier.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the product to delete.
+      responses:
+        '204':
+          description: Deleted the product
+components:
+  schemas:
+    Products:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Id by Mongo
+        title:
+          type: string
+          description: Title of the product
+        description:
+          type: string
+          description: Description of the product
+        price:
+          type: number
+          format: float
+          description: Price of the product
+        thumbnail:
+          type: string
+          description: URL to the product's thumbnail image
+        code:
+          type: string
+          description: Unique code for the product
+        stock:
+          type: number
+          description: Stock quantity of the product
+        category:
+          type: string
+          description: Category of the product
+        status:
+          type: boolean
+          description: Status of the product (true/false)
+      example:
+        _id: 647b9c68599105c3932d2584
+        title: Producto 8
+        description: Descripción del producto 8
+        price: 2499
+        thumbnail: https://assets.justinmind.com/wp-content/uploads/2018/11/Lorem-Ipsum-alternatives-768x492.png
+        code: VWX234
+        stock: 9
+        category: cats
+        status: true
+  requestBodies:
+    updateProduct:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Title of the product
+        description:
+          type: string
+          description: Description of the product
+        price:
+          type: number
+          format: float
+          description: Price of the product
+        thumbnail:
+          type: string
+          description: URL to the product's thumbnail image
+        code:
+          type: string
+          description: Unique code for the product
+        stock:
+          type: number
+          description: Stock quantity of the product
+        category:
+          type: string
+          description: Category of the product
+        status:
+          type: boolean
+          description: Status of the product (true/false)
+      example:
+        title: Producto 8
+        description: Descripción del producto 8
+        price: 2499
+        thumbnail: https://assets.justinmind.com/wp-content/uploads/2018/11/Lorem-Ipsum-alternatives-768x492.png
+        code: VWX234
+        stock: 9
+        category: cats
+        status: true

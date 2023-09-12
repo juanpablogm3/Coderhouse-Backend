@@ -4,16 +4,21 @@ import bcrypt from 'bcrypt';
 import multer from "multer";
 import path from "path";
 import { fileURLToPath } from "url";
+import { dirname } from 'path';
 import 'dotenv/config';
 import { faker } from '@faker-js/faker';
 import { v4 as uuidv4 } from 'uuid';
 import CustomError from "./errors/custom-error.js";
 import EErros from "./errors/enums.js";
-import {logger}  from "./logger.js";
+import { logger }  from "./logger.js";
 
 
 export const __filename = fileURLToPath(import.meta.url);
-export const __dirname = path.dirname(__filename);
+export const __dirname = dirname(__filename).replace(/\/[^/]*$/,'/');
+export const __dirnameBase = dirname(__filename).replace(/\/[^/]*$/,'/');
+
+export default __dirnameBase;
+
 
 
 /* ************* MULTER****************** */
@@ -25,7 +30,6 @@ const storage = multer.diskStorage({
     cb(null, file.originalname);
   },
 });
-export default __dirname;
 export const uploader = multer({ storage });
 
 
