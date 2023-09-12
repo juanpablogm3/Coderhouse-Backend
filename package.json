@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node ./src/app.js --mode PRODUCTION",
-    "dev": "nodemon ./src/app.js --mode DEVELOPMENT"
+    "dev": "nodemon -e yaml,js ./src/app.js --mode DEVELOPMENT"
   },
   "keywords": [],
   "author": "",
