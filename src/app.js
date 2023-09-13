@@ -76,8 +76,8 @@ const options = {
     definition: {
         openapi: '3.0.1',
         info: {
-            title: 'Documentation of project',
-            description: 'Documentation of products and carts endpoints',
+            title: 'Coderhouse backend documentation project',
+            description: 'Documentation of carts and products endpoints',
         },
     },
     apis: [`${__dirnameBase}/docs/**/*.yaml`]

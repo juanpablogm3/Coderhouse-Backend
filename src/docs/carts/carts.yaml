@@ -1,0 +1,209 @@
+paths:
+  /api/carts:
+    post:
+      summary: Create a new cart
+      description: Create a new cart.
+      tags:
+        - Cart
+      responses:
+        '201':
+          description: Created a new cart
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+    get:
+      summary: Get a cart by ID
+      description: Retrieve a cart by its unique identifier.
+      tags:
+        - Cart
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          schema:
+            type: string
+          description: ID of the cart to get.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+    put:
+      summary: Replace products in a cart by ID
+      description: Replace the products in an existing cart with the provided products.
+      tags:
+        - Cart
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          schema:
+            type: string
+          description: ID of the cart to update.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CartProduct'
+      responses:
+        '200':
+          description: Updated the cart with new products
+  /api/carts/{cid}/products/{pid}:
+    put:
+      summary: Modify the quantity of a product in a cart
+      description: Modify the quantity of a product in an existing cart by its unique identifier.
+      tags:
+        - Cart
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          schema:
+            type: string
+          description: ID of the cart.
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: ID of the product.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+                  description: New quantity of the product in the cart.
+              required:
+                - quantity
+      responses:
+        '200':
+          description: Product quantity in the cart updated
+    delete:
+      summary: Remove a product from a cart by ID
+      description: Remove a product from an existing cart by its unique identifier.
+      tags:
+        - Cart
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          schema:
+            type: string
+          description: ID of the cart.
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: ID of the product to remove.
+      responses:
+        '200':
+          description: Product removed from the cart
+  /api/carts/{cid}/products/{pid}/units:
+    post:
+      summary: Add a product to a cart by ID
+      description: Add a product to an existing cart by its unique identifier.
+      tags:
+        - Cart
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          schema:
+            type: string
+          description: ID of the cart.
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: ID of the product to add.
+      responses:
+        '200':
+          description: Product added to the cart
+    delete:
+      summary: Delete all products in a cart by ID
+      description: Delete all products in an existing cart by its unique identifier.
+      tags:
+        - Cart
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          schema:
+            type: string
+          description: ID of the cart.
+      responses:
+        '200':
+          description: All products in the cart deleted
+  /api/carts/{cid}:
+    delete:
+      summary: Delete a cart by ID
+      description: Delete an existing cart by its unique identifier.
+      tags:
+        - Cart
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          schema:
+            type: string
+          description: ID of the cart to delete.
+      responses:
+        '200':
+          description: Cart deleted
+    post:
+      summary: Finish a purchase for a cart by ID
+      description: Finish a purchase for an existing cart by its unique identifier.
+      tags:
+        - Cart
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          schema:
+            type: string
+          description: ID of the cart.
+      responses:
+        '200':
+          description: Purchase completed
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Unique identifier for the cart
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartProduct'
+      example:
+        _id: 647b9c68599105c3932d2584
+        products: 
+          - idProduct: 647b9c68599105c3932d2584
+            quantity: 5
+          - idProduct: 647b9c68599105c3932fefer4
+            quantity: 2
+    CartProduct:
+      type: object
+      properties:
+        idProduct:
+          type: string
+          description: Unique identifier for the product
+        quantity:
+          type: integer
+          description: Quantity of the product in the cart
+      example:
+        idProduct: 647b9c68599105c3932d2584
+        quantity: 5
+        
