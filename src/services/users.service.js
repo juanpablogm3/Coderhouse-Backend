@@ -1,4 +1,5 @@
 import { userModel } from '../dao/models/users.model.js';
+import { UserModel } from "../dao/mongoose/users.model.js";
 import UserDTO from '../dao/DTO/userDTO.js';
 
 class UserService {
@@ -37,10 +38,16 @@ class UserService {
     return userUpdated;
   }
 
-/*   async updateRole(id){
+  async updateRole(id){
     if (!id) throw new Error('invalid _id');
-    const user = await userModel.
-  } */
+    const user = await UserModel.findOne({_id: id});
+    if (user) {
+      user.role = user.role === 'user' ? 'premium' : 'user'; // Cambia el valor de 'role'
+      await user.save();
+    } else {
+      throw new Error('Usuario no encontrado');
+    }
+  }
 
   async updateLastConnection(id) {
     if (!id) throw new Error('invalid _id');
