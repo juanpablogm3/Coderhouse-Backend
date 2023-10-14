@@ -1,4 +1,5 @@
 import {productService} from '../services/products.service.js';
+import { authController } from './auth.controller.js';
 
 
 class ProductsController {
@@ -46,8 +47,12 @@ class ProductsController {
 
     async createProduct(req, res) {
         try {
+            const user = await authController.getSession();
+            console.log(req.session.user);
             const productData = req.body;
+            //productData.owner = req.session.user.role
             const createdProduct = await productService.createProduct(productData);
+            //createdProduct.owner = 'PREMIUMMMMM'
             return res.status(201).json({
                 status: 'success',
                 msg: 'Product created',

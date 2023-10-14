@@ -22,6 +22,7 @@ import errorHandler from "./middlewares/error.js"
 import {logger} from "./logger.js"
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
+import { mailerRouter } from '../src/routes/mailer.router.js'
 
 
 await connectMongo();
@@ -124,6 +125,7 @@ app.use('/api/carts/:cid/purchase', cartsRouter);
 app.use('/auth', authRouter);
 app.use('/loggertest', authRouter);
 app.use('/api/users', usersRouter);
+app.use('/api/mailer', mailerRouter);
 app.get('*',(req, res)=>{
     return res.status(404).json({
         status: 'error',

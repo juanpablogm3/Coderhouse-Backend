@@ -35,6 +35,16 @@ const usersSchema = new Schema({
         type: String,
         default: 'user',
     },
+    documents: [
+        {
+            name: { type: String, required: true },
+            reference: { type: String, required: true },
+        }
+    ],
+    last_connection: {
+        type: Date,
+        default: Date.now()
+    },
     }, { 
         versionKey: false 
     }

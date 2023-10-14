@@ -1,5 +1,8 @@
 import { userService } from '../services/users.service.js';
 import { cartService } from '../services/carts.service.js';
+import { userModel } from '../dao/models/users.model.js';
+import { UserModel } from '../dao/mongoose/users.model.js';
+import { transport } from '../routes/mailer.router.js'
 
 
 class UserController{
@@ -20,6 +23,22 @@ class UserController{
                 });
         }
     };
+
+    async manageUsers(req,res){
+        try {
+            const allUsers = await UserModel.find().lean();
+            console.log(allUsers)
+            const users = allUsers.filter(user=>user.role!='admin')
+            return res.render('adminpanel', {users});
+        } catch (e){
+            console.log(e);
+            return res.status(500).json({
+                status: 'error',
+                msg: 'something went wrong :(',
+                data: {},
+            });
+        }
+    }
 
     async createUser (req, res) {
         try {
@@ -42,6 +61,44 @@ class UserController{
         }
     };
 
+    async deleteInactiveUsers (req, res) {
+        try {
+            const currentDate = new Date();
+            currentDate.setTime(currentDate.getTime() - 1800000); // media hora en miliseg , poner 2 días en miliseg cuando todo OK
+            const users = await userModel.getAll();
+            const usersInactive = users.filter((user) => {
+                return new Date(user.last_connection) > currentDate; // cambiar a < cuando esté todo OK
+            });
+            const usersToDelete = usersInactive.filter(user=>user.role!='admin');
+            for (const userToDelete of usersToDelete) {
+                await transport.sendMail({
+                    from: `${process.env.mailer_email}`,
+                    to: userToDelete.email, // Utiliza la propiedad de email del usuario
+                    subject: 'CUENTA ELIMINADA',
+                    html: `
+                      <h1>Su cuenta ha sido eliminada por inactividad</h1>
+                      <p>El usuario con ID ${userToDelete._id} ha sido eliminado de nuestra base de datos.</p>
+                    `,
+                    attachments: []
+                });
+                await userService.deleteOne(userToDelete._id);
+                await cartService.deleteCartById(userToDelete.cartId);
+            }
+            return res.status(200).json({ 
+                status: 'success',
+                msg: 'users deleted',
+                data: usersToDelete,
+            });
+        }   catch (e) {
+            console.log(e);
+            return res.status(500).json({
+                status: 'error',
+                msg: 'something went wrong :(',
+                data: {},
+            });
+        }
+    };
+
     async deleteUser (req, res) {
         try {
             const { id } = req.params;
@@ -50,14 +107,14 @@ class UserController{
                 status: 'success',
                 msg: 'user deleted',
                 data: deletedUser,
-                });
+            });
         }   catch (e) {
             console.log(e);
             return res.status(500).json({
                 status: 'error',
                 msg: 'something went wrong :(',
                 data: {},
-                });
+            });
         }
     };
 

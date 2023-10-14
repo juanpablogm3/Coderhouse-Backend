@@ -1,6 +1,7 @@
 import cookie from 'cookie';
 import UserDTO from '../dao/DTO/userDTO.js';
 import {logger} from "../logger.js"
+import { userService } from '../services/users.service.js';
 
 
 
@@ -29,12 +30,12 @@ class AuthController {
             const user = new UserDTO(req.session.user)
             return res.send(JSON.stringify(user.filter()));
         } catch (error) {
-        logger.error(error);
-        return res.status(500).json({
-            status: 'error',
-            msg: 'OOps... something went wrong :(',
-            data: {},
-        });
+            logger.error(error);
+            return res.status(500).json({
+                status: 'error',
+                msg: 'OOps... something went wrong :(',
+                data: {},
+            });
         }
     }
 
@@ -56,6 +57,7 @@ class AuthController {
             if (!req.user) {
                 return res.json({ error: 'something went wrong' });
             }
+            let lastconnection = new Date()
             req.session.user = {
             _id: req.user._id,
             email: req.user.email,
@@ -63,7 +65,8 @@ class AuthController {
             last_name: req.user.last_name,
             age: req.user.age,
             role: req.user.role,
-            cartId: req.user.cartId
+            cartId: req.user.cartId,
+            last_connection: lastconnection
             };
             console.log({ msg: 'ok', payload: req.user });
             return res.redirect('/auth/login')
@@ -108,6 +111,8 @@ class AuthController {
             if (!req.user) {
                 return res.json({ error: 'invalid credentials' });
             }
+            userService.updateLastConnection(req.user._id)
+
             req.session.user = {
                 _id: req.user._id,
                 email: req.user.email,
@@ -115,7 +120,8 @@ class AuthController {
                 last_name: req.user.last_name,
                 age: req.user.age,
                 role: req.user.role,
-                cartId: req.user.cartId
+                cartId: req.user.cartId,
+                last_connection: req.user.last_connection
             };
             const cartId = req.session.user.cartId;
             logger.info({ msg: 'ok', payload: req.user });
@@ -150,6 +156,7 @@ class AuthController {
                 if (err) {
                 return res.status(500).render('error', { error: 'no se pudo cerrar su session' });
                 }
+                userService.updateLastConnection(req.user._id)
                 return res.redirect('/auth/login');
             });
         } catch (error) {
@@ -198,7 +205,7 @@ class AuthController {
         
             req.session.user = {
                 _id: req.user._id,
-                email: null,
+                email: req.user.email,
                 first_name: req.user.first_name,
                 last_name: null,
                 age: null,

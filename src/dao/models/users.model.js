@@ -1,7 +1,7 @@
 import { UserModel } from "../mongoose/users.model.js";
 
 
-class UsersModel{
+export default class UsersModel{
 
     async getAll() {
         const users = await UserModel.find({});
@@ -20,6 +20,11 @@ class UsersModel{
 
     async updateOne(id, first_name, last_name, email, age, cartId) {
         const userUpdated = await UserModel.updateOne({ _id: id }, { first_name, last_name, email, age, cartId });
+        return userUpdated;
+    }
+
+    async updateLastConnection(id, lastconnection){
+        const userUpdated = await UserModel.updateOne({ _id: id }, { last_connection: lastconnection });
         return userUpdated;
     }
 }

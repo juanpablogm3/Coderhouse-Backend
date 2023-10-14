@@ -6,6 +6,7 @@ export default class UserDTO{
     filter(){
         const userDTO = { 
             first_name: this.user.first_name,
+            email: this.user.email,
             role: this.user.role
         }
         
