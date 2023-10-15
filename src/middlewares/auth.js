@@ -71,9 +71,26 @@ export function isUserOrAdmin(req, res, next) {
 
 export function isPremiumOrAdmin(req, res, next) {
   try{
-    console.log(req)
     if (req.session?.user?.role === 'premium' || req.session?.user?.role === 'admin') {
       console.log(req.session)
+      return next();
+    } else {
+      CustomError.createError({
+        name: "Authentication error",
+        cause: "Invalid or not existing user credentials",
+        message: "Error de autenticación",
+        code: EErros.AUTHENTICATION_ERROR,
+      })
+    }
+  } catch (error){
+    next(error);
+  }
+}
+
+export function isPremiumOrAdminOrUser(req, res, next) {
+  try{
+    console.log(req)
+    if (req.session?.user?.role === 'premium' || req.session?.user?.role === 'admin'|| req.session?.user?.role === 'user') {
       return next();
     } else {
       CustomError.createError({
