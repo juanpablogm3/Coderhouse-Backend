@@ -71,7 +71,9 @@ export function isUserOrAdmin(req, res, next) {
 
 export function isPremiumOrAdmin(req, res, next) {
   try{
+    console.log(req)
     if (req.session?.user?.role === 'premium' || req.session?.user?.role === 'admin') {
+      console.log(req.session)
       return next();
     } else {
       CustomError.createError({

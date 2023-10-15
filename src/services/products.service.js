@@ -3,6 +3,9 @@ import {ProductModel} from '../dao/mongoose/products.model.js';
 import { generateFakerProducts } from '../utils.js';
 import CustomError from '../errors/custom-error.js';
 import EErros from '../errors/enums.js';
+import 'dotenv/config';
+import { transport } from '../routes/mailer.router.js'
+import { UserModel } from '../dao/mongoose/users.model.js';
 
 class ProductService {
 
@@ -103,6 +106,18 @@ class ProductService {
     async deleteProduct(productId) {
         try {
             const product = await productsModel.deleteProduct(productId);
+            const prodOwner = await UserModel.findById(product.owner);
+            if(prodOwner='premium'){
+                await transport.sendMail({
+                    from: `${process.env.mailer_email}`,
+                    to: prodOwner.email,
+                    subject: 'PRODUCTO ELIMINADO',
+                    html: `
+                    <h1>Su producto ${product.title} ha sido eliminado por el ADMINISTRADOR</h1>
+                    `,
+                    attachments: []
+                });
+            }
             return product;
         } catch (error) {
             throw error;

@@ -2,6 +2,7 @@ import cookie from 'cookie';
 import UserDTO from '../dao/DTO/userDTO.js';
 import {logger} from "../logger.js"
 import { userService } from '../services/users.service.js';
+import { UserModel } from '../dao/mongoose/users.model.js';
 
 
 
@@ -194,6 +195,21 @@ class AuthController {
             msg: 'something went wrong :(',
             data: {},
         });
+        }
+    }
+
+    async manageUsers(req,res){
+        try {
+            const allUsers = await UserModel.find().lean();
+            const users = allUsers.filter(user=>user.role!='admin')
+            return res.render('adminpanel', {users});
+        } catch (e){
+            console.log(e);
+            return res.status(500).json({
+                status: 'error',
+                msg: 'something went wrong :(',
+                data: {},
+            });
         }
     }
 

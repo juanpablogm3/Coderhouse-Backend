@@ -47,12 +47,11 @@ class ProductsController {
 
     async createProduct(req, res) {
         try {
-            const user = await authController.getSession();
-            console.log(req.session.user);
+            const session = await authController.getSession();
+            console.log(session);
             const productData = req.body;
-            //productData.owner = req.session.user.role
+            productData.owner = session.user._id
             const createdProduct = await productService.createProduct(productData);
-            //createdProduct.owner = 'PREMIUMMMMM'
             return res.status(201).json({
                 status: 'success',
                 msg: 'Product created',

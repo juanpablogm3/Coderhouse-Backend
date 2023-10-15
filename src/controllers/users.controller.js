@@ -1,7 +1,7 @@
 import { userService } from '../services/users.service.js';
 import { cartService } from '../services/carts.service.js';
 import { userModel } from '../dao/models/users.model.js';
-import { UserModel } from '../dao/mongoose/users.model.js';
+import 'dotenv/config';
 import { transport } from '../routes/mailer.router.js'
 
 
@@ -23,22 +23,6 @@ class UserController{
                 });
         }
     };
-
-    async manageUsers(req,res){
-        try {
-            const allUsers = await UserModel.find().lean();
-            console.log(allUsers)
-            const users = allUsers.filter(user=>user.role!='admin')
-            return res.render('adminpanel', {users});
-        } catch (e){
-            console.log(e);
-            return res.status(500).json({
-                status: 'error',
-                msg: 'something went wrong :(',
-                data: {},
-            });
-        }
-    }
 
     async createUser (req, res) {
         try {

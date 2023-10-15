@@ -10,4 +10,5 @@ viewsRouter.get('/mockingproducts', viewsController.getAllFakerProducts);
 viewsRouter.get('/', viewsController.getIndexPage);
 viewsRouter.get('/realtimeproducts', viewsController.getRealtimeProducts);
 viewsRouter.get('/chat', isUser, viewsController.getAllMessages);
+
 export default viewsRouter;
