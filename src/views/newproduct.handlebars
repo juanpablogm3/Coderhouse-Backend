@@ -1,0 +1,24 @@
+<div  id="">
+    <h1>CREAR PRODUCTO</h1>
+    <form id="form" action="/api/products/newproduct" method="post" enctype="multipart/form-data">
+        <div class="form-group" style="margin-left: 20px;">
+            <div class="row">
+                <div class="col"><input style="margin-top: 10px" type="text" class="form-control" placeholder="Ingrese Título" value="" name="title" required></div>
+                <div class="col"><input style="margin-top: 10px" type="text" class="form-control" placeholder="Ingrese Descripción" value="" name="description" required></div>
+                <div class="col"><input style="margin-top: 10px" type="text" class="form-control" placeholder="Ingrese Categoría" value="" name="category" required></div>
+                <input style="margin-top: 10px" type="hidden" class="form-control" value="true" name="status" required>
+            </div>
+            <div class="row">
+                <div class="col"><input style="margin-top: 10px" type="code" class="form-control" placeholder="Ingrese Código" value="" name="code" required></div>
+                <div class="col"><input style="margin-top: 10px" type="number" class="form-control" placeholder="Ingrese Precio" value="" name="price" required></div>
+                <div class="col"><input style="margin-top: 10px" type="number" class="form-control" placeholder="Ingrese Stock" value="" name="stock" required></div>
+            </div>
+            <div class="row">
+                <div class="col"><input style="margin-top: 10px" type="text" class="form-control" placeholder="Ingrese URL de la imagen"name="thumbnail" required></div>
+            </div>
+            <button style="margin-top: 10px" type="submit" class="btn btn-primary btn-lg btn-block">Guardar</button>
+        </div>
+    </form>
+    <a href='http://localhost:8080/auth/perfil'>Volver al perfil</a>
+</div>
+<script src="/js/newprod.js"></script>

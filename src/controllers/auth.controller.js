@@ -11,12 +11,12 @@ class AuthController {
         try {
             return res.send(JSON.stringify(req.session))
         } catch (error) {
-        logger.error(error);
-        return res.status(500).json({
-            status: 'error',
-            msg: 'something went wrong :(',
-            data: {},
-        });
+            logger.error(error);
+            return res.status(500).json({
+                status: 'error',
+                msg: 'something went wrong :(',
+                data: {},
+            });
         }
     }
 

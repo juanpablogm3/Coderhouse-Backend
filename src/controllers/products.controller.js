@@ -1,6 +1,4 @@
 import {productService} from '../services/products.service.js';
-import { authController } from './auth.controller.js';
-
 
 class ProductsController {
 
@@ -45,12 +43,23 @@ class ProductsController {
         }
     }
 
+    async getNewProductPage(req, res){
+        try {
+            return res.render('newproduct', {});
+        } catch (error) {
+            console.error(error);
+            return res.status(400).json({
+                status: 'error',
+                msg: error.message,
+            });
+        }
+
+    }
+
     async createProduct(req, res) {
         try {
-            const session = await authController.getSession();
-            console.log(session);
             const productData = req.body;
-            productData.owner = session.user._id
+            productData.owner = req.session?.user?._id;
             const createdProduct = await productService.createProduct(productData);
             return res.status(201).json({
                 status: 'success',

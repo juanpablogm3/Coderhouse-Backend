@@ -8,6 +8,7 @@ import handlebars from 'express-handlebars';
 import http from 'http';
 import { Server as SocketServer } from 'socket.io';
 import {productService} from './services/products.service.js';
+import {productsController} from './controllers/products.controller.js';
 import MongoStore from 'connect-mongo';
 import session from 'express-session';
 import { authRouter } from './routes/auth.router.js';
@@ -40,6 +41,8 @@ io.on('connection', (socket)=> {
     //BACK RECIBE
     socket.on('msg_from_client_to_server', async (newProduct)=>{
         try{
+            const user = await productsController.createOwnerForProduct();
+            newProduct.owner = user;
             await productService.createProduct(newProduct);
             const productList = await productService.getAllProducts();
             //BACK EMITE

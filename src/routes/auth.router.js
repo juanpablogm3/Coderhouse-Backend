@@ -1,6 +1,6 @@
 import express from 'express';
 import passport from 'passport';
-import { isAdmin, isUser, isUserOrAdmin } from '../middlewares/auth.js';
+import { isAdmin, isPremiumOrAdminOrUser, isUser, isUserOrAdmin } from '../middlewares/auth.js';
 import { authController } from '../controllers/auth.controller.js';
 import { loggerTest } from '../controllers/loggertest.controller.js';
 
@@ -15,7 +15,7 @@ authRouter.get('/login', authController.getLoginPage);
 authRouter.post('/login', passport.authenticate('login', { failureRedirect: '/auth/faillogin' }), authController.loginUser);
 authRouter.get('/faillogin', authController.failLogin);
 authRouter.get('/logout', authController.logoutUser);
-authRouter.get('/perfil', isUserOrAdmin, authController.getUserProfile);
+authRouter.get('/perfil', isPremiumOrAdminOrUser, authController.getUserProfile);
 authRouter.get('/administracion', isAdmin, authController.getAdminPage);
 authRouter.get('/panel', isAdmin, authController.manageUsers);
 authRouter.get('/github', passport.authenticate('github'));
