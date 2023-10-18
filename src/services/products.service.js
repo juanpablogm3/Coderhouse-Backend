@@ -107,7 +107,7 @@ class ProductService {
         try {
             const product = await productsModel.deleteProduct(productId);
             const prodOwner = await UserModel.findById(product.owner);
-            if(prodOwner='premium'){
+            if(prodOwner.role='premium'){
                 await transport.sendMail({
                     from: `${process.env.mailer_email}`,
                     to: prodOwner.email,

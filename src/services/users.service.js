@@ -55,7 +55,6 @@ class UserService {
     const userUpdated = await userModel.updateLastConnection(id, lastconnection);
     return userUpdated;
   }
-
 }
 
 export const userService = new UserService();

@@ -22,11 +22,9 @@ form.addEventListener('submit', async (event) => {
         });
 
         if (response.ok) {
-            // Producto enviado con éxito al servidor.
-            alert('Producto enviado con éxito al back');
+            alert('Producto creado!');
         } else {
-            // Manejar errores de respuesta del servidor si es necesario.
-            console.error('Error en el envío del producto al back');
+            console.error('Error al crear el producto');
         }
     } catch (error) {
         console.error('Error al enviar la solicitud:', error);

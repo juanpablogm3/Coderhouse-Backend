@@ -83,7 +83,7 @@ class AuthController {
 
     async failRegister(req, res) {
         try {
-            return res.json({ error: 'fail to register' });
+            return res.render('error',{ error: 'fail to register' });
         } catch (error) {
         logger.error(error);
         return res.status(500).json({
@@ -140,7 +140,7 @@ class AuthController {
 
     async failLogin(req, res) {
         try {
-            return res.json({ error: 'fail to login' });
+            return res.render('error',{ error: 'fail to login' });
         } catch (error) {
         logger.error(error);
         return res.status(500).json({

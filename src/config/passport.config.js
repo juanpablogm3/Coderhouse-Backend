@@ -20,7 +20,7 @@ export function iniPassport() {
           return done(null, false);
         }
         if (!isValidPassword(password, user.password)) {
-          logger.warning('Invalid Password');
+          logger.warn('Invalid Password');
           return done(null, false);
         }
 

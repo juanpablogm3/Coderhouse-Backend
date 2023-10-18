@@ -2,23 +2,22 @@
     <h1>ADMIN PANEL: USUARIOS</h1>
     {{#each users}}
         <div style="display: inline-block">
-            <p>Nombre: {{this.first_name}} email: {{this.email}} Rol: {{this.role}}</p>
+            <p id="{{this._id}}" class="userId">Nombre: {{this.first_name}} email: {{this.email}} Rol: {{this.role}}</p>
         </div>
         <div style="display: inline-block">
-            <button>Cambiar Rol</button><button>Eliminar usuario</button>
+            <button data-userid="{{this._id}}" class="updateRole" onclick="updateRole(this)">Cambiar Rol</button>
+            <button data-userid="{{this._id}}" class="deleteUser" onclick="deleteUser(this)">Eliminar usuario</button>
         </div>
             </br>
             </br>
     {{/each}}
+        <button id="deleteInactiveUsers" onclick="deleteInactiveUsers()">Delete inactive users</button>
+    </br>
+    </br>
+    </br>
+    </br>
+    <a href='http://localhost:8080/auth/administracion'>Volver</a>
 </div>
-
-
-
-
-
-
-
-
 
 
 <script src="/js/adminpanel.js"></script>

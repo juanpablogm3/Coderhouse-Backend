@@ -61,7 +61,7 @@ class UserController{
                     subject: 'CUENTA ELIMINADA',
                     html: `
                       <h1>Su cuenta ha sido eliminada por inactividad</h1>
-                      <p>El usuario con ID ${userToDelete._id} ha sido eliminado de nuestra base de datos.</p>
+                      <p>El usuario con EMAIL ${userToDelete.email} ha sido eliminado de nuestra base de datos.</p>
                     `,
                     attachments: []
                 });
@@ -107,6 +107,25 @@ class UserController{
             const { id } = req.params;
             const { first_name, last_name, email, age } = req.body;
             const updatedUser = await userService.updateOne(id, first_name, last_name, email, age);
+            return res.status(201).json({
+                status: 'success',
+                msg: 'user updated',
+                data: updatedUser,
+                });
+        }   catch (e) {
+            console.log(e);
+            return res.status(500).json({
+                status: 'error',
+                msg: 'something went wrong :(',
+                data: {},
+                });
+        }
+    };
+
+    async updateRole (req, res) {
+        try {
+            const { id } = req.params;
+            const updatedUser = await userService.updateRole(id);
             return res.status(201).json({
                 status: 'success',
                 msg: 'user updated',

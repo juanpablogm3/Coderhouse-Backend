@@ -6,6 +6,7 @@ export const usersRouter = express.Router();
 
 usersRouter.get('/', userController.getUsers);
 usersRouter.post('/', userController.createUser);
-usersRouter.delete('/:id', userController.deleteUser);
-usersRouter.delete('/', userController.deleteInactiveUsers);
+usersRouter.delete('/:id', isAdmin, userController.deleteUser);
+usersRouter.delete('/', isAdmin,userController.deleteInactiveUsers);
 usersRouter.put('/:id', userController.updateUser);
+usersRouter.put('/premium/:id', isAdmin, userController.updateRole);

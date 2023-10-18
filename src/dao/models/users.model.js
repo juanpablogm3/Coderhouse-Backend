@@ -13,8 +13,8 @@ export default class UsersModel{
         return userCreated;
     }
 
-    async deleteOne(_id) {
-        const deleted = await UserModel.deleteOne({ _id });
+    async deleteOne(id) {
+        const deleted = await UserModel.deleteOne({ _id: id });
         return deleted;
     }
 
