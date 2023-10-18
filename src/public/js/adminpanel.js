@@ -3,7 +3,7 @@ function updateRole(button) {
 
     const userId = button.getAttribute('data-userId');
 
-    fetch(`http://localhost:8080/api/users/premium/${userId}`, {
+    fetch(`/api/users/premium/${userId}`, {
         method: 'PUT',
     })
     .then(response => {
@@ -46,7 +46,7 @@ function deleteInactiveUsers() {
     /* const user = document.getElementsByClassName('userId')[0];
     const userId = user.getAttribute('id'); */
 
-    fetch(`http://localhost:8080/api/users`, {
+    fetch(`/api/users`, {
         method: 'DELETE',
     })
     .then(response => {

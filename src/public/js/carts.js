@@ -6,7 +6,7 @@ function removeFromCart(productId) {
         return;
     }
     const cartId = cartInfoElement.getAttribute('id');
-    fetch(`http://localhost:8080/api/carts/${cartId}/products/${productId}`, {
+    fetch(`/api/carts/${cartId}/products/${productId}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
@@ -33,7 +33,7 @@ function finishPurchase(){
         return;
     }
     const cartId = cartInfoElement.getAttribute('id');
-    fetch(`http://localhost:8080/api/carts/${cartId}/purchase`, {
+    fetch(`/api/carts/${cartId}/purchase`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
