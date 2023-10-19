@@ -38,11 +38,8 @@ class CartController{
             });
         } catch (error) {
             logger.error(error);
-            return res.status(400).json({
-                status: 'error',
-                msg: error.message,
-            });
-        }
+            return res.render('error',{error})
+        };
     };
 
     async modifyProductQuantity(req, res) {
@@ -91,10 +88,7 @@ class CartController{
             });
         } catch (error) {
             console.error(error);
-            return res.status(400).json({
-            status: 'error',
-            msg: error.message,
-            });
+            return res.render('error', {error})
         }
     };
 
