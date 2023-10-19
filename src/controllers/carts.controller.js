@@ -25,11 +25,7 @@ class CartController{
             const { cid } = req.params;
             const cart = await cartService.getCartById(cid);
             if (!cart) {
-            return res.status(404).json({
-                status: 'error',
-                msg: 'Cart not found',
-                payload: cart,
-            });
+                return res.render('error', {'ERROR':'El carrito solicitado no existe'});
             }
             return res.status(200).json({
                 status: 'success',
