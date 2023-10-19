@@ -38,13 +38,8 @@ function deleteUser(button) {
     });
 };
 
-//const deleteInactiveUsersButton = document.getElementsById('deleteInactiveUsers');
 
 function deleteInactiveUsers() {
-    alert('entro en fx')
-    
-    /* const user = document.getElementsByClassName('userId')[0];
-    const userId = user.getAttribute('id'); */
 
     fetch(`/api/users`, {
         method: 'DELETE',
@@ -53,7 +48,6 @@ function deleteInactiveUsers() {
         if (response.status === 200) {
         alert('USUARIOS ELIMINADOS')
     } else {
-        // Manejar errores de solicitud aquí
         console.error('Error en la solicitud Fetch');
     }
     window.location.reload();
