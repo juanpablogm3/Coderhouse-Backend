@@ -1,5 +1,6 @@
 const cartInfoElement = document.getElementsByClassName('cartInfoElement')[0];
 const cartId = cartInfoElement.getAttribute('cartId');
+cartInfoElement.addEventListener('click', addToCart(productId));
 
 function addToCart(productId) {
   if (!cartId) {
