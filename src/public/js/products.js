@@ -1,20 +1,7 @@
-// Wait for the document to be fully loaded
-document.addEventListener('DOMContentLoaded', function() {
-  const cartInfoElements = document.getElementsByClassName('cartInfoElement');
+const cartInfoElement = document.getElementsByClassName('cartInfoElement')[0];
+const cartId = cartInfoElement.getAttribute('cartId');
 
-  // Loop through the elements with the class 'cartInfoElement'
-  for (let i = 0; i < cartInfoElements.length; i++) {
-    const cartInfoElement = cartInfoElements[i];
-
-    cartInfoElement.addEventListener('click', function() {
-      const cartId = cartInfoElement.getAttribute('cartId');
-      const productId = cartInfoElement.getAttribute('prodId');
-      addToCart(cartId, productId);
-    });
-  }
-});
-
-function addToCart(cartId, productId) {
+function addToCart(productId) {
   if (!cartId) {
     window.location.href = '/auth/login';
     return;
