@@ -24,6 +24,7 @@ import {logger} from "./logger.js"
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { mailerRouter } from '../src/routes/mailer.router.js'
+import path from 'path';
 
 
 await connectMongo();
@@ -91,7 +92,7 @@ app.use('/apidocs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 //Handlebars
 app.engine('handlebars', handlebars.engine());
-app.set('views', __dirname+'views');
+app.set('views', path.join(__dirname,'views'));
 app.set('view engine', 'handlebars');
 
 //Config EXPRESS
