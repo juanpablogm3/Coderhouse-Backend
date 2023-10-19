@@ -1,11 +1,26 @@
-const cartInfoElement = document.getElementsByClassName('cartInfo')[0];
+//const cartInfoElement = document.getElementsByClassName('cartInfo')[0];
+
+// Wait for the document to be fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+  // Find all elements with the class 'addToCartButton'
+  const addToCartButtons = document.querySelectorAll('cartInfo');
+
+  // Add a click event listener to each button
+  addToCartButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
+      const productId = button.getAttribute('data-productId'); // You might need to set this attribute in your HTML
+      addToCart(productId);
+    });
+  });
+});
+
 
 function addToCart(productId) {
-  if (cartInfoElement === undefined) {
+  if (cartInfo === undefined) {
     window.location.href = '/auth/login';
     return;
   }
-  const cartId = cartInfoElement.getAttribute('id');
+  const cartId = cartInfo.getAttribute('id');
   fetch(`/api/carts/${cartId}/products/${productId}`, {
     method: 'POST',
     headers: {
