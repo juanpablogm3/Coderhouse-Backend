@@ -2,15 +2,15 @@
   {{#if user}}
     <h1 style="padding-left: 30px; padding-top: 30px">
       BIENVENIDO {{user.first_name}}
-      <a class="cartInfo" id="{{user.cartId}}" style="font-size:medium" href="http://localhost:8080/auth/perfil">Mi perfil</a>
-      <a style="font-size:medium" href="http://localhost:8080/auth/logout">Cerrar sesión</a>
-      <a style="font-size:medium" href="http://localhost:8080/carts/{{user.cartId}}">Mi carrito</a>
+      <a class="cartInfo" id="{{user.cartId}}" style="font-size:medium" href="/auth/perfil">Mi perfil</a>
+      <a style="font-size:medium" href="/auth/logout">Cerrar sesión</a>
+      <a style="font-size:medium" href="/carts/{{user.cartId}}">Mi carrito</a>
       <p>CartId: {{user.cartId}}</p>
     </h1>
   {{else}}
     <h1 style="padding-left: 30px; padding-top: 30px">
       BIENVENIDO 
-      <a style="font-size:medium" href="http://localhost:8080/auth/login">Iniciar sesión</a>
+      <a style="font-size:medium" href="/auth/login">Iniciar sesión</a>
     </h1>
   {{/if}}
   <div style="display: flex; justify-content: space-between; padding: 30px">

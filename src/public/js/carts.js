@@ -2,7 +2,7 @@ const cartInfoElement = document.getElementsByClassName('cartInfo')[0];
 
 function removeFromCart(productId) {
     if (cartInfoElement === undefined) {
-        window.location.href = 'http://localhost:8080/auth/login';
+        window.location.href = '/auth/login';
         return;
     }
     const cartId = cartInfoElement.getAttribute('id');
@@ -29,7 +29,7 @@ function removeFromCart(productId) {
 
 function finishPurchase(){
     if (cartInfoElement === undefined) {
-        window.location.href = 'http://localhost:8080/auth/login';
+        window.location.href = '/auth/login';
         return;
     }
     const cartId = cartInfoElement.getAttribute('id');
