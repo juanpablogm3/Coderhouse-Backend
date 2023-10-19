@@ -92,7 +92,7 @@ app.use('/apidocs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 //Handlebars
 app.engine('handlebars', handlebars.engine());
-app.set('views', path.join(__dirname,'views'));
+app.set('views', './src/views');
 app.set('view engine', 'handlebars');
 
 //Config EXPRESS

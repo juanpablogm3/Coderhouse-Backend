@@ -24,7 +24,7 @@ export default __dirnameBase;
 /* ************* MULTER****************** */
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, __dirname + "/public");
+    cb(null, path.join(__dirname,'/public'));
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname);
