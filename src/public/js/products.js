@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const cartInfoElement = document.getElementsByClassName('cartInfoElement')[0];
   const cartId = cartInfoElement.getAttribute('cartId');
   const prodId = cartInfoElement.getAttribute('prodId');
-  cartInfoElement.addEventListener('click', addToCart(cartId, productId));
+  cartInfoElement.addEventListener('click', addToCart(cartId, prodId));
 });
 
 function addToCart(cartId, productId) {
