@@ -1,10 +1,12 @@
-alert('FUNCIONA');
+document.addEventListener('DOMContentLoaded', function() {
+  alert('FUNCIONA');
+  const cartInfoElement = document.getElementsByClassName('cartInfoElement')[0];
+  const cartId = cartInfoElement.getAttribute('cartId');
+  const prodId = cartInfoElement.getAttribute('prodId');
+  cartInfoElement.addEventListener('click', addToCart(cartId, productId));
+});
 
-const cartInfoElement = document.getElementsByClassName('cartInfoElement')[0];
-const cartId = cartInfoElement.getAttribute('cartId');
-cartInfoElement.addEventListener('click', addToCart(productId));
-
-function addToCart(productId) {
+function addToCart(cartId, productId) {
   if (!cartId) {
     window.location.href = '/auth/login';
     return;
