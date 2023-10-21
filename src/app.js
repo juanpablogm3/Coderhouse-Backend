@@ -24,7 +24,6 @@ import {logger} from "./logger.js"
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { mailerRouter } from '../src/routes/mailer.router.js'
-import path from 'path';
 
 
 await connectMongo();
@@ -96,7 +95,7 @@ app.set('views', './src/views');
 app.set('view engine', 'handlebars');
 
 //Config EXPRESS
-app.use(express.static(path.join(__dirname,'public')));
+app.use(express.static(__dirname+'public'));
 app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

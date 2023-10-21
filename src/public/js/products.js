@@ -1,3 +1,4 @@
+alert('entro en preducts.js');
 const cartInfoElement = document.getElementsByClassName('cartInfo')[0];
 
 function addToCart(productId) {
