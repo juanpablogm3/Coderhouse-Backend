@@ -1,7 +1,7 @@
 const cartInfoElement = document.getElementsByClassName('cartInfo')[0];
 
 function addToCart(productId) {
-  if (!cartId) {
+  if (cartInfoElement===undefined) {
     window.location.href = '/auth/login';
     return;
   }
