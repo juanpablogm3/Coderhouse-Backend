@@ -1,17 +1,11 @@
-document.addEventListener('DOMContentLoaded', function() {
-  alert('FUNCIONA');
-  const cartInfoElement = document.getElementsByClassName('cartInfoElement')[0];
-  const cartId = cartInfoElement.getAttribute('cartId');
-  const prodId = cartInfoElement.getAttribute('prodId');
-  cartInfoElement.addEventListener('click', addToCart(cartId, prodId));
-});
+const cartInfoElement = document.getElementsByClassName('cartInfo')[0];
 
-function addToCart(cartId, productId) {
+function addToCart(productId) {
   if (!cartId) {
     window.location.href = '/auth/login';
     return;
   }
-
+  const cartId = cartInfoElement.getAttribute('id');
   fetch(`/api/carts/${cartId}/products/${productId}`, {
     method: 'POST',
     headers: {
