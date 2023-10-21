@@ -48,10 +48,10 @@ class UserController{
     async deleteInactiveUsers (req, res) {
         try {
             const currentDate = new Date();
-            currentDate.setTime(currentDate.getTime() - 1800000); // media hora en miliseg , poner 2 días en miliseg cuando todo OK
+            currentDate.setTime(currentDate.getTime() - 172800000);
             const users = await userModel.getAll();
             const usersInactive = users.filter((user) => {
-                return new Date(user.last_connection) > currentDate; // cambiar a < cuando esté todo OK
+                return new Date(user.last_connection) < currentDate;
             });
             const usersToDelete = usersInactive.filter(user=>user.role!='admin');
             for (const userToDelete of usersToDelete) {
